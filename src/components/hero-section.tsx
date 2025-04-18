@@ -17,7 +17,7 @@ function Hero() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6">
             <span className="block">Hello, I'm</span>
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mt-2 animate-pulse">
-              RULETE, JERIC ASHLEY S.
+              RULETE, JERIC ASHLEY S
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-300 mb-8">
