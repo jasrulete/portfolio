@@ -14,7 +14,7 @@ This project is a minimal React + TypeScript setup using [Vite](https://vitejs.d
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/jasrulete/portfolio
+git clone https://github.com/jasrulete/portfolio.git
 cd portfolio
 npm install
 npm run dev
