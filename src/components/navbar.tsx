@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 
-function Navbar({ darkMode, toggleDarkMode }) {
+interface NavbarProps {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -15,7 +20,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <a href="#" className="text-xl font-bold">
-              Portfolio
+              Jeric's Portfolio
             </a>
           </div>
 

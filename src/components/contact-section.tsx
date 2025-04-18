@@ -9,12 +9,25 @@ function Contact() {
     message: "",
   });
 
-  const handleChange = (e) => {
+  interface FormData {
+    name: string;
+    email: string;
+    message: string;
+  }
+
+  interface ChangeEvent {
+    target: {
+      name: string;
+      value: string;
+    };
+  }
+
+  const handleChange = (e: ChangeEvent) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev: FormData) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     // In a real application, you would handle form submission here
     console.log("Form submitted:", formData);
@@ -52,7 +65,7 @@ function Contact() {
                 <div>
                   <h4 className="text-lg font-medium">Email</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    your.email@example.com
+                    jsrulete@up.edu.ph
                   </p>
                 </div>
               </div>
@@ -75,7 +88,7 @@ function Contact() {
                 <div>
                   <h4 className="text-lg font-medium">Phone</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    +1 (123) 456-7890
+                    +63 927 763 7156
                   </p>
                 </div>
               </div>
@@ -104,7 +117,9 @@ function Contact() {
                 <div>
                   <h4 className="text-lg font-medium">Location</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    San Francisco, CA
+                    Zamboanga City, Philippines
+                    <br />
+                    Cebu City, Philippines
                   </p>
                 </div>
               </div>

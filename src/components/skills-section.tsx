@@ -1,105 +1,43 @@
+import {
+  SiCplusplus,
+  SiPython,
+  SiReact,
+  SiCss3,
+  SiHtml5,
+} from "react-icons/si";
+
 function Skills() {
   const skills = [
     {
-      name: "Frontend Development",
+      name: "C++",
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 text-blue-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
+          alt="C++ Logo"
+          className="h-12 w-12 object-contain"
+        />
       ),
-      description: "Building responsive and interactive user interfaces",
+      description: "Efficient system programming and algorithm design",
     },
     {
-      name: "Backend Development",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 text-green-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
-          />
-        </svg>
-      ),
+      name: "Python",
+      icon: <SiPython className="h-12 w-12 text-yellow-400" />,
       description: "Creating robust server-side applications and APIs",
     },
     {
-      name: "Responsive Design",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 text-purple-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-          />
-        </svg>
-      ),
-      description:
-        "Designing websites that work on all devices and screen sizes",
+      name: "React",
+      icon: <SiReact className="h-12 w-12 text-blue-400" />,
+      description: "Designing interactive and reactive user interfaces",
     },
     {
-      name: "UI/UX Design",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 text-yellow-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-          />
-        </svg>
-      ),
-      description: "Creating intuitive and visually appealing user experiences",
+      name: "CSS",
+      icon: <SiCss3 className="h-12 w-12 text-blue-600" />,
+      description: "Styling modern and responsive web applications",
     },
     {
-      name: "Clean Code",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-          />
-        </svg>
-      ),
-      description: "Writing maintainable, efficient, and well-documented code",
+      name: "HTML",
+      icon: <SiHtml5 className="h-12 w-12 text-orange-500" />,
+      description: "Structuring web content for accessibility and clarity",
     },
   ];
 
