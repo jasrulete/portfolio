@@ -1,5 +1,4 @@
 import {
-  SiCplusplus,
   SiPython,
   SiReact,
   SiCss3,
