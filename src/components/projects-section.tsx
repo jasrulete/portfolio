@@ -22,10 +22,10 @@ function Projects() {
       demo: "#",
     },
     {
-      title: "Finance App",
+      title: "BudgetWise",
       description: "A finance app that allows users to track their expenses and income.",
       image: finance_app,
-      tags: ["HTML", "CSS", "JavaScript"],
+      tags: ["HTML", "CSS", "JavaScript", "Python"],
       github: "https://github.com/jasrulete/finance-app",
       demo: "#",
     },
