@@ -20,7 +20,7 @@ A modern portfolio website built with React, TypeScript, Vite, and Tailwind CSS.
 
 1. Clone the repository:
 ```bash
-git clone [your-repo-url]
+git clone https://github.com/jasrulete/portfolio.git
 cd portfolio-web
 ```
 
