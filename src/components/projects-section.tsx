@@ -1,9 +1,11 @@
+import background from '../assets/background.jpg';
+
 function Projects() {
   const projects = [
     {
       title: "Portfolio Website",
       description: "A personal portfolio website showcasing my projects and skills.",
-      image: "https://scontent.fcgy2-4.fna.fbcdn.net/v/t39.30808-6/489056052_1058347886326843_3573214277028562017_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeE2mz8ShHTJ0lWFuDIlleGFs_qa30jkZBaz-prfSORkFhPF1auclcYYRrKqRCCkGW-iRfqAvLHU2aCl0U8SrkZn&_nc_ohc=4uRKDOj5n6gQ7kNvwFBNiUZ&_nc_oc=AdknoQykonhnwqvyzRGQ84N0SdaRd3wuXjbLn_dkILA_Th8ZvBpY2Jpn1CaiRLHkWUZ534c3uNiRtziM14fQ9b0g&_nc_zt=23&_nc_ht=scontent.fcgy2-4.fna&_nc_gid=oEGxgZxfKakCqVxRs3oCkw&oh=00_AfGvERoxE54HaAO3r8fN7ZaGCijl-E65ix-m1fHEFihV2w&oe=680831C9",
+      image: background,
       tags: ["React", "HTML", "CSS"],
       github: "https://github.com/jasrulete/portfolio",
       demo: "#",
@@ -11,7 +13,7 @@ function Projects() {
     {
       title: "Portfolio Website",
       description: "A personal portfolio website showcasing my projects and skills.",
-      image: "https://scontent.fcgy2-4.fna.fbcdn.net/v/t39.30808-6/489056052_1058347886326843_3573214277028562017_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeE2mz8ShHTJ0lWFuDIlleGFs_qa30jkZBaz-prfSORkFhPF1auclcYYRrKqRCCkGW-iRfqAvLHU2aCl0U8SrkZn&_nc_ohc=4uRKDOj5n6gQ7kNvwFBNiUZ&_nc_oc=AdknoQykonhnwqvyzRGQ84N0SdaRd3wuXjbLn_dkILA_Th8ZvBpY2Jpn1CaiRLHkWUZ534c3uNiRtziM14fQ9b0g&_nc_zt=23&_nc_ht=scontent.fcgy2-4.fna&_nc_gid=oEGxgZxfKakCqVxRs3oCkw&oh=00_AfGvERoxE54HaAO3r8fN7ZaGCijl-E65ix-m1fHEFihV2w&oe=680831C9",
+      image: background,
       tags: ["React", "HTML", "CSS"],
       github: "https://github.com/jasrulete/portfolio",
       demo: "#",
@@ -19,7 +21,7 @@ function Projects() {
     {
       title: "Portfolio Website",
       description: "A personal portfolio website showcasing my projects and skills.",
-      image: "https://scontent.fcgy2-4.fna.fbcdn.net/v/t39.30808-6/489056052_1058347886326843_3573214277028562017_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeE2mz8ShHTJ0lWFuDIlleGFs_qa30jkZBaz-prfSORkFhPF1auclcYYRrKqRCCkGW-iRfqAvLHU2aCl0U8SrkZn&_nc_ohc=4uRKDOj5n6gQ7kNvwFBNiUZ&_nc_oc=AdknoQykonhnwqvyzRGQ84N0SdaRd3wuXjbLn_dkILA_Th8ZvBpY2Jpn1CaiRLHkWUZ534c3uNiRtziM14fQ9b0g&_nc_zt=23&_nc_ht=scontent.fcgy2-4.fna&_nc_gid=oEGxgZxfKakCqVxRs3oCkw&oh=00_AfGvERoxE54HaAO3r8fN7ZaGCijl-E65ix-m1fHEFihV2w&oe=680831C9",
+      image: background,
       tags: ["React", "HTML", "CSS"],
       github: "https://github.com/jasrulete/portfolio",
       demo: "#",
