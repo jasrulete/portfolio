@@ -1,13 +1,14 @@
-import background from '../assets/background.jpg';
+import background from "../assets/background.jpg";
 
 function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col justify-between items-center bg-cover bg-center"
+      className="relative min-h-screen flex flex-col justify-between items-center bg-cover bg-center bg-no-repeat px-4 sm:px-6"
       style={{
         backgroundImage: `url(${background})`,
-        backgroundAttachment: "fixed",
+        backgroundAttachment: "scroll", // safer on mobile than "fixed"
+        backgroundSize: "cover",
       }}
     >
       {/* Overlay */}

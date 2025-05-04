@@ -1,9 +1,4 @@
-import {
-  SiPython,
-  SiReact,
-  SiCss3,
-  SiHtml5,
-} from "react-icons/si";
+import { SiPython, SiReact, SiCss3, SiHtml5 } from "react-icons/si";
 
 function Skills() {
   const skills = [
@@ -37,6 +32,17 @@ function Skills() {
       name: "HTML",
       icon: <SiHtml5 className="h-12 w-12 text-orange-500" />,
       description: "Structuring web content for accessibility and clarity",
+    },
+    {
+      name: "JavaScript",
+      icon: (
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+          alt="JavaScript Logo"
+          className="h-12 w-12 object-contain"
+        />
+      ),
+      description: "Building dynamic and interactive web applications",
     },
   ];
 
