@@ -28,6 +28,14 @@ function Projects() {
       github: "https://github.com/jasrulete/finance-app",
       demo: "#",
     },
+    {
+      title: "Finance App",
+      description: "A finance app that allows users to track their expenses and income.",
+      image: finance_app,
+      tags: ["HTML", "CSS", "JavaScript"],
+      github: "https://github.com/jasrulete/finance-app",
+      demo: "#",
+    },
   ]
 
   return (
