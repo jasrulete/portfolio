@@ -1,6 +1,7 @@
 import background from '../assets/background.jpg';
 import dungeon_descent from '../assets/dungeon.png';
 import finance_app from '../assets/finance-app.png';
+import honeyos from '../assets/honeyOS.png';
 
 function Projects() {
   const projects = [
@@ -28,14 +29,14 @@ function Projects() {
       github: "https://github.com/jasrulete/finance-app",
       demo: "#",
     },
-    // {
-    //   title: "Finance App",
-    //   description: "A finance app that allows users to track their expenses and income.",
-    //   image: finance_app,
-    //   tags: ["HTML", "CSS", "JavaScript"],
-    //   github: "https://github.com/jasrulete/finance-app",
-    //   demo: "#",
-    // },
+    {
+      title: "HoneyOS",
+      description: "A simple operating system that allows users to run basic commands.",
+      image: honeyos,
+      tags: ["HTML", "CSS", "JavaScript", "Neutralino"],
+      github: "https://github.com/jasrulete/CMSC-125-HoneyOS",
+      demo: "#",
+    },
   ]
 
   return (
