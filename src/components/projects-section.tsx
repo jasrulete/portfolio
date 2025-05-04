@@ -1,4 +1,5 @@
 import background from '../assets/background.jpg';
+import dungeon_descent from '../assets/dungeon.png';
 
 function Projects() {
   const projects = [
@@ -11,19 +12,19 @@ function Projects() {
       demo: "#",
     },
     {
-      title: "Portfolio Website",
-      description: "A personal portfolio website showcasing my projects and skills.",
-      image: background,
-      tags: ["React", "HTML", "CSS"],
-      github: "https://github.com/jasrulete/portfolio",
+      title: "Dungeon Descent",
+      description: "A turn-based RPG game where the player controls an adventurer and battles through floors of monsters.",
+      image: dungeon_descent,
+      tags: ["Python"],
+      github: "https://github.com/jasrulete/dungeon-descend",
       demo: "#",
     },
     {
-      title: "Portfolio Website",
-      description: "A personal portfolio website showcasing my projects and skills.",
+      title: "Finance App",
+      description: "A finance app that allows users to track their expenses and income.",
       image: background,
-      tags: ["React", "HTML", "CSS"],
-      github: "https://github.com/jasrulete/portfolio",
+      tags: ["HTML", "CSS", "JavaScript"],
+      github: "https://github.com/jasrulete/finance-app",
       demo: "#",
     },
   ]
