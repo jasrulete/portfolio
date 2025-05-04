@@ -1,6 +1,5 @@
 import background from '../assets/background.jpg';
 import dungeon_descent from '../assets/dungeon.png';
-import finance from '../assets/finance.png';
 
 function Projects() {
   const projects = [
@@ -23,7 +22,7 @@ function Projects() {
     {
       title: "Finance App",
       description: "A finance app that allows users to track their expenses and income.",
-      image: finance,
+      image: dungeon_descent,
       tags: ["HTML", "CSS", "JavaScript"],
       github: "https://github.com/jasrulete/finance-app",
       demo: "#",
