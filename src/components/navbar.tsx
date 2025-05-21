@@ -42,7 +42,7 @@ function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
               href="#contact"
               className="hover:text-blue-500 transition-colors"
             >
-              Contact
+              Contacts
             </a>
             <button
               onClick={toggleDarkMode}
