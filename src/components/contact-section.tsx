@@ -151,8 +151,6 @@ function Contact() {
                 <div>
                   <h4 className="text-lg font-medium">Location</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Zamboanga City, Philippines
-                    <br />
                     Cebu City, Philippines
                   </p>
                 </div>

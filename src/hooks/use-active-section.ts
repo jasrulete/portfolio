@@ -1,0 +1,40 @@
+import { useEffect, useState } from "react";
+
+const SECTION_IDS = [
+  "home",
+  "about",
+  "skills",
+  "projects",
+  "experience",
+  "contact",
+];
+
+export function useActiveSection() {
+  const [activeId, setActiveId] = useState("home");
+
+  useEffect(() => {
+    const sections = SECTION_IDS.map((id) =>
+      document.getElementById(id)
+    ).filter(Boolean) as HTMLElement[];
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]?.target.id) {
+          setActiveId(visible[0].target.id);
+        }
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5] }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  return activeId;
+}

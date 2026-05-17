@@ -1,78 +1,102 @@
-import { SiPython, SiReact, SiCss3, SiHtml5 } from "react-icons/si";
+import { useState } from "react";
+import { cn } from "../../lib/utils";
+import { profile } from "../data/profile";
+import ScrollReveal from "./scroll-reveal";
+import SectionHeading from "./section-heading";
 
-function Skills() {
-  const skills = [
-    {
-      name: "C++",
-      icon: (
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
-          alt="C++ Logo"
-          className="h-12 w-12 object-contain"
-        />
-      ),
-      description: "Efficient system programming and algorithm design",
-    },
-    {
-      name: "Python",
-      icon: <SiPython className="h-12 w-12 text-yellow-400" />,
-      description: "Creating robust server-side applications and APIs",
-    },
-    {
-      name: "React",
-      icon: <SiReact className="h-12 w-12 text-blue-400" />,
-      description: "Designing interactive and reactive user interfaces",
-    },
-    {
-      name: "CSS",
-      icon: <SiCss3 className="h-12 w-12 text-blue-600" />,
-      description: "Styling modern and responsive web applications",
-    },
-    {
-      name: "HTML",
-      icon: <SiHtml5 className="h-12 w-12 text-orange-500" />,
-      description: "Structuring web content for accessibility and clarity",
-    },
-    {
-      name: "JavaScript",
-      icon: (
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
-          alt="JavaScript Logo"
-          className="h-12 w-12 object-contain"
-        />
-      ),
-      description: "Building dynamic and interactive web applications",
-    },
-  ];
+export default function Skills() {
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
 
   return (
     <section id="skills" className="py-20 bg-white dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
-          <div className="w-16 h-1 bg-blue-500 mx-auto"></div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-          {skills.map((skill, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center p-6 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-2 transition-all duration-300"
-            >
-              <div className="mb-4">{skill.icon}</div>
-              <h3 className="text-lg font-semibold text-center mb-2">
-                {skill.name}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center text-sm">
-                {skill.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SkillsContent activeGroup={activeGroup} setActiveGroup={setActiveGroup} />
     </section>
   );
 }
 
-export default Skills;
+function SkillsContent({
+  activeGroup,
+  setActiveGroup,
+}: {
+  activeGroup: string | null;
+  setActiveGroup: (v: string | null) => void;
+}) {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeading title="Technical Skills" />
+      <p className="text-center text-gray-500 dark:text-gray-400 -mt-10 mb-10 text-sm">
+        Click a category to focus · click again to reset
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {profile.skillGroups.map((group, index) => (
+          <ScrollReveal key={group.title} delay={index * 80}>
+            <SkillGroupCard
+              group={group}
+              isActive={activeGroup === null || activeGroup === group.title}
+              isFocused={activeGroup === group.title}
+              onSelect={() =>
+                setActiveGroup(
+                  activeGroup === group.title ? null : group.title
+                )
+              }
+            />
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SkillGroupCard({
+  group,
+  isActive,
+  isFocused,
+  onSelect,
+}: {
+  group: (typeof profile.skillGroups)[number];
+  isActive: boolean;
+  isFocused: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={cn(
+        "w-full text-left p-6 rounded-xl border transition-all duration-300 cursor-pointer",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+        isFocused
+          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg scale-[1.03] -translate-y-1"
+          : "border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50",
+        !isActive && "opacity-40 scale-95",
+        isActive && !isFocused && "hover:shadow-lg hover:-translate-y-1 hover:border-blue-300"
+      )}
+    >
+      <h3 className="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400 flex items-center justify-between">
+        {group.title}
+        <span
+          className={cn(
+            "text-xs transition-transform duration-300",
+            isFocused && "rotate-180"
+          )}
+        >
+          ▾
+        </span>
+      </h3>
+      <div className="flex flex-wrap gap-2">
+        {group.items.map((item, i) => (
+          <span
+            key={item}
+            className={cn(
+              "text-sm px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 shadow-sm transition-all duration-300",
+              isFocused && "animate-pop"
+            )}
+            style={isFocused ? { animationDelay: `${i * 50}ms` } : undefined}
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+    </button>
+  );
+}
