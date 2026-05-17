@@ -12,6 +12,9 @@ export const profile = {
   ] as const,
   projectFilters: ["All", "Web", "Python", "Desktop"] as const,
   email: "jsrulete@up.edu.ph",
+  personalEmail: "rulete.jeric@gmail.com",
+  /** Inbox for the Get In Touch form (Web3Forms delivers to the email tied to your access key). */
+  formEmail: "rulete.jeric@gmail.com",
   phone: "+63 927 763 7156",
   location: "Cebu City, Philippines",
   expectedGraduation: "May 2026",
