@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { cn } from "../../lib/utils";
 import background from "../assets/background.jpg";
+import chedula from "../assets/chedula-logo.png";
 import dungeon_descent from "../assets/dungeon.png";
 import finance_app from "../assets/finance-app.png";
 import honeyos from "../assets/honeyOS.png";
+import minna_no from "../assets/minna-no.png";
+import sportal from "../assets/sportal_logo.webp";
+import toxic_detector from "../assets/Toxic-image(kaggle sourced).png";
 import { profile } from "../data/profile";
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 import TiltCard from "./tilt-card";
 
 const projectImages: Record<string, string> = {
+  "Context-Aware Edge Security Framework": background,
+  Sportal: sportal,
+  Chedula: chedula,
+  "Toxic Comment Detector": toxic_detector,
+  "Minna no Nihongo": minna_no,
   "Portfolio Website": background,
   "Dungeon Descent": dungeon_descent,
   BudgetWise: finance_app,

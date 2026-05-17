@@ -9,6 +9,8 @@ export const profile = {
     "Web Developer",
     "ML Enthusiast",
     "CS Student",
+    "Software Engineer",
+    
   ] as const,
   projectFilters: ["All", "Web", "Python", "ML", "Desktop"] as const,
   email: "jsrulete@up.edu.ph",

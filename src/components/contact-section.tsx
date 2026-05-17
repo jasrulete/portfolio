@@ -4,10 +4,9 @@ import { profile } from "../data/profile";
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 
-const WEB3FORMS_ACCESS_KEY =
-  import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? "da0d0cab-5069-4fe1-a553-d1c0f01b11ac";
-const HCAPTCHA_SITE_KEY =
-  import.meta.env.VITE_HCAPTCHA_SITE_KEY ?? "d152aa96-1af2-4840-ab54-3dd60aa2f63a";
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? "";
+const HCAPTCHA_SITE_KEY = import.meta.env.VITE_HCAPTCHA_SITE_KEY ?? "";
+const formConfigured = Boolean(WEB3FORMS_ACCESS_KEY && HCAPTCHA_SITE_KEY);
 
 type FormFields = {
   name: string;
@@ -34,6 +33,13 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!formConfigured) {
+      setResult(
+        `Form is not configured on this deployment. Please email me at ${profile.formEmail} directly.`
+      );
+      return;
+    }
 
     if (!captchaToken) {
       setResult("Please verify the CAPTCHA.");
@@ -87,6 +93,7 @@ export default function Contact() {
           formData={formData}
           result={result}
           isSuccess={isSuccess}
+          formConfigured={formConfigured}
           captchaRef={captchaRef}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -101,6 +108,7 @@ function ContactGrid({
   formData,
   result,
   isSuccess,
+  formConfigured,
   captchaRef,
   onChange,
   onSubmit,
@@ -109,6 +117,7 @@ function ContactGrid({
   formData: FormFields;
   result: string;
   isSuccess: boolean;
+  formConfigured: boolean;
   captchaRef: React.RefObject<HCaptcha | null>;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -155,16 +164,24 @@ function ContactGrid({
             />
           </div>
 
-          <HCaptcha
-            sitekey={HCAPTCHA_SITE_KEY}
-            onVerify={onCaptchaVerify}
-            onExpire={() => onCaptchaVerify("")}
-            ref={captchaRef}
-          />
+          {formConfigured ? (
+            <HCaptcha
+              sitekey={HCAPTCHA_SITE_KEY}
+              onVerify={onCaptchaVerify}
+              onExpire={() => onCaptchaVerify("")}
+              ref={captchaRef}
+            />
+          ) : (
+            <p className="text-sm text-amber-600 dark:text-amber-400">
+              Contact form requires environment setup on this host. Use the email
+              addresses on the left.
+            </p>
+          )}
 
           <button
             type="submit"
-            className="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+            disabled={!formConfigured}
+            className="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             Send Message
           </button>
