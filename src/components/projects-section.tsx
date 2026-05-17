@@ -73,10 +73,21 @@ export default function Projects() {
                   <div className="p-6 flex flex-col flex-grow">
                     <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">
                       {project.period}
+                      {"subtitle" in project && project.subtitle && (
+                        <span className="text-gray-500 dark:text-gray-400 font-normal">
+                          {" "}
+                          · {project.subtitle}
+                        </span>
+                      )}
                     </p>
                     <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       {project.title}
                     </h3>
+                    {"inProgress" in project && project.inProgress && (
+                      <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 mb-2">
+                        In Progress
+                      </span>
+                    )}
                     <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
                       {project.description}
                     </p>
@@ -113,18 +124,31 @@ function ProjectLinks({
 }: {
   project: (typeof profile.projects)[number];
 }) {
+  const hasGithub = "github" in project && Boolean(project.github);
+  const hasDemo = "demo" in project && Boolean(project.demo);
+
+  if (!hasGithub && !hasDemo) {
+    return (
+      <p className="text-sm text-gray-400 dark:text-gray-500 italic">
+        Links coming soon
+      </p>
+    );
+  }
+
   return (
-    <div className="flex gap-6">
-      <a
-        href={project.github}
-        className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <GithubIcon />
-        Code
-      </a>
-      {"demo" in project && project.demo && (
+    <div className="flex gap-6 flex-wrap">
+      {hasGithub && (
+        <a
+          href={project.github}
+          className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubIcon />
+          Code
+        </a>
+      )}
+      {hasDemo && (
         <a
           href={project.demo}
           className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"

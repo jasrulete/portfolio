@@ -51,8 +51,8 @@ function AboutGrid({
       <ScrollReveal direction="right" delay={150}>
         <div>
           <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-            {profile.tagline} I enjoy turning ideas into polished software—from
-            coursework and personal projects to real-world operations.
+            {profile.tagline} I enjoy transforming ideas into functional systems
+            through clean code, problem-solving, and continuous learning.
           </p>
 
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -63,9 +63,9 @@ function AboutGrid({
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
               {education.campus} · {education.expected}
             </p>
-            {/* <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4">
+            <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4">
               {education.honors}
-            </p> */}
+            </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
               Relevant courseworks
             </p>
