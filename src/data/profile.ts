@@ -95,7 +95,7 @@ export const profile = {
     },
     {
       title: "HoneyOS",
-      period: "March 2025 – Present",
+      period: "March 2025",
       description:
         "Web-based OS interface with a hexagonal UI, text editor, file explorer, camera, music player, and window management via Neutralino.js.",
       tags: ["HTML", "CSS", "JavaScript", "Neutralino"],
