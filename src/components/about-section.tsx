@@ -63,11 +63,11 @@ function AboutGrid({
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
               {education.campus} · {education.expected}
             </p>
-            <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4">
+            {/* <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4">
               {education.honors}
-            </p>
+            </p> */}
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-              Relevant coursework — hover to highlight
+              Relevant courseworks
             </p>
             <div className="flex flex-wrap gap-2">
               {education.coursework.map((course) => (

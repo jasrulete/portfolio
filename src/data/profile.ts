@@ -26,7 +26,7 @@ export const profile = {
     campus: "Gorordo Ave., Cebu City",
     degree: "Bachelor of Science in Computer Science",
     expected: "Expected May 2026",
-    honors: "College Scholar (2nd Semester A.Y. 2023–2024)",
+    // honors: "College Scholar (2nd Semester A.Y. 2023–2024)",
     coursework: [
       "Fundamentals of Programming",
       "Software Engineering",
