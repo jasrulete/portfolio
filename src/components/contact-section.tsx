@@ -4,9 +4,14 @@ import { profile } from "../data/profile";
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 
+/** Web3Forms free plan requires this site key — not your personal hCaptcha key. */
+const WEB3FORMS_HCAPTCHA_SITE_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
+
 const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? "";
-const HCAPTCHA_SITE_KEY = import.meta.env.VITE_HCAPTCHA_SITE_KEY ?? "";
-const formConfigured = Boolean(WEB3FORMS_ACCESS_KEY && HCAPTCHA_SITE_KEY);
+/** Optional override only if you use a custom key on a Web3Forms paid plan. */
+const HCAPTCHA_SITE_KEY =
+  import.meta.env.VITE_HCAPTCHA_SITE_KEY || WEB3FORMS_HCAPTCHA_SITE_KEY;
+const formConfigured = Boolean(WEB3FORMS_ACCESS_KEY);
 
 type FormFields = {
   name: string;
@@ -167,6 +172,7 @@ function ContactGrid({
           {formConfigured ? (
             <HCaptcha
               sitekey={HCAPTCHA_SITE_KEY}
+              reCaptchaCompat={false}
               onVerify={onCaptchaVerify}
               onExpire={() => onCaptchaVerify("")}
               ref={captchaRef}
