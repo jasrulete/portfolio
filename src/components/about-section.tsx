@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "../../lib/utils";
-import profilePhoto from "../assets/Rulete_Barong.jpg"
+import profilePhoto from "../assets/profile.jpg"
 import { profile } from "../data/profile";
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
