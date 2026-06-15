@@ -27,7 +27,7 @@ export const profile = {
     school: "University of the Philippines",
     campus: "Gorordo Ave., Cebu City",
     degree: "Bachelor of Science in Computer Science",
-    expected: "Expected July 2026",
+    expected: "July 2026",
     honors:
       "College Scholar (2nd Semester A.Y. 2023–2024) · College Scholar (2nd Semester A.Y. 2024–2025)",
     coursework: [
