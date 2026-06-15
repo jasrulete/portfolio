@@ -92,7 +92,7 @@ function AboutGrid({
 
           <a
             href={cvUrl}
-            download="Jeric-Rulete-CV.pdf"
+            download="Jeric-Rulete_CV.pdf"
             className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
