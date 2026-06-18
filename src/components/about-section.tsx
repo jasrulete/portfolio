@@ -6,7 +6,7 @@ import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 
 export default function AboutSection() {
-  const { education, cvUrl } = profile;
+  const { education, cvUrl, resumeUrl } = profile;
   const [hoveredCourse, setHoveredCourse] = useState<string | null>(null);
 
   return (
@@ -15,6 +15,7 @@ export default function AboutSection() {
       <AboutGrid
         education={education}
         cvUrl={cvUrl}
+        resumeUrl={resumeUrl}
         hoveredCourse={hoveredCourse}
         setHoveredCourse={setHoveredCourse}
       />
@@ -25,11 +26,13 @@ export default function AboutSection() {
 function AboutGrid({
   education,
   cvUrl,
+  resumeUrl,
   hoveredCourse,
   setHoveredCourse,
 }: {
   education: (typeof profile)["education"];
   cvUrl: string;
+  resumeUrl: string;
   hoveredCourse: string | null;
   setHoveredCourse: (v: string | null) => void;
 }) {
@@ -90,16 +93,28 @@ function AboutGrid({
             </div>
           </div>
 
-          <a
-            href={cvUrl}
-            download="Jeric-Rulete-CV.pdf"
-            className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Download CV
-          </a>
+          <div className="flex flex-wrap gap-4 mt-8">
+            <a
+              href={cvUrl}
+              download="Jeric-Rulete-CV.pdf"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download CV
+            </a>
+            <a
+              href={resumeUrl}
+              download="Jeric Rulete_Resume.pdf"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-400 text-gray-600 dark:text-gray-300 dark:border-gray-500 font-semibold hover:bg-gray-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download Resume
+            </a>
+          </div>
         </div>
       </ScrollReveal>
     </AboutGridContainer>

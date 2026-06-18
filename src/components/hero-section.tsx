@@ -86,6 +86,13 @@ export default function Hero() {
                 Download CV
               </MagneticLink>
               <MagneticLink
+                href={profile.resumeUrl}
+                download="Jeric Rulete_Resume.pdf"
+                className="border-2 border-white/40 text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900"
+              >
+                Download Resume
+              </MagneticLink>
+              <MagneticLink
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
