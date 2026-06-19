@@ -95,7 +95,7 @@ export const profile = {
         "Edge Computing",
       ],
       category: "ML",
-      // inProgress: true,
+      inProgress: false,
     },
     {
       title: "Sportal",
