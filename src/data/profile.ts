@@ -22,8 +22,8 @@ export const profile = {
   expectedGraduation: "July 2026",
   github: "https://github.com/jasrulete",
   portfolio: "https://jasrulete.github.io/portfolio/",
-  cvUrl: `${import.meta.env.BASE_URL}Jeric-Rulete-CV.pdf`,
-  resumeUrl: `${import.meta.env.BASE_URL}Jeric%20Rulete_Resume.pdf`,
+  cvUrl: `${import.meta.env.BASE_URL}Jeric-Rulete_CV.pdf`,
+  resumeUrl: `${import.meta.env.BASE_URL}Jeric-Rulete_Resume.pdf`,
   education: {
     school: "University of the Philippines",
     campus: "Gorordo Ave., Cebu City",

@@ -96,7 +96,7 @@ function AboutGrid({
           <div className="flex flex-wrap gap-4 mt-8">
             <a
               href={cvUrl}
-              download="Jeric-Rulete-CV.pdf"
+              download="Jeric-Rulete_CV.pdf"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
@@ -106,7 +106,7 @@ function AboutGrid({
             </a>
             <a
               href={resumeUrl}
-              download="Jeric Rulete_Resume.pdf"
+              download="Jeric-Rulete_Resume.pdf"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-400 text-gray-600 dark:text-gray-300 dark:border-gray-500 font-semibold hover:bg-gray-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
