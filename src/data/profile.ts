@@ -84,7 +84,7 @@ export const profile = {
   projects: [
     {
       title: "Context-Aware Edge Security Framework",
-      subtitle: "Special Project · In Progress",
+      subtitle: "Special Project",
       period: "June 2026",
       description:
         "Designing a context-aware edge security framework for smart home IoT using lightweight ML, adaptive AES/ChaCha20 switching, and M/M/4 queueing models—evaluated via MRT, detection accuracy, energy use, and APJ.",
@@ -95,7 +95,7 @@ export const profile = {
         "Edge Computing",
       ],
       category: "ML",
-      inProgress: true,
+      // inProgress: true,
     },
     {
       title: "Sportal",
