@@ -115,8 +115,8 @@ export default function Projects() {
                         </dt>
                         <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                           {"challenge" in project
-                            ? project.challenge
-                            : project.description}
+                            ? (project.challenge as string)
+                            : (project.description as string)}
                         </dd>
                       </div>
 
@@ -126,7 +126,7 @@ export default function Projects() {
                             Architecture & Execution
                           </dt>
                           <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                            {project.architecture}
+                            {project.architecture as string}
                           </dd>
                         </div>
                       )}
@@ -138,7 +138,7 @@ export default function Projects() {
                             <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">
                               Outcome:
                             </span>
-                            {project.outcome}
+                            {project.outcome as string}
                           </dd>
                         </div>
                       )}
@@ -193,7 +193,7 @@ function ProjectLinks({
     <div className="flex gap-6 flex-wrap">
       {hasGithub && (
         <a
-          href={project.github}
+          href={project.github as string}
           className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"
           target="_blank"
           rel="noopener noreferrer"
@@ -204,7 +204,7 @@ function ProjectLinks({
       )}
       {hasDemo && (
         <a
-          href={project.demo}
+          href={project.demo as string}
           className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"
           target="_blank"
           rel="noopener noreferrer"
