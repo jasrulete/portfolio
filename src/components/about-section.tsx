@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "../../lib/utils";
-import profilePhoto from "../assets/profile.jpg"
+import profilePhoto from "../assets/profile.jpg";
 import { profile } from "../data/profile";
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
@@ -53,10 +53,24 @@ function AboutGrid({
 
       <ScrollReveal direction="right" delay={150}>
         <div>
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-            {profile.tagline} I enjoy transforming ideas into functional systems
-            through clean code, problem-solving, and continuous learning.
-          </p>
+          {/* <div className="mb-8"> */}
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+              {profile.tagline}
+            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+              As a computer science graduate entering the professional sector, I
+              specialize in bridging complex theoretical concepts with
+              practical, data-driven systems. My core engineering focus lies in
+              developing machine learning decision engines, agent-based
+              modeling, and advanced software simulations using Python.
+            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              Whether I am architecting edge-based IoT security frameworks or
+              compiling comprehensive, production-grade technical reports using
+              LaTeX, I approach every project with a commitment to robust system
+              design, analytical problem-solving, and scalable architecture.
+            </p>
+          {/* </div> */}
 
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
             <h3 className="text-xl font-bold mb-1">{education.degree}</h3>
@@ -84,7 +98,7 @@ function AboutGrid({
                       ? "bg-blue-600 text-white scale-110 shadow-md"
                       : hoveredCourse
                         ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 scale-95"
-                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/40"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/40",
                   )}
                 >
                   {course}
@@ -99,8 +113,20 @@ function AboutGrid({
               download="Jeric-Rulete_CV.pdf"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
               Download CV
             </a>
@@ -109,8 +135,20 @@ function AboutGrid({
               download="Jeric-Rulete_Resume.pdf"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-400 text-gray-600 dark:text-gray-300 dark:border-gray-500 font-semibold hover:bg-gray-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
               Download Resume
             </a>
