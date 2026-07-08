@@ -8,6 +8,7 @@ import ContactSection from "./components/contact-section";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import ScrollProgress from "./components/scroll-progress";
+import FaqChatbot from "./components/FaqChatbot";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -35,6 +36,7 @@ function App() {
         <SkillsSection />
         <ProjectsSection />
         <ExperienceSection />
+        <FaqChatbot />
         <ContactSection />
         <Footer />
       </div>
