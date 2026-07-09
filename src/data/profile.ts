@@ -115,22 +115,22 @@ export const profile = {
       demo: "https://sportal-10.vercel.app",
       category: "Web",
     },
-    {
-      title: "Chedula",
-      subtitle: "Academic Project · Frontend",
-      period: "June 2025",
-      description:
-        "Next.js 14 app with Supabase auth, multi-step business onboarding, WebSocket AI chat for appointments, and dashboard modules for calendar, CRM, services, and public booking links.",
-      tags: [
-        "Next.js",
-        "TypeScript",
-        "Supabase",
-        "WebSockets",
-        "Zustand",
-        "shadcn/ui",
-      ],
-      category: "Web",
-    },
+    // {
+    //   title: "Chedula",
+    //   subtitle: "Academic Project · Frontend",
+    //   period: "June 2025",
+    //   description:
+    //     "Next.js 14 app with Supabase auth, multi-step business onboarding, WebSocket AI chat for appointments, and dashboard modules for calendar, CRM, services, and public booking links.",
+    //   tags: [
+    //     "Next.js",
+    //     "TypeScript",
+    //     "Supabase",
+    //     "WebSockets",
+    //     "Zustand",
+    //     "shadcn/ui",
+    //   ],
+    //   category: "Web",
+    // },
     {
       title: "Toxic Comment Detector",
       subtitle: "Academic Project",

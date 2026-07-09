@@ -69,9 +69,10 @@ function App() {
         <SkillsSection />
         <ProjectsSection />
         <ExperienceSection />
-        <FaqChatbot />
         <ContactSection />
         <Footer />
+        {/* Fixed floating widget — lives outside the section flow on purpose */}
+        <FaqChatbot />
       </div>
     </div>
   );
