@@ -3,6 +3,7 @@ import {
   User,
   FolderKanban,
   Sparkles,
+  Palette,
   Briefcase,
   Mail,
   TerminalSquare,
@@ -16,6 +17,7 @@ import Taskbar from "./Taskbar";
 import AboutApp from "./apps/AboutApp";
 import ProjectsApp from "./apps/ProjectsApp";
 import SkillsApp from "./apps/SkillsApp";
+import DesignLabApp from "./apps/DesignLabApp";
 import ExperienceApp from "./apps/ExperienceApp";
 import ContactApp from "./apps/ContactApp";
 import TerminalApp from "./apps/TerminalApp";
@@ -55,6 +57,14 @@ const icons: IconDef[] = [
     content: <SkillsApp />,
     width: 560,
     height: 460,
+  },
+  {
+    id: "design",
+    label: "Design.sys",
+    icon: <Palette size={28} />,
+    content: <DesignLabApp />,
+    width: 680,
+    height: 520,
   },
   {
     id: "experience",

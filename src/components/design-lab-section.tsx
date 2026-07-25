@@ -1,0 +1,251 @@
+import ScrollReveal from "./scroll-reveal";
+import SectionHeading from "./section-heading";
+
+const BRAND_COLORS = [
+  { name: "Blue 600", hex: "#2563EB", className: "bg-blue-600", role: "Primary action" },
+  { name: "Purple 600", hex: "#9333EA", className: "bg-purple-600", role: "Gradient partner" },
+  { name: "Blue 400", hex: "#60A5FA", className: "bg-blue-400", role: "Dark-mode accent" },
+  { name: "Amber 600", hex: "#D97706", className: "bg-amber-600", role: "Highlights" },
+  { name: "Green 600", hex: "#16A34A", className: "bg-green-600", role: "Success" },
+  { name: "Red 600", hex: "#DC2626", className: "bg-red-600", role: "Errors" },
+];
+
+const NEUTRAL_RAMP = [
+  "bg-gray-50",
+  "bg-gray-100",
+  "bg-gray-200",
+  "bg-gray-300",
+  "bg-gray-400",
+  "bg-gray-500",
+  "bg-gray-600",
+  "bg-gray-700",
+  "bg-gray-800",
+  "bg-gray-900",
+];
+
+const MOTION_TIERS = [
+  { label: "Micro", duration: "duration-150", note: "150ms · hovers, presses" },
+  { label: "Standard", duration: "duration-300", note: "300ms · reveals, color shifts" },
+  { label: "Emphasis", duration: "duration-700", note: "700ms · imagery, hero motion" },
+];
+
+export default function DesignLabSection() {
+  return (
+    <section id="design" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading title="Design Lab" />
+        <p className="text-center text-gray-500 dark:text-gray-400 -mt-10 mb-12 text-sm max-w-2xl mx-auto">
+          The design system behind this site — tokens, components, and motion
+          rules, documented the way I&apos;d hand them to a team.
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <ScrollReveal>
+            <LabCard title="Color tokens">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                {BRAND_COLORS.map((c) => (
+                  <div key={c.name}>
+                    <div className={`h-12 rounded-lg shadow-inner ${c.className}`} />
+                    <p className="mt-2 text-sm font-medium">{c.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <code>{c.hex}</code> · {c.role}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+                Neutral ramp
+              </p>
+              <div className="flex rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                {NEUTRAL_RAMP.map((cls) => (
+                  <div key={cls} className={`h-8 flex-1 ${cls}`} />
+                ))}
+              </div>
+              <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                Body text holds a 4.5:1 contrast ratio (WCAG AA) in both themes.
+              </p>
+            </LabCard>
+          </ScrollReveal>
+
+          <ScrollReveal delay={100}>
+            <LabCard title="Typography scale">
+              <div className="space-y-5">
+                <TypeSample
+                  label="Display · text-4xl / extrabold"
+                  className="text-4xl font-extrabold"
+                  text="Building useful things"
+                />
+                <TypeSample
+                  label="Heading · text-2xl / bold"
+                  className="text-2xl font-bold"
+                  text="Section headings"
+                />
+                <TypeSample
+                  label="Body · text-base / regular · line-height 1.5+"
+                  className="text-base text-gray-600 dark:text-gray-300"
+                  text="Body copy stays at 16px minimum for comfortable reading on every device."
+                />
+                <TypeSample
+                  label="Caption · text-sm / medium"
+                  className="text-sm font-medium text-gray-500 dark:text-gray-400"
+                  text="Supporting details and metadata"
+                />
+              </div>
+            </LabCard>
+          </ScrollReveal>
+
+          <ScrollReveal delay={150}>
+            <LabCard title="Components & states">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <button
+                  type="button"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                >
+                  Primary
+                </button>
+                <button
+                  type="button"
+                  className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold py-2.5 px-6 rounded-full hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                >
+                  Outline
+                </button>
+                <button
+                  type="button"
+                  disabled
+                  className="bg-blue-600 text-white font-bold py-2.5 px-6 rounded-full opacity-50 cursor-not-allowed"
+                >
+                  Disabled
+                </button>
+                <span className="text-sm px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700">
+                  Tag chip
+                </span>
+              </div>
+              <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1.5 list-disc list-inside">
+                <li>Every interactive element has hover, focus, and active states</li>
+                <li>Keyboard focus is always visible (never `outline: none` alone)</li>
+                <li>Touch targets keep comfortable padding and spacing</li>
+              </ul>
+            </LabCard>
+          </ScrollReveal>
+
+          <ScrollReveal delay={200}>
+            <LabCard title="Motion system">
+              <div className="grid grid-cols-3 gap-4 mb-5">
+                {MOTION_TIERS.map((tier) => (
+                  <div key={tier.label} className="text-center">
+                    <div className="h-20 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center group cursor-pointer">
+                      <div
+                        className={`w-8 h-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 transition-transform ${tier.duration} group-hover:-translate-y-3 group-hover:rotate-6`}
+                      />
+                    </div>
+                    <p className="mt-2 text-sm font-medium">{tier.label}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {tier.note}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Motion conveys hierarchy, not decoration — and every animation
+                is disabled for visitors with{" "}
+                <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                  prefers-reduced-motion
+                </code>
+                .
+              </p>
+            </LabCard>
+          </ScrollReveal>
+
+          <ScrollReveal delay={250}>
+            <div className="lg:col-span-2">
+              <LabCard title="One token set, two themes">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <ThemePreview variant="light" />
+                  <ThemePreview variant="dark" />
+                </div>
+                <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+                  Dark mode is a first-class theme seeded from your system
+                  preference — not an inverted afterthought. Try the toggle in
+                  the navbar.
+                </p>
+              </LabCard>
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LabCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="h-full bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border border-gray-100 dark:border-gray-700">
+      <h3 className="text-lg font-bold mb-5 text-blue-600 dark:text-blue-400">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+function TypeSample({
+  label,
+  className,
+  text,
+}: {
+  label: string;
+  className: string;
+  text: string;
+}) {
+  return (
+    <div>
+      <p className="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+        {label}
+      </p>
+      <p className={className}>{text}</p>
+    </div>
+  );
+}
+
+/** Static previews (no dark: variants) so both themes render regardless of the page theme. */
+function ThemePreview({ variant }: { variant: "light" | "dark" }) {
+  const isDark = variant === "dark";
+  return (
+    <div
+      className={`rounded-lg p-5 border ${
+        isDark
+          ? "bg-gray-900 border-gray-700"
+          : "bg-gray-50 border-gray-200"
+      }`}
+    >
+      <p
+        className={`text-[11px] uppercase tracking-wider mb-3 ${
+          isDark ? "text-gray-500" : "text-gray-400"
+        }`}
+      >
+        {isDark ? "Dark" : "Light"}
+      </p>
+      <p className={`font-bold mb-1 ${isDark ? "text-white" : "text-gray-900"}`}>
+        Card heading
+      </p>
+      <p className={`text-sm mb-4 ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+        Same components, same spacing, theme-aware tokens.
+      </p>
+      <span
+        className={`inline-block text-xs px-3 py-1 rounded-full ${
+          isDark
+            ? "bg-blue-900/40 text-blue-300"
+            : "bg-blue-100 text-blue-800"
+        }`}
+      >
+        Accent chip
+      </span>
+    </div>
+  );
+}
