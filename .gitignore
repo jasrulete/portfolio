@@ -56,5 +56,5 @@ coverage
 .env.test.local
 .env.production.local
 .claude/worktrees/**
- 
- 
+.claude
+.claude-flow
