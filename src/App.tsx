@@ -14,22 +14,26 @@ import DesktopOS from "./components/desktop/DesktopOS";
 
 type ViewMode = "classic" | "desktop";
 const MODE_KEY = "portfolio-view-mode";
+const THEME_KEY = "portfolio-theme";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored) return stored === "dark";
+    return (
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false
+    );
+  });
   const [mode, setMode] = useState<ViewMode>(() => {
     if (typeof window === "undefined") return "classic";
     return (localStorage.getItem(MODE_KEY) as ViewMode) || "classic";
   });
+  const [projectTag, setProjectTag] = useState<string | null>(null);
 
   useEffect(() => {
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setDarkMode(true);
-    }
-  }, []);
+    localStorage.setItem(THEME_KEY, darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   useEffect(() => {
     localStorage.setItem(MODE_KEY, mode);
@@ -54,6 +58,12 @@ function App() {
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blue-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md"
+        >
+          Skip to content
+        </a>
         <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         <ScrollProgress />
         <button
@@ -64,12 +74,17 @@ function App() {
           <MonitorSmartphone size={16} />
           Desktop mode
         </button>
-        <Hero />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <ContactSection />
+        <main id="main-content">
+          <Hero />
+          <AboutSection />
+          <SkillsSection onSkillSelect={setProjectTag} />
+          <ProjectsSection
+            activeTag={projectTag}
+            onClearTag={() => setProjectTag(null)}
+          />
+          <ExperienceSection />
+          <ContactSection />
+        </main>
         <Footer />
         {/* Fixed floating widget — lives outside the section flow on purpose */}
         <FaqChatbot />

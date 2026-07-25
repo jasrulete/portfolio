@@ -88,6 +88,12 @@ export const profile = {
       period: "June 2026",
       description:
         "Designing a context-aware edge security framework for smart home IoT using lightweight ML, adaptive AES/ChaCha20 switching, and M/M/4 queueing models—evaluated via MRT, detection accuracy, energy use, and APJ.",
+      challenge:
+        "Smart-home IoT devices are resource-constrained, yet static encryption either wastes energy on low-risk traffic or under-protects high-risk traffic. The framework needed to adapt security strength to context without overwhelming edge hardware.",
+      architecture:
+        "A lightweight ML classifier assesses threat context at the edge and adaptively switches between AES and ChaCha20 ciphers, with an M/M/4 queueing model governing request handling under load.",
+      outcome:
+        "Evaluated across mean response time, detection accuracy, energy consumption, and adaptive protection justification (APJ) as a BS Computer Science special project.",
       tags: [
         "Python",
         "Machine Learning",
@@ -103,6 +109,12 @@ export const profile = {
       period: "June 2025",
       description:
         "Next.js tournament platform with MongoDB/Prisma, NextAuth, organizer dashboards, automated brackets (round-robin & single-elimination), Cloudinary uploads, and Leaflet venue maps.",
+      challenge:
+        "Local tournament organizers juggle registrations, brackets, and venue logistics across spreadsheets and group chats, with no single source of truth for players or spectators.",
+      architecture:
+        "Next.js with MongoDB via Prisma and NextAuth authentication. Organizer dashboards generate round-robin and single-elimination brackets automatically; Cloudinary handles media uploads and Leaflet maps venue locations.",
+      outcome:
+        "Deployed on Vercel with working organizer and player flows — bracket generation that previously took an afternoon of manual seeding happens on submission.",
       tags: [
         "Next.js",
         "TypeScript",
@@ -137,6 +149,12 @@ export const profile = {
       period: "February 2025",
       description:
         "Binary classifiers on the Jigsaw Toxic Comment dataset with NLTK preprocessing, TF-IDF features, and Streamlit deployment with confidence scores.",
+      challenge:
+        "Moderating user comments manually doesn't scale, and off-the-shelf toxicity APIs are opaque — the goal was a transparent, reproducible classifier built from the ground up.",
+      architecture:
+        "NLTK preprocessing and TF-IDF feature extraction feeding scikit-learn binary classifiers trained on the Jigsaw Toxic Comment dataset, served through a Streamlit interface.",
+      outcome:
+        "An interactive demo that classifies arbitrary comments with confidence scores, making the model's certainty visible instead of a black-box yes/no.",
       tags: ["Python", "scikit-learn", "NLTK", "Streamlit", "NLP"],
       github: "https://github.com/jasrulete/toxic-comment-detector",
       category: "ML",
@@ -147,6 +165,12 @@ export const profile = {
       period: "May 2025",
       description:
         "React/Vite PWA with 8 textbook chapters, ~440 vocabulary entries, quiz modes, hiragana practice, streak tracking, and Web Speech API pronunciation—deployed on Netlify.",
+      challenge:
+        "Studying Japanese from the Minna no Nihongo textbook alone offers no active recall, pronunciation feedback, or way to track progress between study sessions.",
+      architecture:
+        "React/Vite PWA with Zustand state, installable and offline-capable. Quiz modes and hiragana practice drive active recall; the Web Speech API provides pronunciation playback; streak tracking encourages daily use.",
+      outcome:
+        "~440 vocabulary entries across 8 textbook chapters live on Netlify — a study tool used for real coursework, not just a demo.",
       tags: ["React", "Vite", "Tailwind CSS", "PWA", "Zustand"],
       demo: "https://minna-no-nihongo.netlify.app/",
       category: "Web",

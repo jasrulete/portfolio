@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "../../lib/utils";
 import background from "../assets/background.jpg";
 // import chedula from "../assets/chedula-logo.png";
@@ -9,6 +9,7 @@ import minna_no from "../assets/minna-no.png";
 import sportal from "../assets/sportal_logo.webp";
 import toxic_detector from "../assets/Toxic-image(kaggle sourced).png";
 import { profile } from "../data/profile";
+import { normalizeSkill } from "../data/skill-match";
 import { useGithubStats } from "../../lib/use-github-stats";
 import GithubStatsBadge from "./github-stats-badge";
 import ScrollReveal from "./scroll-reveal";
@@ -29,16 +30,29 @@ const projectImages: Record<string, string> = {
 
 type Filter = (typeof profile.projectFilters)[number];
 
-export default function Projects() {
+export default function Projects({
+  activeTag = null,
+  onClearTag,
+}: {
+  activeTag?: string | null;
+  onClearTag?: () => void;
+}) {
   const [filter, setFilter] = useState<Filter>("All");
+
+  useEffect(() => {
+    if (activeTag) setFilter("All");
+  }, [activeTag]);
 
   const githubUrls = profile.projects
     .map((p) => ("github" in p ? (p.github as string) : null))
     .filter((url): url is string => Boolean(url));
   const { stats } = useGithubStats(githubUrls);
 
-  const filtered =
-    filter === "All"
+  const filtered = activeTag
+    ? profile.projects.filter((p) =>
+        p.tags.some((t) => normalizeSkill(t) === normalizeSkill(activeTag)),
+      )
+    : filter === "All"
       ? profile.projects
       : profile.projects.filter(
           (p) => "category" in p && p.category === filter,
@@ -54,7 +68,11 @@ export default function Projects() {
             <button
               key={cat}
               type="button"
-              onClick={() => setFilter(cat)}
+              onClick={() => {
+                setFilter(cat);
+                onClearTag?.();
+              }}
+              aria-pressed={!activeTag && filter === cat}
               className={cn(
                 "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
                 filter === cat
@@ -66,6 +84,35 @@ export default function Projects() {
             </button>
           ))}
         </div>
+
+        {activeTag && (
+          <div className="flex justify-center -mt-6 mb-10">
+            <button
+              type="button"
+              onClick={() => onClearTag?.()}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+            >
+              Showing projects using
+              <span className="font-bold">{activeTag}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              <span className="sr-only">Clear skill filter</span>
+            </button>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filtered.map((project, index) => (
@@ -80,6 +127,8 @@ export default function Projects() {
                     <img
                       src={projectImages[project.title] ?? background}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
