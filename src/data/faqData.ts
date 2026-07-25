@@ -61,6 +61,36 @@ export const faqData: FaqEntry[] = [
       "A few highlights: the IoT edge security thesis project, Sportal, a Toxic Comment Detector, a Bridge Structural Degradation Simulation in NetLogo (modeled on the Mandaue–Mactan Bridge), and Pulse. Check the Projects section above for details on each.",
   },
   {
+    id: "site-features",
+    question: "What can this site do?",
+    keywords: [
+      "easter eggs",
+      "view modes",
+      "desktop mode",
+      "mobile mode",
+      "command palette",
+      "ctrl k",
+      "design lab",
+      "features of this site",
+      "hidden features",
+    ],
+    answer:
+      "More than scroll! Use the buttons in the bottom-left to switch into a desktop OS mode (draggable windows, taskbar, a working terminal) or a phone-launcher mobile mode — all three views share the same content. Press Ctrl+K (or Cmd+K) anywhere for a command palette, click any skill chip to see the projects that use it, and check the Design Lab section for the design system this site runs on.",
+  },
+  {
+    id: "how-built",
+    question: "How was this site built?",
+    keywords: [
+      "tech behind this site",
+      "portfolio stack",
+      "how did you make this",
+      "is this chatbot an ai",
+      "what powers this website",
+    ],
+    answer:
+      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. Fun fact: this chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things Jeric actually wrote. Project cards pull live GitHub stats (cached in sessionStorage for an hour), images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
+  },
+  {
     id: "hire-you",
     question: "Are you looking for work?",
     keywords: ["available for hire", "open to opportunities", "job search", "contact"],

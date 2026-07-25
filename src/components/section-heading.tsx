@@ -1,7 +1,11 @@
+import DecryptedText from "./decrypted-text";
+
 export default function SectionHeading({ title }: { title: string }) {
   return (
     <div className="text-center mb-16">
-      <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">{title}</h2>
+      <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+        <DecryptedText text={title} trigger="view" speed={30} />
+      </h2>
       <div className="w-16 h-1 bg-blue-500 mx-auto" />
     </div>
   );

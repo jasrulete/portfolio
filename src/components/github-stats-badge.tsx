@@ -5,6 +5,7 @@
 // defined in projects-section.tsx.
 
 import type { GithubStats } from "../../lib/use-github-stats";
+import CountUp from "./count-up";
 
 function timeAgo(dateStr: string): string {
   const diffMs = Date.now() - new Date(dateStr).getTime();
@@ -19,9 +20,25 @@ function timeAgo(dateStr: string): string {
 
 export default function GithubStatsBadge({
   stats,
+  loading,
 }: {
   stats: GithubStats | undefined;
+  loading?: boolean;
 }) {
+  if (!stats && loading) {
+    return (
+      <div
+        className="flex items-center gap-3 animate-pulse"
+        aria-hidden
+        data-testid="stats-skeleton"
+      >
+        <span className="h-3.5 w-10 rounded bg-gray-200 dark:bg-gray-700" />
+        <span className="h-3.5 w-16 rounded bg-gray-200 dark:bg-gray-700" />
+        <span className="h-3.5 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+    );
+  }
+
   if (!stats) return null;
 
   return (
@@ -36,7 +53,7 @@ export default function GithubStatsBadge({
           >
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.956a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.363 1.118l1.287 3.957c.3.921-.755 1.688-1.538 1.118l-3.367-2.447a1 1 0 00-1.176 0l-3.367 2.447c-.783.57-1.838-.197-1.538-1.118l1.287-3.957a1 1 0 00-.363-1.118L2.062 9.383c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.956z" />
           </svg>
-          {stats.stars}
+          <CountUp value={stats.stars} />
         </span>
       )}
       {stats.language && <span>{stats.language}</span>}

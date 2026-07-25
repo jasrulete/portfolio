@@ -4,6 +4,8 @@ import {
   Moon,
   Sun,
   MonitorSmartphone,
+  Smartphone,
+  LayoutTemplate,
   Github,
   ExternalLink,
   FileText,
@@ -31,20 +33,28 @@ const SECTIONS = [
   { id: "contact", label: "Contact" },
 ];
 
+type ViewMode = "classic" | "desktop" | "mobile";
+
+const VIEW_MODES: { id: ViewMode; label: string }[] = [
+  { id: "classic", label: "Switch to classic view" },
+  { id: "desktop", label: "Switch to desktop OS view" },
+  { id: "mobile", label: "Switch to mobile app view" },
+];
+
 export default function CommandPalette({
   open,
   setOpen,
   darkMode,
   toggleDarkMode,
-  toggleViewMode,
+  setViewMode,
   mode,
 }: {
   open: boolean;
   setOpen: (v: boolean) => void;
   darkMode: boolean;
   toggleDarkMode: () => void;
-  toggleViewMode: () => void;
-  mode: "classic" | "desktop";
+  setViewMode: (m: ViewMode) => void;
+  mode: ViewMode;
 }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
@@ -104,20 +114,24 @@ export default function CommandPalette({
           toggleDarkMode();
         },
       },
-      {
-        id: "view-mode",
-        label:
-          mode === "classic"
-            ? "Switch to desktop OS view"
-            : "Switch to classic view",
+      ...VIEW_MODES.filter((m) => m.id !== mode).map((m) => ({
+        id: `view-${m.id}`,
+        label: m.label,
         hint: "Action",
-        keywords: "mode os windows classic desktop switch",
-        icon: <MonitorSmartphone size={16} />,
+        keywords: "mode view os windows phone classic desktop mobile switch",
+        icon:
+          m.id === "desktop" ? (
+            <MonitorSmartphone size={16} />
+          ) : m.id === "mobile" ? (
+            <Smartphone size={16} />
+          ) : (
+            <LayoutTemplate size={16} />
+          ),
         action: () => {
           close();
-          toggleViewMode();
+          setViewMode(m.id);
         },
-      },
+      })),
       {
         id: "github-profile",
         label: "Open GitHub profile",
@@ -194,7 +208,7 @@ export default function CommandPalette({
     }
 
     return list;
-  }, [mode, darkMode, toggleDarkMode, toggleViewMode, setOpen]);
+  }, [mode, darkMode, toggleDarkMode, setViewMode, setOpen]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();

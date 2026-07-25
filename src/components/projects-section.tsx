@@ -46,7 +46,7 @@ export default function Projects({
   const githubUrls = profile.projects
     .map((p) => ("github" in p ? (p.github as string) : null))
     .filter((url): url is string => Boolean(url));
-  const { stats } = useGithubStats(githubUrls);
+  const { stats, loading: statsLoading } = useGithubStats(githubUrls);
 
   const filtered = activeTag
     ? profile.projects.filter((p) =>
@@ -124,12 +124,9 @@ export default function Projects({
                     className="relative overflow-hidden"
                     style={{ paddingBottom: "35%" }}
                   >
-                    <img
+                    <ProjectImage
                       src={projectImages[project.title] ?? background}
                       alt={project.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
 
@@ -204,6 +201,7 @@ export default function Projects({
                       <div className="mb-3">
                         <GithubStatsBadge
                           stats={stats[project.github as string]}
+                          loading={statsLoading}
                         />
                       </div>
                     )}
@@ -234,6 +232,31 @@ export default function Projects({
         )}
       </div>
     </section>
+  );
+}
+
+function ProjectImage({ src, alt }: { src: string; alt: string }) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        ref={(el) => {
+          if (el?.complete) setLoaded(true);
+        }}
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-700 hover:scale-105 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </>
   );
 }
 

@@ -48,7 +48,7 @@ export const profile = {
     },
     {
       title: "Frontend",
-      items: ["React", "Next.js", "HTML5", "CSS3", "Tailwind CSS"],
+      items: ["React", "Next.js", "Vite", "HTML5", "CSS3", "Tailwind CSS"],
     },
     {
       title: "Backend",
@@ -60,7 +60,15 @@ export const profile = {
     },
     {
       title: "Tools & Platforms",
-      items: ["Git", "GitHub", "Vercel", "Cloudinary", "Figma", "VS Code"],
+      items: [
+        "Git",
+        "GitHub",
+        "GitHub Actions",
+        "Vercel",
+        "Cloudinary",
+        "Figma",
+        "VS Code",
+      ],
     },
     {
       title: "Concepts",
@@ -70,6 +78,8 @@ export const profile = {
         "Authentication Systems",
         "Database Design",
         "Responsive Web Design",
+        "Accessibility (WCAG)",
+        "Design Systems",
       ],
     },
   ],
@@ -172,7 +182,13 @@ export const profile = {
       subtitle: "Academic Project",
       period: "April 2025 – Present",
       description:
-        "Responsive React portfolio with dark/light mode, interactive project grid, GitHub links, and live demos—built with Tailwind CSS and optimized for mobile.",
+        "This site: three view modes (classic scroll, a desktop OS with draggable windows, and a phone launcher), a Ctrl+K command palette, a documented design system, and live GitHub stats.",
+      challenge:
+        "A portfolio should prove skill rather than claim it — a static page with a skills list convinces no one who reads fifty of them a week.",
+      architecture:
+        "React 19 + TypeScript + Vite with Tailwind. Three view modes share one content layer: a classic scrolling page, a desktop OS simulation with a context-based window manager, and a phone-style launcher. Plus a Ctrl+K command palette, scramble-reveal headings, a Fuse.js FAQ chatbot, and GitHub API stats cached in sessionStorage.",
+      outcome:
+        "The site is its own case study — the Design Lab section documents its design tokens, skills link to the projects that prove them, and everything respects prefers-reduced-motion at WCAG AA contrast.",
       tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
       github: "https://github.com/jasrulete/portfolio",
       demo: "https://jasrulete.github.io/portfolio/",

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import background from "../assets/background.jpg";
 import { profile } from "../data/profile";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
+import DecryptedText from "./decrypted-text";
 import ScrollReveal from "./scroll-reveal";
 
 export default function Hero() {
@@ -44,7 +45,7 @@ export default function Hero() {
               {profile.title}
             </p>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-              {profile.shortName}
+              <DecryptedText text={profile.shortName} trigger="mount" speed={55} />
               <span className="text-blue-400">_</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
@@ -121,10 +122,29 @@ function MagneticLink({
   className,
   ...props
 }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  const onMove = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    const el = ref.current;
+    if (!el || reducedMotion || e.pointerType !== "mouse") return;
+    const rect = el.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    el.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px) scale(1.05)`;
+  };
+
+  const onLeave = () => {
+    if (ref.current) ref.current.style.transform = "";
+  };
+
   return (
     <a
       {...props}
-      className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${className ?? ""}`}
+      ref={ref}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      className={`inline-block transition-transform duration-200 ease-out active:scale-95 ${className ?? ""}`}
     >
       {children}
     </a>

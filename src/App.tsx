@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MonitorSmartphone } from "lucide-react";
+import { MonitorSmartphone, Smartphone } from "lucide-react";
 import Hero from "./components/hero-section";
 import AboutSection from "./components/about-section";
 import SkillsSection from "./components/skills-section";
@@ -13,8 +13,9 @@ import ScrollProgress from "./components/scroll-progress";
 import FaqChatbot from "./components/FaqChatbot";
 import CommandPalette from "./components/command-palette";
 import DesktopOS from "./components/desktop/DesktopOS";
+import MobileOS from "./components/mobile/MobileOS";
 
-type ViewMode = "classic" | "desktop";
+type ViewMode = "classic" | "desktop" | "mobile";
 const MODE_KEY = "portfolio-view-mode";
 const THEME_KEY = "portfolio-theme";
 
@@ -46,17 +47,13 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  const toggleViewMode = () => {
-    setMode((m) => (m === "classic" ? "desktop" : "classic"));
-  };
-
   const palette = (
     <CommandPalette
       open={paletteOpen}
       setOpen={setPaletteOpen}
       darkMode={darkMode}
       toggleDarkMode={toggleDarkMode}
-      toggleViewMode={toggleViewMode}
+      setViewMode={setMode}
       mode={mode}
     />
   );
@@ -65,7 +62,16 @@ function App() {
     return (
       <div className={darkMode ? "dark" : ""}>
         {palette}
-        <DesktopOS onModeToggle={toggleViewMode} />
+        <DesktopOS onModeToggle={() => setMode("classic")} />
+      </div>
+    );
+  }
+
+  if (mode === "mobile") {
+    return (
+      <div className={darkMode ? "dark" : ""}>
+        {palette}
+        <MobileOS onExit={() => setMode("classic")} />
       </div>
     );
   }
@@ -86,14 +92,24 @@ function App() {
           onOpenPalette={() => setPaletteOpen(true)}
         />
         <ScrollProgress />
-        <button
-          onClick={toggleViewMode}
-          className="fixed bottom-5 left-5 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-lg hover:bg-blue-700 transition-colors"
-          title="Switch to desktop OS view"
-        >
-          <MonitorSmartphone size={16} />
-          Desktop mode
-        </button>
+        <div className="fixed bottom-5 left-5 z-50 flex flex-col gap-2">
+          <button
+            onClick={() => setMode("desktop")}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-lg hover:bg-blue-700 transition-colors"
+            title="Switch to desktop OS view"
+          >
+            <MonitorSmartphone size={16} />
+            Desktop mode
+          </button>
+          <button
+            onClick={() => setMode("mobile")}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-lg hover:bg-blue-700 transition-colors"
+            title="Switch to mobile app view"
+          >
+            <Smartphone size={16} />
+            Mobile mode
+          </button>
+        </div>
         <main id="main-content">
           <Hero />
           <AboutSection />
