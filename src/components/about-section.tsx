@@ -41,7 +41,7 @@ function AboutGrid({
       <ScrollReveal direction="left">
         <div className="flex justify-center">
           <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-2 border-2 border-blue-500/40 rounded-2xl translate-x-3 translate-y-3 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2" />
             <img
               src={profilePhoto}
               alt={profile.name}
@@ -60,17 +60,16 @@ function AboutGrid({
               {profile.tagline}
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-              As a computer science graduate entering the professional sector, I
-              specialize in bridging complex theoretical concepts with
-              practical, data-driven systems. My core engineering focus lies in
-              developing machine learning decision engines, agent-based
-              modeling, and advanced software simulations using Python.
+              I&apos;m a computer science graduate from UP Cebu. Most of my work
+              leans quantitative — machine learning classifiers, agent-based
+              models, and simulations in Python — and I like shipping it with a
+              UI so people can actually try it.
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Whether I am architecting edge-based IoT security frameworks or
-              compiling comprehensive, production-grade technical reports using
-              LaTeX, I approach every project with a commitment to robust system
-              design, analytical problem-solving, and scalable architecture.
+              Right now I&apos;m building an edge security framework for
+              smart-home IoT: lightweight ML that decides when
+              resource-constrained devices should switch between AES and
+              ChaCha20. I still write my technical reports in LaTeX, by choice.
             </p>
           {/* </div> */}
 

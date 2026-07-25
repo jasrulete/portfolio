@@ -59,9 +59,10 @@ function NavContent({
           <div className="flex items-center">
             <a
               href="#home"
-              className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              className="font-display text-xl font-bold text-gray-900 dark:text-white"
             >
               {profile.shortName}
+              <span className="text-blue-500">_</span>
             </a>
           </div>
 

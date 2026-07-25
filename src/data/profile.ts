@@ -3,15 +3,7 @@ export const profile = {
   shortName: "Jeric Rulete",
   title: "BS Computer Science · University of the Philippines Cebu",
   tagline:
-    "Full-stack developer and CS student building scalable web apps, AI-powered tools, and interactive experiences with React, Next.js, TypeScript, and Python.",
-  roles: [
-    "Full-Stack Developer",
-    "Web Developer",
-    "ML Enthusiast",
-    "CS Student",
-    "Software Engineer",
-    
-  ] as const,
+    "I build web apps and ML tools end to end — recently a tournament platform with automated brackets, a Japanese-study PWA with ~440 vocab entries, and a toxic-comment classifier with a live demo.",
   projectFilters: ["All", "Web", "Python", "ML", "Desktop"] as const,
   email: "jsrulete@up.edu.ph",
   personalEmail: "rulete.jeric@gmail.com",

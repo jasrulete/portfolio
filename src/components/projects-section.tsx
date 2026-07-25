@@ -76,7 +76,7 @@ export default function Projects({
               className={cn(
                 "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
                 filter === cat
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md scale-105"
+                  ? "bg-blue-600 text-white shadow-md scale-105"
                   : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:scale-105 hover:shadow",
               )}
             >

@@ -2,8 +2,7 @@ import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 
 const BRAND_COLORS = [
-  { name: "Blue 600", hex: "#2563EB", className: "bg-blue-600", role: "Primary action" },
-  { name: "Purple 600", hex: "#9333EA", className: "bg-purple-600", role: "Gradient partner" },
+  { name: "Blue 600", hex: "#2563EB", className: "bg-blue-600", role: "The one accent" },
   { name: "Blue 400", hex: "#60A5FA", className: "bg-blue-400", role: "Dark-mode accent" },
   { name: "Amber 600", hex: "#D97706", className: "bg-amber-600", role: "Highlights" },
   { name: "Green 600", hex: "#16A34A", className: "bg-green-600", role: "Success" },
@@ -62,7 +61,8 @@ export default function DesignLabSection() {
                 ))}
               </div>
               <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                Body text holds a 4.5:1 contrast ratio (WCAG AA) in both themes.
+                One accent, no decorative gradients. Body text holds a 4.5:1
+                contrast ratio (WCAG AA) in both themes.
               </p>
             </LabCard>
           </ScrollReveal>
@@ -71,13 +71,13 @@ export default function DesignLabSection() {
             <LabCard title="Typography scale">
               <div className="space-y-5">
                 <TypeSample
-                  label="Display · text-4xl / extrabold"
-                  className="text-4xl font-extrabold"
+                  label="Display · JetBrains Mono · text-4xl / bold"
+                  className="font-display text-4xl font-bold"
                   text="Building useful things"
                 />
                 <TypeSample
-                  label="Heading · text-2xl / bold"
-                  className="text-2xl font-bold"
+                  label="Heading · JetBrains Mono · text-2xl / bold"
+                  className="font-display text-2xl font-bold"
                   text="Section headings"
                 />
                 <TypeSample
@@ -99,7 +99,7 @@ export default function DesignLabSection() {
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <button
                   type="button"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                 >
                   Primary
                 </button>
@@ -135,7 +135,7 @@ export default function DesignLabSection() {
                   <div key={tier.label} className="text-center">
                     <div className="h-20 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center group cursor-pointer">
                       <div
-                        className={`w-8 h-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 transition-transform ${tier.duration} group-hover:-translate-y-3 group-hover:rotate-6`}
+                        className={`w-8 h-8 rounded-lg bg-blue-600 transition-transform ${tier.duration} group-hover:-translate-y-3 group-hover:rotate-6`}
                       />
                     </div>
                     <p className="mt-2 text-sm font-medium">{tier.label}</p>

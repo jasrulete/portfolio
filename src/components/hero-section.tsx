@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import background from "../assets/background.jpg";
 import { profile } from "../data/profile";
-import { useTypewriter } from "../hooks/use-typewriter";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
-import HeroParticles from "./hero-particles";
 import ScrollReveal from "./scroll-reveal";
 
 export default function Hero() {
-  const roleText = useTypewriter(profile.roles);
   const reducedMotion = usePrefersReducedMotion();
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
@@ -39,68 +36,53 @@ export default function Hero() {
         }}
       />
       <div className="absolute inset-0 bg-black/60 z-0" />
-      <HeroParticles />
-
-      <div
-        className="absolute inset-0 z-[2] pointer-events-none opacity-40"
-        style={{
-          background: reducedMotion
-            ? undefined
-            : `radial-gradient(600px circle at ${50 + mouse.x * 2}% ${40 + mouse.y * 2}%, rgba(99, 102, 241, 0.35), transparent 50%)`,
-        }}
-      />
 
       <div className="z-10 flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 text-center pt-20">
         <ScrollReveal>
           <div>
-            <p className="text-blue-300 text-sm sm:text-base font-medium tracking-wide uppercase mb-3">
+            <p className="font-display text-blue-300 text-sm sm:text-base tracking-wide mb-4">
               {profile.title}
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
-              <span className="block text-gray-200 text-2xl sm:text-3xl font-semibold mb-2">
-                Hello, I&apos;m
-              </span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-[length:200%_auto] animate-gradient-x">
-                {profile.name}
-              </span>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+              {profile.shortName}
+              <span className="text-blue-400">_</span>
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-200 mb-2 h-9">
-              <span className="text-blue-400">{roleText}</span>
-              <span className="animate-blink text-blue-400">|</span>
-            </p>
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
               {profile.tagline}
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center items-center gap-4">
               <MagneticLink
                 href="#projects"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-md hover:shadow-lg hover:shadow-purple-500/25"
+                className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:shadow-lg"
               >
-                View My Work
-              </MagneticLink>
-              <MagneticLink
-                href={profile.cvUrl}
-                download="Jeric-Rulete-CV.pdf"
-                className="border-2 border-white/80 text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900"
-              >
-                Download CV
-              </MagneticLink>
-              <MagneticLink
-                href={profile.resumeUrl}
-                download="Jeric Rulete_Resume.pdf"
-                className="border-2 border-white/40 text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900"
-              >
-                Download Resume
+                View my work
               </MagneticLink>
               <MagneticLink
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white font-bold py-3 px-8 rounded-full hover:text-blue-300"
+                className="border-2 border-white/80 text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900"
               >
-                GitHub →
+                GitHub
               </MagneticLink>
             </div>
+            <p className="mt-6 text-sm text-gray-300">
+              <a
+                href={profile.cvUrl}
+                download="Jeric-Rulete-CV.pdf"
+                className="underline underline-offset-4 hover:text-white transition-colors"
+              >
+                Download CV
+              </a>
+              <span className="mx-2 text-gray-500">·</span>
+              <a
+                href={profile.resumeUrl}
+                download="Jeric Rulete_Resume.pdf"
+                className="underline underline-offset-4 hover:text-white transition-colors"
+              >
+                Resume
+              </a>
+            </p>
           </div>
         </ScrollReveal>
       </div>
