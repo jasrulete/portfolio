@@ -3,6 +3,7 @@ import { MonitorSmartphone } from "lucide-react";
 import Hero from "./components/hero-section";
 import AboutSection from "./components/about-section";
 import SkillsSection from "./components/skills-section";
+import DesignLabSection from "./components/design-lab-section";
 import ProjectsSection from "./components/projects-section";
 import ExperienceSection from "./components/experience-section";
 import ContactSection from "./components/contact-section";
@@ -10,6 +11,7 @@ import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import ScrollProgress from "./components/scroll-progress";
 import FaqChatbot from "./components/FaqChatbot";
+import CommandPalette from "./components/command-palette";
 import DesktopOS from "./components/desktop/DesktopOS";
 
 type ViewMode = "classic" | "desktop";
@@ -30,6 +32,7 @@ function App() {
     return (localStorage.getItem(MODE_KEY) as ViewMode) || "classic";
   });
   const [projectTag, setProjectTag] = useState<string | null>(null);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(THEME_KEY, darkMode ? "dark" : "light");
@@ -47,9 +50,21 @@ function App() {
     setMode((m) => (m === "classic" ? "desktop" : "classic"));
   };
 
+  const palette = (
+    <CommandPalette
+      open={paletteOpen}
+      setOpen={setPaletteOpen}
+      darkMode={darkMode}
+      toggleDarkMode={toggleDarkMode}
+      toggleViewMode={toggleViewMode}
+      mode={mode}
+    />
+  );
+
   if (mode === "desktop") {
     return (
       <div className={darkMode ? "dark" : ""}>
+        {palette}
         <DesktopOS onModeToggle={toggleViewMode} />
       </div>
     );
@@ -57,6 +72,7 @@ function App() {
 
   return (
     <div className={darkMode ? "dark" : ""}>
+      {palette}
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
         <a
           href="#main-content"
@@ -64,7 +80,11 @@ function App() {
         >
           Skip to content
         </a>
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <Navbar
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+          onOpenPalette={() => setPaletteOpen(true)}
+        />
         <ScrollProgress />
         <button
           onClick={toggleViewMode}
@@ -78,6 +98,7 @@ function App() {
           <Hero />
           <AboutSection />
           <SkillsSection onSkillSelect={setProjectTag} />
+          <DesignLabSection />
           <ProjectsSection
             activeTag={projectTag}
             onClearTag={() => setProjectTag(null)}

@@ -6,18 +6,20 @@ import { useActiveSection } from "../hooks/use-active-section";
 interface NavbarProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  onOpenPalette?: () => void;
 }
 
 const navLinks = [
   { href: "#home", id: "home", label: "Home" },
   { href: "#about", id: "about", label: "About" },
   { href: "#skills", id: "skills", label: "Skills" },
+  { href: "#design", id: "design", label: "Design" },
   { href: "#projects", id: "projects", label: "Projects" },
   { href: "#experience", id: "experience", label: "Experience" },
   { href: "#contact", id: "contact", label: "Contact" },
 ];
 
-export default function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
+export default function Navbar({ darkMode, toggleDarkMode, onOpenPalette }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const activeSection = useActiveSection();
 
@@ -29,6 +31,7 @@ export default function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
         activeSection={activeSection}
         darkMode={darkMode}
         toggleDarkMode={toggleDarkMode}
+        onOpenPalette={onOpenPalette}
       />
     </nav>
   );
@@ -40,12 +43,14 @@ function NavContent({
   activeSection,
   darkMode,
   toggleDarkMode,
+  onOpenPalette,
 }: {
   isMenuOpen: boolean;
   setIsMenuOpen: (v: boolean) => void;
   activeSection: string;
   darkMode: boolean;
   toggleDarkMode: () => void;
+  onOpenPalette?: () => void;
 }) {
   return (
     <>
@@ -78,6 +83,16 @@ function NavContent({
                 )}
               </a>
             ))}
+            {onOpenPalette && (
+              <button
+                onClick={onOpenPalette}
+                aria-label="Open command palette"
+                className="flex items-center gap-1.5 ml-2 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 transition-colors"
+              >
+                <SearchIcon />
+                <kbd className="text-[10px] font-semibold">Ctrl K</kbd>
+              </button>
+            )}
             <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
           </div>
 
@@ -143,6 +158,14 @@ function DarkModeToggle({
     >
       {darkMode ? <SunIcon /> : <MoonIcon />}
     </button>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
   );
 }
 
