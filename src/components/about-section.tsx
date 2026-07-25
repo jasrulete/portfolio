@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "../../lib/utils";
-import profilePhoto from "../assets/profile.jpg";
+import profilePhoto from "../assets/profile.webp";
 import { profile } from "../data/profile";
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
@@ -45,6 +45,8 @@ function AboutGrid({
             <img
               src={profilePhoto}
               alt={profile.name}
+              loading="lazy"
+              decoding="async"
               className="relative w-64 h-64 sm:w-80 sm:h-80 object-cover rounded-2xl shadow-xl transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </div>
