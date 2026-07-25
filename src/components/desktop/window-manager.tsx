@@ -65,7 +65,13 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         );
       }
       cascadeRef.current = (cascadeRef.current + 1) % 6;
-      const width = opts.width ?? 560;
+      // On small screens draggable windows are clumsy — open maximized instead.
+      const isSmallScreen =
+        typeof window !== "undefined" && window.innerWidth < 768;
+      const width = Math.min(
+        opts.width ?? 560,
+        typeof window !== "undefined" ? window.innerWidth - 16 : 560
+      );
       const height = opts.height ?? 420;
       const baseX =
         typeof window !== "undefined"
@@ -86,7 +92,15 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         height,
         zIndex: zRef.current,
         minimized: false,
-        maximized: false,
+        maximized: isSmallScreen,
+        prevBounds: isSmallScreen
+          ? {
+              x: baseX + cascadeRef.current * 24,
+              y: baseY + cascadeRef.current * 20,
+              width,
+              height,
+            }
+          : undefined,
       };
       return [...prev, newWindow];
     });
