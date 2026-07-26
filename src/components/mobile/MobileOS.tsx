@@ -11,6 +11,9 @@ import {
   FileText,
   ChevronLeft,
   Monitor,
+  Camera,
+  Gamepad2,
+  Bomb,
 } from "lucide-react";
 import { profile } from "../../data/profile";
 import AboutApp from "../desktop/apps/AboutApp";
@@ -21,6 +24,9 @@ import ExperienceApp from "../desktop/apps/ExperienceApp";
 import ContactApp from "../desktop/apps/ContactApp";
 import TerminalApp from "../desktop/apps/TerminalApp";
 import ChatbotApp from "../desktop/apps/ChatbotApp";
+import CameraApp from "../desktop/apps/CameraApp";
+import SnakeApp from "../desktop/apps/SnakeApp";
+import MinesweeperApp from "../desktop/apps/MinesweeperApp";
 
 interface MobileAppDef {
   id: string;
@@ -39,6 +45,9 @@ const apps: MobileAppDef[] = [
   { id: "contact", label: "Contact", icon: <Mail size={26} />, content: <ContactApp /> },
   { id: "terminal", label: "Terminal", icon: <TerminalSquare size={26} />, content: <TerminalApp /> },
   { id: "chatbot", label: "Ask Me", icon: <MessageCircleQuestion size={26} />, content: <ChatbotApp /> },
+  { id: "camera", label: "Camera", icon: <Camera size={26} />, content: <CameraApp /> },
+  { id: "snake", label: "Snake", icon: <Gamepad2 size={26} />, content: <SnakeApp /> },
+  { id: "mines", label: "Mines", icon: <Bomb size={26} />, content: <MinesweeperApp /> },
   { id: "resume", label: "Resume", icon: <FileText size={26} />, content: null, isExternalLink: true },
 ];
 
