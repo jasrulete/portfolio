@@ -71,7 +71,8 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-pop,
-  .animate-bounce {
+  .animate-bounce,
+  .animate-pulse {
     animation: none !important;
   }
 

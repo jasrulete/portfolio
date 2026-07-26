@@ -28,12 +28,29 @@ export default function DecryptedText({
   const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion) {
+      setDisplay(text);
+      return;
+    }
+
+    // Resync if the text prop ever changes on a live instance.
+    played.current = false;
+    setDisplay(text);
+
+    const scrambleFrom = (revealed: number) =>
+      text.slice(0, revealed) +
+      Array.from({ length: text.length - revealed }, (_, i) =>
+        text[revealed + i] === " "
+          ? " "
+          : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
+      ).join("");
 
     const play = () => {
       if (played.current) return;
       played.current = true;
       let revealed = 0;
+      // Start fully scrambled immediately — never flash the answer first.
+      setDisplay(scrambleFrom(0));
       intervalRef.current = setInterval(() => {
         revealed += 1;
         if (revealed >= text.length) {
@@ -41,16 +58,7 @@ export default function DecryptedText({
           clearInterval(intervalRef.current);
           return;
         }
-        setDisplay(
-          text.slice(0, revealed) +
-            Array.from({ length: text.length - revealed }, (_, i) =>
-              text[revealed + i] === " "
-                ? " "
-                : SCRAMBLE_CHARS[
-                    Math.floor(Math.random() * SCRAMBLE_CHARS.length)
-                  ]
-            ).join("")
-        );
+        setDisplay(scrambleFrom(revealed));
       }, speed);
     };
 

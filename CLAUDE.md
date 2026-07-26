@@ -26,19 +26,25 @@ The site is served from the `/portfolio/` base path (`vite.config.ts` `base: "/p
 
 React 19 + TypeScript + Vite + Tailwind CSS. Single-page app, no backend — all dynamic behavior is client-side.
 
-### Dual view modes
-`src/App.tsx` renders one of two entirely separate UIs, chosen by a `ViewMode` (`"classic" | "desktop"`) persisted to `localStorage` under `portfolio-view-mode`:
+### View modes
+`src/App.tsx` renders one of three entirely separate UIs, chosen by a `ViewMode` (`"classic" | "desktop" | "mobile"`) persisted to `localStorage` under `portfolio-view-mode` (dark mode is persisted separately under `portfolio-theme`):
 
-- **Classic** — a conventional scrolling portfolio: `hero-section` → `about-section` → `skills-section` → `projects-section` → `experience-section` → `contact-section` → `footer`, plus a fixed `FaqChatbot` and `ScrollProgress`.
-- **Desktop** — a simulated OS in `src/components/desktop/`. `DesktopOS` wraps everything in `WindowManagerProvider`, renders draggable desktop icons, a `WindowLayer`, and a `Taskbar`. Each icon opens an app from `desktop/apps/` (About, Projects, Skills, Experience, Contact, Terminal, Chatbot) inside a `Window`; "Resume.pdf" is an external link instead of a window.
+- **Classic** — a conventional scrolling portfolio: `hero-section` → `about-section` → `skills-section` → `design-lab-section` → `projects-section` → `experience-section` → `contact-section` → `footer`, plus a fixed `FaqChatbot` and `ScrollProgress`. Floating bottom-left buttons switch to the other two modes.
+- **Desktop** — a simulated OS in `src/components/desktop/`. `DesktopOS` wraps everything in `WindowManagerProvider`, renders draggable desktop icons, a `WindowLayer`, and a `Taskbar`. Each icon opens an app from `desktop/apps/` (About, Projects, Skills, Design Lab, Experience, Contact, Terminal, Chatbot) inside a `Window`; "Resume.pdf" is an external link instead of a window. On viewports under 768px, windows open maximized.
+- **Mobile** — a simulated phone launcher in `src/components/mobile/MobileOS.tsx`: status bar with clock and Exit button, app-icon grid, and a dock. Tapping an icon renders the corresponding `desktop/apps/*App.tsx` component full-screen with a back header — it reuses the desktop app components directly, so it needs no content edits of its own.
 
-The two modes largely re-present the same content through different chrome. When editing portfolio *content*, expect to touch both a classic `*-section.tsx` and its `desktop/apps/*App.tsx` counterpart.
+A `CommandPalette` (`src/components/command-palette.tsx`, Ctrl/Cmd+K) is mounted in all three modes: section-jump commands appear only in classic; theme, view-mode switching, and project/link commands appear everywhere.
+
+The modes re-present the same content through different chrome. When editing portfolio *content*, expect to touch both a classic `*-section.tsx` and its `desktop/apps/*App.tsx` counterpart; mobile picks the change up automatically.
 
 ### Window manager
 `src/components/desktop/window-manager.tsx` is a React Context (`useWindowManager`) holding an array of `WindowState`. It owns open/close/focus/minimize/maximize/bounds, a monotonically increasing z-index ref for stacking, and a cascade offset so new windows don't perfectly overlap. `Window.tsx` consumes this context for drag/resize. There is no external state library — this context is the only global store.
 
 ### Content lives in data files
-`src/data/profile.ts` is the single source of truth for identity, contact info, roles, project filters, and asset URLs — components read from it rather than hardcoding. `src/data/faqData.ts` backs the chatbot.
+`src/data/profile.ts` is the single source of truth for identity, contact info, project filters, and asset URLs — components read from it rather than hardcoding. `src/data/faqData.ts` backs the chatbot. `src/data/skill-match.ts` maps skill names to project tags (with aliases like HTML5→HTML) to power the skills-section chips that filter the projects grid.
+
+### Design system
+Single blue-600 accent, no decorative gradients, JetBrains Mono for headings via the `font-display` Tailwind class (loaded from Google Fonts in `index.html`). The system is documented in-site by `design-lab-section.tsx` — if you change tokens, update that section so it stays truthful. All animation respects `prefers-reduced-motion` (see `src/hooks/use-prefers-reduced-motion.ts`, used by `decrypted-text.tsx`, `count-up.tsx`, and the hero).
 
 ### Zero-backend "AI"
 `FaqChatbot.tsx` (and `desktop/apps/ChatbotApp.tsx`) is **not** an LLM — it uses Fuse.js fuzzy search over `faqData.ts` for client-side retrieval. It can only surface pre-written answers, never generates text. Do not wire it to an API.
@@ -49,8 +55,8 @@ The two modes largely re-present the same content through different chrome. When
 ## Conventions
 
 - **No path aliases.** Imports are relative. Note the two hook locations: `src/hooks/` (portfolio hooks) and root-level `hooks/` + `lib/` (shadcn-style utilities like `lib/utils.ts`'s `cn()`); `tsconfig.app.json` only `include`s `src`, so root `lib/`/`hooks/` are pulled in transitively via relative imports.
-- Component files are kebab-case (`hero-section.tsx`); desktop app components are PascalCase (`AboutApp.tsx`).
-- Dark mode is a `dark` class toggled on a wrapper div in `App.tsx` (Tailwind `dark:` variants), seeded from `prefers-color-scheme`.
+- Component files are kebab-case (`hero-section.tsx`); OS-mode chrome and app components are PascalCase (`AboutApp.tsx`, `DesktopOS.tsx`, `MobileOS.tsx`).
+- Dark mode is a `dark` class toggled on a wrapper div in `App.tsx` (Tailwind `dark:` variants), seeded from `localStorage` (`portfolio-theme`) falling back to `prefers-color-scheme`.
 - UI variants use `class-variance-authority` + `tailwind-merge` via `cn()`.
 
 ---
