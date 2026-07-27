@@ -10,6 +10,7 @@ import {
   MessageCircleQuestion,
   FileText,
   Camera,
+  Hand,
   Gamepad2,
   Bomb,
 } from "lucide-react";
@@ -26,6 +27,7 @@ import ContactApp from "./apps/ContactApp";
 import TerminalApp from "./apps/TerminalApp";
 import ChatbotApp from "./apps/ChatbotApp";
 import CameraApp from "./apps/CameraApp";
+import GestureApp from "./apps/GestureApp";
 import SnakeApp from "./apps/SnakeApp";
 import MinesweeperApp from "./apps/MinesweeperApp";
 
@@ -111,6 +113,14 @@ const icons: IconDef[] = [
     content: <CameraApp />,
     width: 560,
     height: 560,
+  },
+  {
+    id: "gestures",
+    label: "Gestures.ai",
+    icon: <Hand size={28} />,
+    content: <GestureApp />,
+    width: 560,
+    height: 600,
   },
   {
     id: "snake",

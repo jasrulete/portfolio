@@ -80,6 +80,7 @@ export const profile = {
         "Responsive Web Design",
         "Accessibility (WCAG)",
         "Design Systems",
+        "Computer Vision",
       ],
     },
   ],

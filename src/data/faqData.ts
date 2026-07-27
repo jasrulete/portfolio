@@ -75,7 +75,7 @@ export const faqData: FaqEntry[] = [
       "hidden features",
     ],
     answer:
-      "More than scroll! Use the buttons in the bottom-left to switch into a desktop OS mode (draggable windows, a working terminal, playable Snake and Minesweeper, even a camera app) or a phone-launcher mobile mode — all three views share the same content. Press Ctrl+K (or Cmd+K) anywhere for a command palette, click any skill chip to see the projects that use it, and check the Design Lab section for the design system this site runs on.",
+      "More than scroll! Use the buttons in the bottom-left to switch into a desktop OS mode (draggable windows, a working terminal, playable Snake and Minesweeper, even a camera with a thumbs-up photo timer and a live gesture-recognition app) or a phone-launcher mobile mode — all three views share the same content. Press Ctrl+K (or Cmd+K) anywhere for a command palette, click any skill chip to see the projects that use it, and check the Design Lab section for the design system this site runs on.",
   },
   {
     id: "how-built",
