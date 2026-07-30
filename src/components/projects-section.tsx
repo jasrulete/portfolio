@@ -46,7 +46,7 @@ export default function Projects({
   const githubUrls = profile.projects
     .map((p) => ("github" in p ? (p.github as string) : null))
     .filter((url): url is string => Boolean(url));
-  const { stats, loading: statsLoading } = useGithubStats(githubUrls);
+  const { stats, loading: statsLoading, failed: statsFailed } = useGithubStats(githubUrls);
 
   const filtered = activeTag
     ? profile.projects.filter((p) =>
@@ -202,6 +202,7 @@ export default function Projects({
                         <GithubStatsBadge
                           stats={stats[project.github as string]}
                           loading={statsLoading}
+                          failed={Boolean(statsFailed[project.github as string])}
                         />
                       </div>
                     )}

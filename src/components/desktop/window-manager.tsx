@@ -2,10 +2,13 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
+
+const TASKBAR_HEIGHT = 48; // matches Window.tsx
 
 export interface WindowState {
   id: string;
@@ -151,6 +154,31 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     },
     []
   );
+
+  // Non-maximized windows keep the bounds they were given at open/drag/resize
+  // time, so shrinking the browser afterward can otherwise leave them
+  // clipped or off-screen — reclamp on viewport resize.
+  useEffect(() => {
+    const handleResize = () => {
+      const maxWidth = window.innerWidth - 16;
+      const maxHeight = window.innerHeight - TASKBAR_HEIGHT - 16;
+      setWindows((prev) =>
+        prev.map((w) => {
+          if (w.maximized) return w;
+          const width = Math.min(w.width, maxWidth);
+          const height = Math.min(w.height, maxHeight);
+          const x = Math.max(0, Math.min(w.x, window.innerWidth - width));
+          const y = Math.max(
+            0,
+            Math.min(w.y, window.innerHeight - TASKBAR_HEIGHT - height)
+          );
+          return { ...w, width, height, x, y };
+        })
+      );
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <WindowManagerContext.Provider

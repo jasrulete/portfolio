@@ -34,8 +34,10 @@ function parseOwnerRepo(githubUrl: string): { owner: string; repo: string } | nu
 export function useGithubStats(githubUrls: string[]): {
   stats: StatsMap;
   loading: boolean;
+  failed: Record<string, true>; // urls whose fetch errored (network/rate-limit), not just absent
 } {
   const [stats, setStats] = useState<StatsMap>({});
+  const [failed, setFailed] = useState<Record<string, true>>({});
   const [loading, setLoading] = useState(true);
 
   // Stable key so the effect doesn't re-run every render on a new array identity
@@ -50,6 +52,7 @@ export function useGithubStats(githubUrls: string[]): {
         const { data, ts } = JSON.parse(cached);
         if (Date.now() - ts < CACHE_TTL_MS) {
           setStats(data);
+          setFailed({});
           setLoading(false);
           return;
         }
@@ -64,7 +67,7 @@ export function useGithubStats(githubUrls: string[]): {
               `https://api.github.com/repos/${parsed.owner}/${parsed.repo}`,
               { headers: { Accept: "application/vnd.github+json" } }
             );
-            if (!res.ok) return null;
+            if (!res.ok) return { url, ok: false as const };
             const data = await res.json();
             const result: GithubStats = {
               stars: data.stargazers_count ?? 0,
@@ -72,9 +75,9 @@ export function useGithubStats(githubUrls: string[]): {
               language: data.language ?? null,
               pushedAt: data.pushed_at ?? data.updated_at,
             };
-            return [url, result] as const;
+            return { url, ok: true as const, result };
           } catch {
-            return null;
+            return { url, ok: false as const };
           }
         })
       );
@@ -82,10 +85,14 @@ export function useGithubStats(githubUrls: string[]): {
       if (cancelled) return;
 
       const map: StatsMap = {};
+      const failedMap: Record<string, true> = {};
       for (const entry of entries) {
-        if (entry) map[entry[0]] = entry[1];
+        if (!entry) continue;
+        if (entry.ok) map[entry.url] = entry.result;
+        else failedMap[entry.url] = true;
       }
       setStats(map);
+      setFailed(failedMap);
       setLoading(false);
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: map, ts: Date.now() }));
     }
@@ -97,5 +104,5 @@ export function useGithubStats(githubUrls: string[]): {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlsKey]);
 
-  return { stats, loading };
+  return { stats, loading, failed };
 }

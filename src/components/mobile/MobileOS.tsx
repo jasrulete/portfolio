@@ -1,63 +1,10 @@
-import { useEffect, useState, type ReactNode } from "react";
-import {
-  User,
-  FolderKanban,
-  Sparkles,
-  Palette,
-  Briefcase,
-  Mail,
-  TerminalSquare,
-  MessageCircleQuestion,
-  FileText,
-  ChevronLeft,
-  Monitor,
-  Camera,
-  Hand,
-  Gamepad2,
-  Bomb,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, Monitor } from "lucide-react";
 import { profile } from "../../data/profile";
-import AboutApp from "../desktop/apps/AboutApp";
-import ProjectsApp from "../desktop/apps/ProjectsApp";
-import SkillsApp from "../desktop/apps/SkillsApp";
-import DesignLabApp from "../desktop/apps/DesignLabApp";
-import ExperienceApp from "../desktop/apps/ExperienceApp";
-import ContactApp from "../desktop/apps/ContactApp";
-import TerminalApp from "../desktop/apps/TerminalApp";
-import ChatbotApp from "../desktop/apps/ChatbotApp";
-import CameraApp from "../desktop/apps/CameraApp";
-import GestureApp from "../desktop/apps/GestureApp";
-import SnakeApp from "../desktop/apps/SnakeApp";
-import MinesweeperApp from "../desktop/apps/MinesweeperApp";
-
-interface MobileAppDef {
-  id: string;
-  label: string;
-  icon: ReactNode;
-  content: ReactNode;
-  isExternalLink?: boolean;
-}
-
-const apps: MobileAppDef[] = [
-  { id: "about", label: "About", icon: <User size={26} />, content: <AboutApp /> },
-  { id: "projects", label: "Projects", icon: <FolderKanban size={26} />, content: <ProjectsApp /> },
-  { id: "skills", label: "Skills", icon: <Sparkles size={26} />, content: <SkillsApp /> },
-  { id: "design", label: "Design", icon: <Palette size={26} />, content: <DesignLabApp /> },
-  { id: "experience", label: "Experience", icon: <Briefcase size={26} />, content: <ExperienceApp /> },
-  { id: "contact", label: "Contact", icon: <Mail size={26} />, content: <ContactApp /> },
-  { id: "terminal", label: "Terminal", icon: <TerminalSquare size={26} />, content: <TerminalApp /> },
-  { id: "chatbot", label: "Ask Me", icon: <MessageCircleQuestion size={26} />, content: <ChatbotApp /> },
-  { id: "camera", label: "Camera", icon: <Camera size={26} />, content: <CameraApp /> },
-  { id: "gestures", label: "Gestures", icon: <Hand size={26} />, content: <GestureApp /> },
-  { id: "snake", label: "Snake", icon: <Gamepad2 size={26} />, content: <SnakeApp /> },
-  { id: "mines", label: "Mines", icon: <Bomb size={26} />, content: <MinesweeperApp /> },
-  { id: "resume", label: "Resume", icon: <FileText size={26} />, content: null, isExternalLink: true },
-];
-
-const DOCK_IDS = ["about", "projects", "contact", "terminal"];
+import { OS_APPS, DOCK_APP_IDS, type OSAppDef } from "../../data/os-apps";
 
 export default function MobileOS({ onExit }: { onExit: () => void }) {
-  const [openApp, setOpenApp] = useState<MobileAppDef | null>(null);
+  const [openApp, setOpenApp] = useState<OSAppDef | null>(null);
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -65,7 +12,7 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
     return () => clearInterval(t);
   }, []);
 
-  const handleOpen = (app: MobileAppDef) => {
+  const handleOpen = (app: OSAppDef) => {
     if (app.isExternalLink) {
       window.open(profile.resumeUrl, "_blank");
       return;
@@ -120,7 +67,7 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
 
           {/* App grid */}
           <div className="grid grid-cols-4 gap-x-2 gap-y-6 px-6 max-w-md w-full mx-auto">
-            {apps.map((app) => (
+            {OS_APPS.map((app) => (
               <button
                 key={app.id}
                 onClick={() => handleOpen(app)}
@@ -136,8 +83,8 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
 
           {/* Dock */}
           <div className="mt-auto mb-6 mx-auto flex gap-6 px-6 py-3 rounded-3xl bg-white/10">
-            {apps
-              .filter((a) => DOCK_IDS.includes(a.id))
+            {OS_APPS
+              .filter((a) => DOCK_APP_IDS.includes(a.id))
               .map((app) => (
                 <button
                   key={app.id}

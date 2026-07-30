@@ -21,9 +21,11 @@ function timeAgo(dateStr: string): string {
 export default function GithubStatsBadge({
   stats,
   loading,
+  failed,
 }: {
   stats: GithubStats | undefined;
   loading?: boolean;
+  failed?: boolean;
 }) {
   if (!stats && loading) {
     return (
@@ -36,6 +38,14 @@ export default function GithubStatsBadge({
         <span className="h-3.5 w-16 rounded bg-gray-200 dark:bg-gray-700" />
         <span className="h-3.5 w-24 rounded bg-gray-200 dark:bg-gray-700" />
       </div>
+    );
+  }
+
+  if (!stats && failed) {
+    return (
+      <span className="text-xs text-gray-400 dark:text-gray-500">
+        GitHub stats unavailable
+      </span>
     );
   }
 
