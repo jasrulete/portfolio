@@ -151,7 +151,7 @@ export default function CommandPalette({
         icon: <FileText size={16} />,
         action: () => {
           close();
-          window.open(profile.cvUrl, "_blank");
+          window.open(profile.cvUrl, "_blank", "noopener,noreferrer");
         },
       },
       {
@@ -162,7 +162,7 @@ export default function CommandPalette({
         icon: <FileText size={16} />,
         action: () => {
           close();
-          window.open(profile.resumeUrl, "_blank");
+          window.open(profile.resumeUrl, "_blank", "noopener,noreferrer");
         },
       },
       {

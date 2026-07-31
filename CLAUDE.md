@@ -57,7 +57,7 @@ Single blue-600 accent, no decorative gradients, JetBrains Mono for headings via
 - **No path aliases.** Imports are relative. Note the two hook locations: `src/hooks/` (portfolio hooks) and root-level `hooks/` + `lib/` (shadcn-style utilities like `lib/utils.ts`'s `cn()`); `tsconfig.app.json` only `include`s `src`, so root `lib/`/`hooks/` are pulled in transitively via relative imports.
 - Component files are kebab-case (`hero-section.tsx`); OS-mode chrome and app components are PascalCase (`AboutApp.tsx`, `DesktopOS.tsx`, `MobileOS.tsx`).
 - Dark mode is a `dark` class toggled on a wrapper div in `App.tsx` (Tailwind `dark:` variants), seeded from `localStorage` (`portfolio-theme`) falling back to `prefers-color-scheme`.
-- UI variants use `class-variance-authority` + `tailwind-merge` via `cn()`.
+- `cn()` (in `lib/utils.ts`) composes `clsx` + `tailwind-merge` for conditional class names.
 
 ---
 

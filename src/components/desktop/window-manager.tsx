@@ -159,7 +159,10 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
   // time, so shrinking the browser afterward can otherwise leave them
   // clipped or off-screen — reclamp on viewport resize.
   useEffect(() => {
-    const handleResize = () => {
+    let rafId: number | null = null;
+
+    const reclamp = () => {
+      rafId = null;
       const maxWidth = window.innerWidth - 16;
       const maxHeight = window.innerHeight - TASKBAR_HEIGHT - 16;
       setWindows((prev) =>
@@ -176,8 +179,19 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         })
       );
     };
+
+    // Coalesce rapid-fire resize events into at most one reclamp per frame,
+    // instead of remapping every open window on every tick of a drag-resize.
+    const handleResize = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(reclamp);
+    };
+
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (

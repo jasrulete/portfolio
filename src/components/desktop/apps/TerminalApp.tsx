@@ -52,7 +52,8 @@ function runCommand(raw: string): string {
   }
 
   if (cmd === "cat resume.pdf" || cmd === "resume") {
-    if (typeof window !== "undefined") window.open(profile.resumeUrl, "_blank");
+    if (typeof window !== "undefined")
+      window.open(profile.resumeUrl, "_blank", "noopener,noreferrer");
     return "Opening resume.pdf ...";
   }
 

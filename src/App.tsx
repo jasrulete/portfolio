@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { MonitorSmartphone, Smartphone } from "lucide-react";
 import Hero from "./components/hero-section";
 import AboutSection from "./components/about-section";
@@ -12,8 +12,13 @@ import Navbar from "./components/navbar";
 import ScrollProgress from "./components/scroll-progress";
 import FaqChatbot from "./components/FaqChatbot";
 import CommandPalette from "./components/command-palette";
-import DesktopOS from "./components/desktop/DesktopOS";
-import MobileOS from "./components/mobile/MobileOS";
+import ModeLoadingFallback from "./components/mode-loading-fallback";
+
+// Only the classic view (the default) ships eagerly — the desktop-OS and
+// mobile-launcher trees (plus every app they contain) are fetched only when
+// a visitor actually switches into that mode.
+const DesktopOS = lazy(() => import("./components/desktop/DesktopOS"));
+const MobileOS = lazy(() => import("./components/mobile/MobileOS"));
 
 type ViewMode = "classic" | "desktop" | "mobile";
 const MODE_KEY = "portfolio-view-mode";
@@ -62,7 +67,9 @@ function App() {
     return (
       <div className={darkMode ? "dark" : ""}>
         {palette}
-        <DesktopOS onModeToggle={() => setMode("classic")} />
+        <Suspense fallback={<ModeLoadingFallback />}>
+          <DesktopOS onModeToggle={() => setMode("classic")} />
+        </Suspense>
       </div>
     );
   }
@@ -71,7 +78,9 @@ function App() {
     return (
       <div className={darkMode ? "dark" : ""}>
         {palette}
-        <MobileOS onExit={() => setMode("classic")} />
+        <Suspense fallback={<ModeLoadingFallback />}>
+          <MobileOS onExit={() => setMode("classic")} />
+        </Suspense>
       </div>
     );
   }

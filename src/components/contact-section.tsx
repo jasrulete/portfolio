@@ -27,6 +27,7 @@ export default function Contact() {
   });
   const [result, setResult] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const captchaRef = useRef<HCaptcha>(null);
 
   const handleChange = (
@@ -38,6 +39,8 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isSubmitting) return;
 
     if (!formConfigured) {
       setResult(
@@ -51,14 +54,19 @@ export default function Contact() {
       return;
     }
 
+    setIsSubmitting(true);
     setResult("Sending...");
+
+    // Strip control characters before the name goes into a header field —
+    // maxLength on the input doesn't stop a pasted/scripted \r\n.
+    const safeName = formData.name.replace(/[\r\n]+/g, " ").slice(0, 100);
 
     const formPayload = new FormData();
     formPayload.append("access_key", WEB3FORMS_ACCESS_KEY);
     formPayload.append("name", formData.name);
     formPayload.append("email", formData.email);
     formPayload.append("message", formData.message);
-    formPayload.append("subject", `Portfolio message from ${formData.name}`);
+    formPayload.append("subject", `Portfolio message from ${safeName}`);
     formPayload.append("from_name", formData.name);
     formPayload.append("replyto", formData.email);
     formPayload.append("h-captcha-response", captchaToken);
@@ -84,6 +92,8 @@ export default function Contact() {
       setResult(
         `Could not send. Please email me at ${profile.formEmail} directly.`
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -99,6 +109,7 @@ export default function Contact() {
           result={result}
           isSuccess={isSuccess}
           formConfigured={formConfigured}
+          isSubmitting={isSubmitting}
           captchaRef={captchaRef}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -114,6 +125,7 @@ function ContactGrid({
   result,
   isSuccess,
   formConfigured,
+  isSubmitting,
   captchaRef,
   onChange,
   onSubmit,
@@ -123,6 +135,7 @@ function ContactGrid({
   result: string;
   isSuccess: boolean;
   formConfigured: boolean;
+  isSubmitting: boolean;
   captchaRef: React.RefObject<HCaptcha | null>;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -143,6 +156,7 @@ function ContactGrid({
             value={formData.name}
             onChange={onChange}
             required
+            maxLength={100}
           />
           <FormField
             label="Your email"
@@ -186,10 +200,10 @@ function ContactGrid({
 
           <button
             type="submit"
-            disabled={!formConfigured}
+            disabled={!formConfigured || isSubmitting}
             className="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            Send Message
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
 
           {result && (
@@ -302,6 +316,7 @@ function FormField({
   onChange,
   type = "text",
   required,
+  maxLength,
 }: {
   label: string;
   id: string;
@@ -310,6 +325,7 @@ function FormField({
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   type?: string;
   required?: boolean;
+  maxLength?: number;
 }) {
   return (
     <div>
@@ -320,6 +336,7 @@ function FormField({
         type={type}
         id={id}
         name={name}
+        maxLength={maxLength}
         value={value}
         onChange={onChange}
         required={required}

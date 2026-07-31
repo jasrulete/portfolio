@@ -1,22 +1,29 @@
+import { Suspense } from "react";
 import { profile } from "../../data/profile";
 import { OS_APPS, type OSAppDef } from "../../data/os-apps";
 import { WindowManagerProvider, useWindowManager } from "./window-manager";
 import Window from "./Window";
 import Taskbar from "./Taskbar";
+import AppLoadingFallback from "./apps/app-loading-fallback";
 
 function DesktopIcons() {
   const { openWindow } = useWindowManager();
 
   const handleOpen = (app: OSAppDef) => {
     if (app.isExternalLink) {
-      window.open(profile.resumeUrl, "_blank");
+      window.open(profile.resumeUrl, "_blank", "noopener,noreferrer");
       return;
     }
+    const Component = app.Component!;
     openWindow({
       id: app.id,
       title: app.desktopLabel,
       icon: app.icon,
-      content: app.content,
+      content: (
+        <Suspense fallback={<AppLoadingFallback />}>
+          <Component />
+        </Suspense>
+      ),
       width: app.windowSize?.width,
       height: app.windowSize?.height,
     });

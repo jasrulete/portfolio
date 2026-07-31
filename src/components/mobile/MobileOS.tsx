@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ChevronLeft, Monitor } from "lucide-react";
 import { profile } from "../../data/profile";
 import { OS_APPS, DOCK_APP_IDS, type OSAppDef } from "../../data/os-apps";
+import AppLoadingFallback from "../desktop/apps/app-loading-fallback";
 
 export default function MobileOS({ onExit }: { onExit: () => void }) {
   const [openApp, setOpenApp] = useState<OSAppDef | null>(null);
@@ -14,7 +15,7 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
 
   const handleOpen = (app: OSAppDef) => {
     if (app.isExternalLink) {
-      window.open(profile.resumeUrl, "_blank");
+      window.open(profile.resumeUrl, "_blank", "noopener,noreferrer");
       return;
     }
     setOpenApp(app);
@@ -24,6 +25,8 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const OpenAppComponent = openApp?.Component;
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900 text-white">
@@ -52,7 +55,13 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
             </button>
             <h1 className="font-display text-sm font-bold">{openApp.label}</h1>
           </header>
-          <div className="flex-1 overflow-y-auto">{openApp.content}</div>
+          <div className="flex-1 overflow-y-auto">
+            {OpenAppComponent && (
+              <Suspense fallback={<AppLoadingFallback />}>
+                <OpenAppComponent />
+              </Suspense>
+            )}
+          </div>
         </div>
       ) : (
         <div className="relative h-full flex flex-col">
