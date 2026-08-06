@@ -1,0 +1,309 @@
+// project-layouts.tsx
+//
+// The four ways the projects section can present the same filtered list, plus
+// the control that switches between them.
+//
+// Grid stays the default deliberately: a visitor skimming for a minute should
+// not have to click through a carousel to see the work. The spatial layouts
+// are an opt-in demonstration of the CSS 3D techniques documented in the
+// Design Lab, applied to real content.
+//
+// Every layout keeps all projects in the DOM — the ring marks off-screen
+// panels aria-hidden and announces the active one, rather than unmounting
+// them, so nothing becomes unreachable to assistive tech.
+
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, LayoutGrid, RotateCw, Disc3, Layers } from "lucide-react";
+import { cn } from "../../lib/utils";
+import type { GithubStats } from "../../lib/use-github-stats";
+import DepthCard from "./depth-card";
+import ScrollReveal from "./scroll-reveal";
+import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
+import {
+  CompactProjectCard,
+  FlipProjectCard,
+  ProjectCard,
+  type Project,
+} from "./project-card";
+
+export type ProjectLayout = "grid" | "flip" | "corridor" | "ring";
+
+const PROJECT_LAYOUTS: {
+  id: ProjectLayout;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  { id: "grid", label: "Grid", icon: <LayoutGrid size={14} /> },
+  { id: "flip", label: "Flip", icon: <RotateCw size={14} /> },
+  { id: "corridor", label: "Corridor", icon: <Layers size={14} /> },
+  { id: "ring", label: "Ring", icon: <Disc3 size={14} /> },
+];
+
+export function LayoutSwitcher({
+  value,
+  onChange,
+}: {
+  value: ProjectLayout;
+  onChange: (l: ProjectLayout) => void;
+}) {
+  return (
+    <div
+      role="radiogroup"
+      aria-label="Projects layout"
+      className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+    >
+      {PROJECT_LAYOUTS.map((l) => (
+        <button
+          key={l.id}
+          type="button"
+          role="radio"
+          aria-checked={value === l.id}
+          onClick={() => onChange(l.id)}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+            value === l.id
+              ? "bg-blue-600 text-white"
+              : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+          )}
+        >
+          {l.icon}
+          {l.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+interface LayoutProps {
+  // readonly: profile.projects is an `as const` tuple, so the unfiltered
+  // list arrives readonly. Accepting it is correct rather than casting.
+  projects: readonly Project[];
+  stats: Record<string, GithubStats>;
+  statsLoading: boolean;
+  statsFailed: Record<string, true>;
+}
+
+export function ProjectsLayout({
+  layout,
+  ...props
+}: LayoutProps & { layout: ProjectLayout }) {
+  if (layout === "flip") return <FlipLayout {...props} />;
+  if (layout === "corridor") return <CorridorLayout {...props} />;
+  if (layout === "ring") return <RingLayout {...props} />;
+  return <GridLayout {...props} />;
+}
+
+function GridLayout({ projects, stats, statsLoading, statsFailed }: LayoutProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {projects.map((project, index) => (
+        <ScrollReveal key={project.title} delay={index * 100}>
+          <DepthCard>
+            <ProjectCard
+              project={project}
+              stats={"github" in project ? stats[project.github as string] : undefined}
+              statsLoading={statsLoading}
+              statsFailed={
+                "github" in project
+                  ? Boolean(statsFailed[project.github as string])
+                  : false
+              }
+            />
+          </DepthCard>
+        </ScrollReveal>
+      ))}
+    </div>
+  );
+}
+
+function FlipLayout({ projects }: LayoutProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {projects.map((project, index) => (
+        <ScrollReveal key={project.title} delay={index * 100}>
+          <FlipProjectCard project={project} />
+        </ScrollReveal>
+      ))}
+    </div>
+  );
+}
+
+const CARD_W = 288; // w-72 — wide enough for the featured card's case study
+const CORRIDOR_GAP = 32;
+const CORRIDOR_ITEM = CARD_W + CORRIDOR_GAP;
+
+function CorridorLayout({ projects }: LayoutProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [trackWidth, setTrackWidth] = useState(0);
+  const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setTrackWidth(el.clientWidth));
+    ro.observe(el);
+    setTrackWidth(el.clientWidth);
+    return () => ro.disconnect();
+  }, []);
+
+  // Rounding rather than a distance threshold: this guarantees exactly one
+  // featured card, so two never expand at once mid-scroll.
+  const activeIndex = Math.min(
+    projects.length - 1,
+    Math.max(0, Math.round(scrollLeft / CORRIDOR_ITEM))
+  );
+
+  return (
+    <div>
+      <div
+        ref={trackRef}
+        onScroll={(e) => setScrollLeft(e.currentTarget.scrollLeft)}
+        className="overflow-x-auto pb-10 pt-6"
+        style={{ perspective: "1200px", scrollSnapType: "x mandatory" }}
+      >
+        <div
+          className="flex px-[calc(50%-9rem)]"
+          style={{ gap: CORRIDOR_GAP, transformStyle: "preserve-3d" }}
+        >
+          {projects.map((project, i) => {
+            // The track is padded by (trackWidth/2 - CARD_W/2) so the first and
+            // last cards can reach the centre. Folding that padding in, a
+            // card's distance from centre reduces to just its index offset
+            // minus how far we have scrolled.
+            const fromCentre = i * CORRIDOR_ITEM - scrollLeft;
+            const offset = trackWidth ? fromCentre / (trackWidth / 2) : 0;
+            const c = Math.max(-1.6, Math.min(1.6, offset));
+            const t = Math.abs(c);
+            return (
+              <div
+                key={project.title}
+                className="h-[30rem] w-72 shrink-0"
+                style={{
+                  scrollSnapAlign: "center",
+                  ...(reducedMotion
+                    ? {}
+                    : {
+                        // Centred card comes toward the viewer; the rest turn
+                        // away and recede, so one card is always the subject.
+                        transform: `rotateY(${c * -32}deg) translateZ(${60 - t * 220}px)`,
+                        opacity: 1 - Math.min(0.5, t * 0.36),
+                        zIndex: Math.round(100 - t * 50),
+                      }),
+                }}
+              >
+                <CompactProjectCard
+                  project={project}
+                  featured={i === activeIndex}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <p className="text-center text-xs text-gray-500 dark:text-gray-400">
+        Scroll sideways — the centred card turns to face you.
+      </p>
+    </div>
+  );
+}
+
+function RingLayout({ projects }: LayoutProps) {
+  const [index, setIndex] = useState(0);
+  const reducedMotion = usePrefersReducedMotion();
+
+  // Reset when the filtered list changes, so the ring never points at a
+  // panel that no longer exists.
+  useEffect(() => setIndex(0), [projects.length]);
+
+  if (projects.length === 0) return null;
+
+  const step = 360 / projects.length;
+  // Minimum radius before neighbouring panels intersect is
+  // (width/2) / tan(180/n); 300px keeps 256px-wide cards clear at n >= 5.
+  const radius = Math.max(300, (128 / Math.tan(Math.PI / projects.length)) * 1.1);
+
+  return (
+    <div>
+      {/* Clipping wrapper sits outside the 3D chain: it has no preserve-3d of
+          its own, so it bounds the ring without flattening it. */}
+      <div className="overflow-hidden">
+        <div
+          className="relative h-[26rem]"
+          style={{ perspective: "1600px" }}
+        >
+          <div
+            className={cn(
+              "absolute inset-0",
+              !reducedMotion && "transition-transform duration-500 ease-out"
+            )}
+            style={{
+              transformStyle: "preserve-3d",
+              transform: `translateZ(-${radius}px) rotateY(${-index * step}deg)`,
+            }}
+          >
+            {projects.map((project, i) => (
+              <div
+                key={project.title}
+                aria-hidden={i !== index}
+                className="absolute left-1/2 top-1/2 h-80 w-64"
+                style={{
+                  // Centring must live in the inline transform: an inline
+                  // transform replaces Tailwind's -translate utilities wholesale.
+                  transform: `translate(-50%, -50%) rotateY(${i * step}deg) translateZ(${radius}px)`,
+                }}
+              >
+                <CompactProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-4">
+        <RingButton
+          label="Previous project"
+          onClick={() => setIndex((i) => (i - 1 + projects.length) % projects.length)}
+        >
+          <ChevronLeft size={18} />
+        </RingButton>
+        <p
+          aria-live="polite"
+          className="min-w-[12rem] text-center text-sm font-medium text-gray-700 dark:text-gray-200"
+        >
+          {projects[index]?.title}
+          <span className="ml-2 text-xs text-gray-400">
+            {index + 1}/{projects.length}
+          </span>
+        </p>
+        <RingButton
+          label="Next project"
+          onClick={() => setIndex((i) => (i + 1) % projects.length)}
+        >
+          <ChevronRight size={18} />
+        </RingButton>
+      </div>
+    </div>
+  );
+}
+
+function RingButton({
+  children,
+  label,
+  onClick,
+}: {
+  children: React.ReactNode;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="rounded-full border border-gray-300 p-3 text-gray-600 transition-colors hover:border-blue-500 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-600 dark:text-gray-300"
+    >
+      {children}
+    </button>
+  );
+}

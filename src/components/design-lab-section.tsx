@@ -1,5 +1,11 @@
 import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
+import {
+  DepthLayersDemo,
+  FlipCardDemo,
+  RingCarouselDemo,
+  ScrollDepthDemo,
+} from "./design-lab-3d";
 
 const BRAND_COLORS = [
   { name: "Blue 600", hex: "#2563EB", className: "bg-blue-600", role: "The one accent" },
@@ -61,8 +67,11 @@ export default function DesignLabSection() {
                 ))}
               </div>
               <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                One accent, no decorative gradients. Body text holds a 4.5:1
-                contrast ratio (WCAG AA) in both themes.
+                One accent, no decorative gradients on content or components.
+                The desktop/mobile OS chrome uses a wallpaper gradient as a
+                deliberate skeuomorphic touch, kept separate from this content
+                system. Body text holds a 4.5:1 contrast ratio (WCAG AA) in
+                both themes.
               </p>
             </LabCard>
           </ScrollReveal>
@@ -156,8 +165,36 @@ export default function DesignLabSection() {
             </LabCard>
           </ScrollReveal>
 
-          <ScrollReveal delay={250}>
-            <div className="lg:col-span-2">
+          {/* col-span must live on ScrollReveal itself — it renders the grid
+              item, so the class does nothing on a nested wrapper. */}
+          <ScrollReveal delay={250} className="lg:col-span-2">
+            <div>
+              <LabCard title="Depth & 3D">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <DepthLayersDemo />
+                  <FlipCardDemo />
+                  <ScrollDepthDemo />
+                  <RingCarouselDemo />
+                </div>
+                <p className="mt-5 text-sm text-gray-600 dark:text-gray-300">
+                  All four are CSS 3D on real DOM — no WebGL, no dependencies.
+                  That is deliberate for content: these stay focusable,
+                  selectable and screen-reader legible, which a{" "}
+                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                    canvas
+                  </code>{" "}
+                  gallery could not be. Depth collapses to flat layout under{" "}
+                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                    prefers-reduced-motion
+                  </code>
+                  .
+                </p>
+              </LabCard>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={300} className="lg:col-span-2">
+            <div>
               <LabCard title="One token set, two themes">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <ThemePreview variant="light" />
