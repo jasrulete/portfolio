@@ -128,9 +128,19 @@ function FlipLayout({ projects }: LayoutProps) {
   );
 }
 
-const CARD_W = 288; // w-72 — wide enough for the featured card's case study
-const CORRIDOR_GAP = 32;
+// Dimensions live in JS, not Tailwind classes, because the scroll maths below
+// depends on them — a class and a constant drifting apart is exactly how the
+// last card became unreachable before.
+const CARD_W = 352;
+const CARD_H = 560;
+const CORRIDOR_GAP = 40;
 const CORRIDOR_ITEM = CARD_W + CORRIDOR_GAP;
+
+// Half a viewport minus half a card, less one gap (the flex gap after the
+// spacer supplies that). Rendered as real flex items rather than padding:
+// an overflowing flex container's end padding does not count toward
+// scrollWidth, which left the final card short of centre.
+const EDGE_SPACER = `calc(50% - ${CARD_W / 2 + CORRIDOR_GAP}px)`;
 
 function CorridorLayout({ projects }: LayoutProps) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -163,42 +173,60 @@ function CorridorLayout({ projects }: LayoutProps) {
         style={{ perspective: "1200px", scrollSnapType: "x mandatory" }}
       >
         <div
-          className="flex px-[calc(50%-9rem)]"
+          className="flex"
           style={{ gap: CORRIDOR_GAP, transformStyle: "preserve-3d" }}
         >
+          <div aria-hidden className="shrink-0" style={{ width: EDGE_SPACER }} />
+
           {projects.map((project, i) => {
-            // The track is padded by (trackWidth/2 - CARD_W/2) so the first and
-            // last cards can reach the centre. Folding that padding in, a
-            // card's distance from centre reduces to just its index offset
-            // minus how far we have scrolled.
+            // With the spacers above and below, card i's centre sits exactly
+            // i * CORRIDOR_ITEM to the right of the viewport centre at
+            // scrollLeft 0 — so distance from centre is just that minus how
+            // far we have scrolled.
             const fromCentre = i * CORRIDOR_ITEM - scrollLeft;
             const offset = trackWidth ? fromCentre / (trackWidth / 2) : 0;
             const c = Math.max(-1.6, Math.min(1.6, offset));
             const t = Math.abs(c);
             return (
+              // The flex item stays untransformed on purpose. Chrome derives
+              // scrollable overflow from *transformed* boxes, so transforming
+              // this element directly made the receding right-hand cards
+              // project narrower than their layout box and shrank the scroll
+              // range — leaving the last card unable to reach centre.
               <div
                 key={project.title}
-                className="h-[30rem] w-72 shrink-0"
+                className="shrink-0"
                 style={{
+                  width: CARD_W,
+                  height: CARD_H,
                   scrollSnapAlign: "center",
-                  ...(reducedMotion
-                    ? {}
-                    : {
-                        // Centred card comes toward the viewer; the rest turn
-                        // away and recede, so one card is always the subject.
-                        transform: `rotateY(${c * -32}deg) translateZ(${60 - t * 220}px)`,
-                        opacity: 1 - Math.min(0.5, t * 0.36),
-                        zIndex: Math.round(100 - t * 50),
-                      }),
+                  transformStyle: "preserve-3d",
                 }}
               >
-                <CompactProjectCard
-                  project={project}
-                  featured={i === activeIndex}
-                />
+                <div
+                  className="h-full w-full"
+                  style={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          // Centred card comes toward the viewer; the rest turn
+                          // away and recede, so one card is always the subject.
+                          transform: `rotateY(${c * -32}deg) translateZ(${60 - t * 220}px)`,
+                          opacity: 1 - Math.min(0.5, t * 0.36),
+                          zIndex: Math.round(100 - t * 50),
+                        }
+                  }
+                >
+                  <CompactProjectCard
+                    project={project}
+                    featured={i === activeIndex}
+                  />
+                </div>
               </div>
             );
           })}
+
+          <div aria-hidden className="shrink-0" style={{ width: EDGE_SPACER }} />
         </div>
       </div>
       <p className="text-center text-xs text-gray-500 dark:text-gray-400">

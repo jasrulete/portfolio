@@ -101,7 +101,7 @@ export function FlipProjectCard({ project }: { project: Project }) {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <article className="h-[30rem]" style={{ perspective: "1400px" }}>
+    <article className="h-[36rem]" style={{ perspective: "1400px" }}>
       <div
         className="relative h-full w-full transition-transform duration-500 motion-reduce:transition-none"
         style={{
