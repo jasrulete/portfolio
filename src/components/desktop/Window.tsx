@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { X, Minus, Square, Copy } from "lucide-react";
 import { useWindowManager, type WindowState } from "./window-manager";
 
@@ -9,6 +9,7 @@ const MIN_HEIGHT = 220;
 export default function Window({ win }: { win: WindowState }) {
   const { closeWindow, focusWindow, minimizeWindow, toggleMaximize, updateBounds } =
     useWindowManager();
+  const rootRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{
     startX: number;
     startY: number;
@@ -89,6 +90,13 @@ export default function Window({ win }: { win: WindowState }) {
     resizeRef.current = null;
   }, []);
 
+  // Move focus into the window when it's first opened, so keyboard/AT users
+  // land somewhere meaningful instead of staying wherever they triggered it
+  // from (or losing focus entirely).
+  useEffect(() => {
+    rootRef.current?.focus();
+  }, []);
+
   if (win.minimized) return null;
 
   const style = win.maximized
@@ -109,7 +117,11 @@ export default function Window({ win }: { win: WindowState }) {
 
   return (
     <div
-      className="fixed flex flex-col rounded-lg overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-gray-800"
+      ref={rootRef}
+      role="dialog"
+      aria-label={win.title}
+      tabIndex={-1}
+      className="fixed flex flex-col rounded-lg overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-gray-800 outline-none"
       style={style}
       onPointerDown={() => focusWindow(win.id)}
     >
@@ -129,7 +141,7 @@ export default function Window({ win }: { win: WindowState }) {
         <div className="flex items-center gap-1 shrink-0">
           <button
             aria-label="Minimize"
-            className="p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
+            className="p-3 rounded hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
             onClick={(e) => {
               e.stopPropagation();
               minimizeWindow(win.id);
@@ -139,7 +151,7 @@ export default function Window({ win }: { win: WindowState }) {
           </button>
           <button
             aria-label="Maximize"
-            className="p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
+            className="p-3 rounded hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
             onClick={(e) => {
               e.stopPropagation();
               toggleMaximize(win.id);
@@ -149,7 +161,7 @@ export default function Window({ win }: { win: WindowState }) {
           </button>
           <button
             aria-label="Close"
-            className="p-1.5 rounded hover:bg-red-500 hover:text-white text-gray-600 dark:text-gray-300"
+            className="p-3 rounded hover:bg-red-500 hover:text-white text-gray-600 dark:text-gray-300"
             onClick={(e) => {
               e.stopPropagation();
               closeWindow(win.id);
@@ -166,12 +178,12 @@ export default function Window({ win }: { win: WindowState }) {
 
       {!win.maximized && (
         <div
-          className="absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize touch-none"
+          className="absolute bottom-0 right-0 w-7 h-7 cursor-nwse-resize touch-none"
           onPointerDown={onResizeStart}
           onPointerMove={onResizeMove}
           onPointerUp={onResizeEnd}
         >
-          <div className="absolute bottom-1 right-1 w-2 h-2 border-r-2 border-b-2 border-gray-400 dark:border-gray-500" />
+          <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-r-2 border-b-2 border-gray-400 dark:border-gray-500" />
         </div>
       )}
     </div>

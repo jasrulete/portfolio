@@ -28,7 +28,7 @@ interface DetectedGesture {
 }
 
 export default function GestureApp() {
-  const { videoRef, status, start, stop: stopCamera } = useCameraStream();
+  const { videoRef, status, start, stop: stopCamera, aspectRatio } = useCameraStream();
   const overlayRef = useRef<HTMLCanvasElement>(null);
   const recognizerRef = useRef<GestureRecognizer | null>(null);
   const rafRef = useRef(0);
@@ -178,17 +178,20 @@ export default function GestureApp() {
         nothing is uploaded.
       </p>
 
-      <div className="relative w-full max-w-md aspect-video rounded-lg overflow-hidden bg-gray-900 flex items-center justify-center">
+      <div
+        style={{ aspectRatio }}
+        className="relative w-full max-w-md max-h-[70vh] rounded-lg overflow-hidden bg-gray-900 flex items-center justify-center"
+      >
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          className={`w-full h-full object-cover -scale-x-100 ${status === "live" ? "" : "hidden"}`}
+          className={`w-full h-full object-contain -scale-x-100 ${status === "live" ? "" : "hidden"}`}
         />
         <canvas
           ref={overlayRef}
-          className={`absolute inset-0 w-full h-full object-cover pointer-events-none -scale-x-100 ${status === "live" && model === "on" ? "" : "hidden"}`}
+          className={`absolute inset-0 w-full h-full object-contain pointer-events-none -scale-x-100 ${status === "live" && model === "on" ? "" : "hidden"}`}
           aria-hidden
         />
         {status !== "live" && (

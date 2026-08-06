@@ -17,7 +17,7 @@ const TIMER_CONFIDENCE = 0.6;
 const RETRIGGER_COOLDOWN_MS = 3000;
 
 export default function CameraApp() {
-  const { videoRef, status, start, stop: stopCamera } = useCameraStream();
+  const { videoRef, status, start, stop: stopCamera, aspectRatio } = useCameraStream();
   const overlayRef = useRef<HTMLCanvasElement>(null);
   const recognizerRef = useRef<GestureRecognizer | null>(null);
   const rafRef = useRef(0);
@@ -201,17 +201,20 @@ export default function CameraApp() {
         Everything runs in your browser — video never leaves your device.
       </p>
 
-      <div className="relative w-full max-w-md aspect-video rounded-lg overflow-hidden bg-gray-900 flex items-center justify-center">
+      <div
+        style={{ aspectRatio }}
+        className="relative w-full max-w-md max-h-[70vh] rounded-lg overflow-hidden bg-gray-900 flex items-center justify-center"
+      >
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          className={`w-full h-full object-cover ${status === "live" ? "" : "hidden"} ${mirrorClass}`}
+          className={`w-full h-full object-contain ${status === "live" ? "" : "hidden"} ${mirrorClass}`}
         />
         <canvas
           ref={overlayRef}
-          className={`absolute inset-0 w-full h-full object-cover pointer-events-none ${status === "live" && hands === "on" ? "" : "hidden"} ${mirrorClass}`}
+          className={`absolute inset-0 w-full h-full object-contain pointer-events-none ${status === "live" && hands === "on" ? "" : "hidden"} ${mirrorClass}`}
           aria-hidden
         />
         {countdown !== null && (

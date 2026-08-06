@@ -139,7 +139,7 @@ export const OS_APPS: OSAppDef[] = [
     desktopLabel: "Mines.exe",
     icon: <Bomb size={28} />,
     Component: MinesweeperApp,
-    windowSize: { width: 420, height: 560 },
+    windowSize: { width: 480, height: 580 },
   },
   {
     id: "resume",

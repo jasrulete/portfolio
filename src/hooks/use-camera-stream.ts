@@ -12,9 +12,25 @@ export function useCameraStream() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [status, setStatus] = useState<CameraStatus>("idle");
+  // Landscape (16:9) until the real stream tells us otherwise — a phone's
+  // front camera is typically portrait, and forcing it into a landscape box
+  // crops the frame the gesture/photo features depend on.
+  const [aspectRatio, setAspectRatio] = useState(16 / 9);
 
   useEffect(() => {
     return () => streamRef.current?.getTracks().forEach((t) => t.stop());
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onLoadedMetadata = () => {
+      if (video.videoWidth && video.videoHeight) {
+        setAspectRatio(video.videoWidth / video.videoHeight);
+      }
+    };
+    video.addEventListener("loadedmetadata", onLoadedMetadata);
+    return () => video.removeEventListener("loadedmetadata", onLoadedMetadata);
   }, []);
 
   const start = async () => {
@@ -43,5 +59,5 @@ export function useCameraStream() {
     setStatus("idle");
   };
 
-  return { videoRef, status, start, stop };
+  return { videoRef, status, start, stop, aspectRatio };
 }

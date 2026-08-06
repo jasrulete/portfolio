@@ -112,6 +112,7 @@ function NavContent({
       </div>
 
       <div
+        inert={!isMenuOpen}
         className={cn(
           "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
           isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"

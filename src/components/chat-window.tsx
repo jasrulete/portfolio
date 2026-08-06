@@ -7,7 +7,12 @@ import type { FaqChat } from "../hooks/use-faq-chat";
 export function FaqChatBody({ chat }: { chat: FaqChat }) {
   return (
     <>
-      <div ref={chat.scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-3">
+      <div
+        ref={chat.scrollRef}
+        role="log"
+        aria-live="polite"
+        className="flex-1 space-y-3 overflow-y-auto px-4 py-3"
+      >
         {chat.messages.map((m) => (
           <div
             key={m.id}

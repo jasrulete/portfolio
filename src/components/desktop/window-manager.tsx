@@ -23,6 +23,7 @@ export interface WindowState {
   minimized: boolean;
   maximized: boolean;
   prevBounds?: { x: number; y: number; width: number; height: number };
+  opener?: HTMLElement; // element to return focus to on close/minimize
 }
 
 export interface OpenWindowOptions {
@@ -55,15 +56,24 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
   const [windows, setWindows] = useState<WindowState[]>([]);
   const zRef = useRef(10);
   const cascadeRef = useRef(0);
+  const windowsRef = useRef<WindowState[]>([]);
+
+  useEffect(() => {
+    windowsRef.current = windows;
+  }, [windows]);
 
   const openWindow = useCallback((opts: OpenWindowOptions) => {
+    const opener =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : undefined;
     setWindows((prev) => {
       const existing = prev.find((w) => w.id === opts.id);
       zRef.current += 1;
       if (existing) {
         return prev.map((w) =>
           w.id === opts.id
-            ? { ...w, minimized: false, zIndex: zRef.current }
+            ? { ...w, minimized: false, zIndex: zRef.current, opener }
             : w
         );
       }
@@ -96,6 +106,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         zIndex: zRef.current,
         minimized: false,
         maximized: isSmallScreen,
+        opener,
         prevBounds: isSmallScreen
           ? {
               x: baseX + cascadeRef.current * 24,
@@ -110,7 +121,9 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const closeWindow = useCallback((id: string) => {
+    const opener = windowsRef.current.find((w) => w.id === id)?.opener;
     setWindows((prev) => prev.filter((w) => w.id !== id));
+    if (opener && document.contains(opener)) opener.focus();
   }, []);
 
   const focusWindow = useCallback((id: string) => {
@@ -122,9 +135,14 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const minimizeWindow = useCallback((id: string) => {
+    const win = windowsRef.current.find((w) => w.id === id);
+    const willMinimize = win ? !win.minimized : false;
     setWindows((prev) =>
       prev.map((w) => (w.id === id ? { ...w, minimized: !w.minimized } : w))
     );
+    if (willMinimize && win?.opener && document.contains(win.opener)) {
+      win.opener.focus();
+    }
   }, []);
 
   const toggleMaximize = useCallback((id: string) => {

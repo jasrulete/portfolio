@@ -1,10 +1,16 @@
 import { Suspense, useEffect, useState } from "react";
-import { ChevronLeft, Monitor } from "lucide-react";
+import { ChevronLeft, Monitor, Search } from "lucide-react";
 import { profile } from "../../data/profile";
 import { OS_APPS, DOCK_APP_IDS, type OSAppDef } from "../../data/os-apps";
 import AppLoadingFallback from "../desktop/apps/app-loading-fallback";
 
-export default function MobileOS({ onExit }: { onExit: () => void }) {
+export default function MobileOS({
+  onExit,
+  onOpenPalette,
+}: {
+  onExit: () => void;
+  onOpenPalette: () => void;
+}) {
   const [openApp, setOpenApp] = useState<OSAppDef | null>(null);
   const [now, setNow] = useState(() => new Date());
 
@@ -33,14 +39,23 @@ export default function MobileOS({ onExit }: { onExit: () => void }) {
       {/* Status bar */}
       <div className="relative z-20 flex items-center justify-between px-4 h-10 text-xs font-display bg-black/20">
         <span>{time}</span>
-        <button
-          onClick={onExit}
-          aria-label="Exit mobile view"
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 transition-colors"
-        >
-          <Monitor size={12} />
-          Exit
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onOpenPalette}
+            aria-label="Open command palette"
+            className="p-1.5 rounded-full bg-white/15 hover:bg-white/25 transition-colors"
+          >
+            <Search size={12} />
+          </button>
+          <button
+            onClick={onExit}
+            aria-label="Exit mobile view"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 transition-colors"
+          >
+            <Monitor size={12} />
+            Exit
+          </button>
+        </div>
       </div>
 
       {openApp ? (

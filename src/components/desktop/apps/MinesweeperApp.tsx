@@ -191,7 +191,7 @@ export default function MinesweeperApp() {
 
       <div
         className="grid gap-0.5"
-        style={{ gridTemplateColumns: `repeat(${COLS}, 2rem)` }}
+        style={{ gridTemplateColumns: `repeat(${COLS}, 2.75rem)` }}
       >
         {board.map((row, r) =>
           row.map((cell, c) => (
@@ -204,7 +204,7 @@ export default function MinesweeperApp() {
                 toggleFlag(r, c);
               }}
               aria-label={`Cell ${r + 1},${c + 1}`}
-              className={`w-8 h-8 rounded text-sm font-display font-bold flex items-center justify-center transition-colors ${
+              className={`w-11 h-11 rounded text-sm font-display font-bold flex items-center justify-center transition-colors ${
                 cell.revealed
                   ? cell.mine
                     ? "bg-red-600 text-white"

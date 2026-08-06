@@ -68,7 +68,10 @@ function App() {
       <div className={darkMode ? "dark" : ""}>
         {palette}
         <Suspense fallback={<ModeLoadingFallback />}>
-          <DesktopOS onModeToggle={() => setMode("classic")} />
+          <DesktopOS
+            onModeToggle={() => setMode("classic")}
+            onOpenPalette={() => setPaletteOpen(true)}
+          />
         </Suspense>
       </div>
     );
@@ -79,7 +82,10 @@ function App() {
       <div className={darkMode ? "dark" : ""}>
         {palette}
         <Suspense fallback={<ModeLoadingFallback />}>
-          <MobileOS onExit={() => setMode("classic")} />
+          <MobileOS
+            onExit={() => setMode("classic")}
+            onOpenPalette={() => setPaletteOpen(true)}
+          />
         </Suspense>
       </div>
     );

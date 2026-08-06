@@ -34,12 +34,12 @@ function DesktopIcons() {
       {OS_APPS.map((app) => (
         <button
           key={app.id}
-          onDoubleClick={() => handleOpen(app)}
+          onClick={() => handleOpen(app)}
           onTouchEnd={(e) => {
             e.preventDefault();
             handleOpen(app);
           }}
-          className="flex flex-col items-center gap-1 w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 outline-none"
+          className="flex flex-col items-center gap-1 w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60 outline-none"
         >
           <span className="drop-shadow-lg">{app.icon}</span>
           <span className="text-xs text-center drop-shadow-lg leading-tight">
@@ -62,13 +62,19 @@ function WindowLayer() {
   );
 }
 
-export default function DesktopOS({ onModeToggle }: { onModeToggle: () => void }) {
+export default function DesktopOS({
+  onModeToggle,
+  onOpenPalette,
+}: {
+  onModeToggle: () => void;
+  onOpenPalette: () => void;
+}) {
   return (
     <WindowManagerProvider>
       <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900">
         <DesktopIcons />
         <WindowLayer />
-        <Taskbar onModeToggle={onModeToggle} />
+        <Taskbar onModeToggle={onModeToggle} onOpenPalette={onOpenPalette} />
       </div>
     </WindowManagerProvider>
   );

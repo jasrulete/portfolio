@@ -240,8 +240,16 @@ export default function CommandPalette({
     } else if (e.key === "Enter") {
       e.preventDefault();
       filtered[selected]?.action();
+    } else if (e.key === "Tab") {
+      // The palette's only focusable control is this input — arrow keys
+      // drive selection via aria-activedescendant, so Tab has nothing
+      // legitimate to move to. Keep focus trapped here instead of letting
+      // it escape into the page behind the overlay.
+      e.preventDefault();
     }
   };
+
+  const activeOption = filtered[selected];
 
   return (
     <div
@@ -264,6 +272,11 @@ export default function CommandPalette({
             onKeyDown={onInputKeyDown}
             placeholder="Type a command or search…"
             aria-label="Search commands"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="command-palette-listbox"
+            aria-autocomplete="list"
+            aria-activedescendant={activeOption ? `command-option-${activeOption.id}` : undefined}
             className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
           />
           <kbd className="shrink-0 text-[10px] font-semibold text-gray-400 border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5">
@@ -273,6 +286,7 @@ export default function CommandPalette({
 
         <div
           ref={listRef}
+          id="command-palette-listbox"
           role="listbox"
           aria-label="Commands"
           className="max-h-[50vh] overflow-y-auto py-2"
@@ -285,8 +299,10 @@ export default function CommandPalette({
           {filtered.map((cmd, i) => (
             <button
               key={cmd.id}
+              id={`command-option-${cmd.id}`}
               type="button"
               role="option"
+              tabIndex={-1}
               aria-selected={i === selected}
               onMouseEnter={() => setSelected(i)}
               onClick={() => cmd.action()}

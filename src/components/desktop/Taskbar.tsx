@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import { LayoutGrid } from "lucide-react";
+import { LayoutGrid, Search } from "lucide-react";
 import { useWindowManager } from "./window-manager";
 
-export default function Taskbar({ onModeToggle }: { onModeToggle: () => void }) {
+export default function Taskbar({
+  onModeToggle,
+  onOpenPalette,
+}: {
+  onModeToggle: () => void;
+  onOpenPalette: () => void;
+}) {
   const { windows, focusWindow, minimizeWindow } = useWindowManager();
   const [time, setTime] = useState(new Date());
 
@@ -38,8 +44,18 @@ export default function Taskbar({ onModeToggle }: { onModeToggle: () => void }) 
           </button>
         ))}
       </div>
-      <div className="text-xs font-medium text-gray-600 dark:text-gray-300 pr-2 shrink-0">
-        {time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+      <div className="flex items-center gap-1 shrink-0">
+        <button
+          onClick={onOpenPalette}
+          aria-label="Open command palette"
+          title="Command palette (Ctrl K)"
+          className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10"
+        >
+          <Search size={14} />
+        </button>
+        <div className="text-xs font-medium text-gray-600 dark:text-gray-300 pr-2">
+          {time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+        </div>
       </div>
     </div>
   );
