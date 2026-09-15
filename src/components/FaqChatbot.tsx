@@ -11,7 +11,7 @@
 // it renders itself as a fixed floating widget.
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Sparkles } from "lucide-react";
+import { MessageCircle, X, MessageCircleQuestion } from "lucide-react";
 import { useFaqChat } from "../hooks/use-faq-chat";
 import { FaqChatBody } from "./chat-window";
 
@@ -22,43 +22,57 @@ export default function FaqChatbot() {
   const [open, setOpen] = useState(false);
   const chat = useFaqChat(FALLBACK_ANSWER);
   const panelRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
-    if (!open) return;
-    panelRef.current?.focus();
-    chat.scrollRef.current?.scrollTo({
-      top: chat.scrollRef.current.scrollHeight,
-      behavior: "smooth",
-    });
+    if (open) {
+      panelRef.current?.focus();
+      chat.scrollRef.current?.scrollTo({
+        top: chat.scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    } else if (wasOpen.current) {
+      // Escape or the close button must not drop focus onto <body>.
+      openerRef.current?.focus?.();
+      openerRef.current = null;
+    }
+    wasOpen.current = open;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+
+  const toggle = () => {
+    if (!open) openerRef.current = document.activeElement as HTMLElement | null;
+    setOpen(!open);
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 font-sans">
       {open && (
+        // Not aria-modal: the panel doesn't trap focus and the page behind it
+        // stays interactive, so claiming modality would lie to screen readers.
         <div
           ref={panelRef}
           role="dialog"
-          aria-modal="true"
-          aria-label="Ask about Jeric"
+          aria-label="Quick answers"
           tabIndex={-1}
           onKeyDown={(e) => {
             if (e.key === "Escape") setOpen(false);
           }}
-          className="mb-4 flex h-[28rem] w-80 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900 animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-200 motion-reduce:animate-none outline-none"
+          className="mb-4 flex h-[28rem] w-80 flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-900 animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-200 motion-reduce:animate-none outline-none"
         >
           {/* Header */}
-          <div className="flex items-center justify-between bg-slate-900 px-4 py-3 text-white dark:bg-slate-800">
+          <div className="flex items-center justify-between bg-gray-900 px-4 py-3 text-white dark:bg-gray-800">
             <div className="flex items-center gap-2">
-              <Sparkles size={16} />
-              <span className="text-sm font-medium">Ask about Jeric</span>
+              <MessageCircleQuestion size={16} aria-hidden />
+              <span className="text-sm font-medium">Quick answers</span>
             </div>
             <button
               onClick={() => setOpen(false)}
               aria-label="Close chat"
-              className="rounded-full p-1 hover:bg-white/10"
+              className="rounded-full p-2 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
-              <X size={16} />
+              <X size={16} aria-hidden />
             </button>
           </div>
 
@@ -68,11 +82,12 @@ export default function FaqChatbot() {
 
       {/* Toggle button */}
       <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Open FAQ chatbot"
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg transition-transform duration-150 hover:scale-105 active:scale-95 hover:bg-indigo-700"
+        onClick={toggle}
+        aria-label={open ? "Close quick answers" : "Open quick answers"}
+        aria-expanded={open}
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition-transform duration-150 hover:scale-105 active:scale-95 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
       >
-        {open ? <X size={22} /> : <MessageCircle size={22} />}
+        {open ? <X size={22} aria-hidden /> : <MessageCircle size={22} aria-hidden />}
       </button>
     </div>
   );

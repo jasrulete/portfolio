@@ -19,6 +19,8 @@ type FormFields = {
   message: string;
 };
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
   const [formData, setFormData] = useState<FormFields>({
     name: "",
@@ -26,9 +28,12 @@ export default function Contact() {
     message: "",
   });
   const [result, setResult] = useState("");
+  // Status drives the colour of the result line. Deriving it from the message
+  // text ("sent") painted "Sending..." in error red.
+  const [status, setStatus] = useState<Status>("idle");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const captchaRef = useRef<HCaptcha>(null);
+  const isSubmitting = status === "sending";
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,6 +48,7 @@ export default function Contact() {
     if (isSubmitting) return;
 
     if (!formConfigured) {
+      setStatus("error");
       setResult(
         `Form is not configured on this deployment. Please email me at ${profile.formEmail} directly.`
       );
@@ -50,11 +56,12 @@ export default function Contact() {
     }
 
     if (!captchaToken) {
+      setStatus("error");
       setResult("Please verify the CAPTCHA.");
       return;
     }
 
-    setIsSubmitting(true);
+    setStatus("sending");
     setResult("Sending...");
 
     // Strip control characters before the name goes into a header field —
@@ -80,34 +87,33 @@ export default function Contact() {
       const data = await response.json();
 
       if (data.success) {
+        setStatus("success");
         setResult("Message sent! I'll get back to you soon.");
         setFormData({ name: "", email: "", message: "" });
         setCaptchaToken(null);
         captchaRef.current?.resetCaptcha();
       } else {
+        setStatus("error");
         setResult(data.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
       console.error("Submission Error:", error);
+      setStatus("error");
       setResult(
         `Could not send. Please email me at ${profile.formEmail} directly.`
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
-
-  const isSuccess = result.includes("sent");
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading title="Get In Touch" />
+        <SectionHeading title="Contact" />
 
         <ContactGrid
           formData={formData}
           result={result}
-          isSuccess={isSuccess}
+          status={status}
           formConfigured={formConfigured}
           isSubmitting={isSubmitting}
           captchaRef={captchaRef}
@@ -123,7 +129,7 @@ export default function Contact() {
 function ContactGrid({
   formData,
   result,
-  isSuccess,
+  status,
   formConfigured,
   isSubmitting,
   captchaRef,
@@ -133,7 +139,7 @@ function ContactGrid({
 }: {
   formData: FormFields;
   result: string;
-  isSuccess: boolean;
+  status: Status;
   formConfigured: boolean;
   isSubmitting: boolean;
   captchaRef: React.RefObject<HCaptcha | null>;
@@ -141,6 +147,13 @@ function ContactGrid({
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onCaptchaVerify: (token: string) => void;
 }) {
+  const statusClass =
+    status === "success"
+      ? "text-green-600 dark:text-green-400"
+      : status === "sending"
+        ? "text-gray-600 dark:text-gray-300"
+        : "text-red-600 dark:text-red-400";
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <ScrollReveal direction="left">
@@ -153,6 +166,7 @@ function ContactGrid({
             label="Name"
             id="name"
             name="name"
+            autoComplete="name"
             value={formData.name}
             onChange={onChange}
             required
@@ -163,6 +177,7 @@ function ContactGrid({
             id="email"
             name="email"
             type="email"
+            autoComplete="email"
             value={formData.email}
             onChange={onChange}
             required
@@ -179,7 +194,7 @@ function ContactGrid({
               required
               rows={5}
               placeholder="Write your message here..."
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-500 dark:border-gray-400 rounded-md dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -192,7 +207,7 @@ function ContactGrid({
               ref={captchaRef}
             />
           ) : (
-            <p className="text-sm text-amber-600 dark:text-amber-400">
+            <p className="text-sm text-red-600 dark:text-red-400">
               Contact form requires environment setup on this host. Use the email
               addresses on the left.
             </p>
@@ -207,10 +222,7 @@ function ContactGrid({
           </button>
 
           {result && (
-            <p
-              role="status"
-              className={`mt-4 text-sm ${isSuccess ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
-            >
+            <p role="status" className={`mt-4 text-sm ${statusClass}`}>
               {result}
             </p>
           )}
@@ -221,10 +233,7 @@ function ContactGrid({
 }
 
 function ContactInfo() {
-  const emails = [
-    { label: "Personal", address: profile.personalEmail },
-    { label: "School", address: profile.email },
-  ];
+  const emails = [{ label: "Personal", address: profile.personalEmail }];
 
   return (
     <div>
@@ -241,7 +250,7 @@ function ContactInfo() {
                     href={`mailto:${address}`}
                     className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                   >
-                    <span className="text-xs text-gray-400 dark:text-gray-500 mr-2">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">
                       {label}:
                     </span>
                     {address}
@@ -273,17 +282,6 @@ function ContactInfo() {
           }
         />
       </div>
-
-      <p className="mt-8 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-        Messages from the form are delivered to{" "}
-        <a
-          href={`mailto:${profile.formEmail}`}
-          className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-        >
-          {profile.formEmail}
-        </a>
-        . You can reply directly to visitors from your inbox.
-      </p>
     </div>
   );
 }
@@ -315,6 +313,7 @@ function FormField({
   value,
   onChange,
   type = "text",
+  autoComplete,
   required,
   maxLength,
 }: {
@@ -324,6 +323,7 @@ function FormField({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   type?: string;
+  autoComplete?: string;
   required?: boolean;
   maxLength?: number;
 }) {
@@ -336,11 +336,12 @@ function FormField({
         type={type}
         id={id}
         name={name}
+        autoComplete={autoComplete}
         maxLength={maxLength}
         value={value}
         onChange={onChange}
         required={required}
-        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-500 dark:border-gray-400 rounded-md dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );

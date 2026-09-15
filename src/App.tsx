@@ -33,9 +33,12 @@ function App() {
       window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false
     );
   });
+  // sessionStorage, not localStorage: trying the OS modes once should not
+  // strand a later visitor (e.g. reopening the link from an email) in the
+  // fake OS. The choice survives a reload, not the tab.
   const [mode, setMode] = useState<ViewMode>(() => {
     if (typeof window === "undefined") return "classic";
-    return (localStorage.getItem(MODE_KEY) as ViewMode) || "classic";
+    return (sessionStorage.getItem(MODE_KEY) as ViewMode) || "classic";
   });
   const [projectTag, setProjectTag] = useState<string | null>(null);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -45,7 +48,7 @@ function App() {
   }, [darkMode]);
 
   useEffect(() => {
-    localStorage.setItem(MODE_KEY, mode);
+    sessionStorage.setItem(MODE_KEY, mode);
   }, [mode]);
 
   const toggleDarkMode = () => {
@@ -107,38 +110,39 @@ function App() {
           onOpenPalette={() => setPaletteOpen(true)}
         />
         <ScrollProgress />
-        <div className="fixed bottom-5 left-5 z-50 flex flex-col gap-2">
-          <button
-            onClick={() => setMode("desktop")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-lg hover:bg-blue-700 transition-colors"
-            title="Switch to desktop OS view"
-          >
-            <MonitorSmartphone size={16} />
-            Desktop mode
-          </button>
-          <button
-            onClick={() => setMode("mobile")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-lg hover:bg-blue-700 transition-colors"
-            title="Switch to mobile app view"
-          >
-            <Smartphone size={16} />
-            Mobile mode
-          </button>
-        </div>
         <main id="main-content">
           <Hero />
-          <AboutSection />
-          <SkillsSection onSkillSelect={setProjectTag} />
-          <DesignLabSection />
           <ProjectsSection
             activeTag={projectTag}
             onClearTag={() => setProjectTag(null)}
           />
           <ExperienceSection />
+          <SkillsSection onSkillSelect={setProjectTag} />
+          <AboutSection />
+          <DesignLabSection />
           <ContactSection />
         </main>
         <Footer />
-        {/* Fixed floating widget — lives outside the section flow on purpose */}
+        {/* Fixed widgets — after <main> in the DOM on purpose, so they sit at
+            the end of the tab order instead of ahead of the content. */}
+        <div className="fixed bottom-5 left-5 z-50 hidden sm:flex flex-col gap-2">
+          <button
+            onClick={() => setMode("desktop")}
+            className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-500 dark:border-gray-400 text-gray-700 dark:text-gray-300 text-xs font-medium shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+            title="Switch to desktop OS view"
+          >
+            <MonitorSmartphone size={14} />
+            Desktop mode
+          </button>
+          <button
+            onClick={() => setMode("mobile")}
+            className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-500 dark:border-gray-400 text-gray-700 dark:text-gray-300 text-xs font-medium shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+            title="Switch to mobile app view"
+          >
+            <Smartphone size={14} />
+            Mobile mode
+          </button>
+        </div>
         <FaqChatbot />
       </div>
     </div>

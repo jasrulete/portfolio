@@ -17,7 +17,6 @@ import { ChevronLeft, ChevronRight, LayoutGrid, RotateCw, Disc3, Layers } from "
 import { cn } from "../../lib/utils";
 import type { GithubStats } from "../../lib/use-github-stats";
 import DepthCard from "./depth-card";
-import ScrollReveal from "./scroll-reveal";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
 import {
   CompactProjectCard,
@@ -93,24 +92,24 @@ export function ProjectsLayout({
   return <GridLayout {...props} />;
 }
 
+// Project cards are deliberately not wrapped in ScrollReveal: a card that
+// fades in on a delay is a card a fast scroller sees as an empty box.
 function GridLayout({ projects, stats, statsLoading, statsFailed }: LayoutProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {projects.map((project, index) => (
-        <ScrollReveal key={project.title} delay={index * 100}>
-          <DepthCard>
-            <ProjectCard
-              project={project}
-              stats={"github" in project ? stats[project.github as string] : undefined}
-              statsLoading={statsLoading}
-              statsFailed={
-                "github" in project
-                  ? Boolean(statsFailed[project.github as string])
-                  : false
-              }
-            />
-          </DepthCard>
-        </ScrollReveal>
+      {projects.map((project) => (
+        <DepthCard key={project.title}>
+          <ProjectCard
+            project={project}
+            stats={"github" in project ? stats[project.github as string] : undefined}
+            statsLoading={statsLoading}
+            statsFailed={
+              "github" in project
+                ? Boolean(statsFailed[project.github as string])
+                : false
+            }
+          />
+        </DepthCard>
       ))}
     </div>
   );
@@ -119,10 +118,8 @@ function GridLayout({ projects, stats, statsLoading, statsFailed }: LayoutProps)
 function FlipLayout({ projects }: LayoutProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {projects.map((project, index) => (
-        <ScrollReveal key={project.title} delay={index * 100}>
-          <FlipProjectCard project={project} />
-        </ScrollReveal>
+      {projects.map((project) => (
+        <FlipProjectCard key={project.title} project={project} />
       ))}
     </div>
   );
@@ -134,13 +131,7 @@ function FlipLayout({ projects }: LayoutProps) {
 const CARD_W = 352;
 const CARD_H = 560;
 const CORRIDOR_GAP = 40;
-const CORRIDOR_ITEM = CARD_W + CORRIDOR_GAP;
-
-// Half a viewport minus half a card, less one gap (the flex gap after the
-// spacer supplies that). Rendered as real flex items rather than padding:
-// an overflowing flex container's end padding does not count toward
-// scrollWidth, which left the final card short of centre.
-const EDGE_SPACER = `calc(50% - ${CARD_W / 2 + CORRIDOR_GAP}px)`;
+const CARD_W_MIN = 240;
 
 function CorridorLayout({ projects }: LayoutProps) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -157,11 +148,24 @@ function CorridorLayout({ projects }: LayoutProps) {
     return () => ro.disconnect();
   }, []);
 
+  // The fixed 352px card was wider than the content area of a 375px phone,
+  // so it overflowed sideways on its own. Cap it to the track and derive the
+  // scroll maths from the measured width rather than the constant.
+  const cardW = trackWidth
+    ? Math.max(CARD_W_MIN, Math.min(CARD_W, trackWidth - 48))
+    : CARD_W;
+  const corridorItem = cardW + CORRIDOR_GAP;
+  // Half a viewport minus half a card, less one gap (the flex gap after the
+  // spacer supplies that). Rendered as real flex items rather than padding:
+  // an overflowing flex container's end padding does not count toward
+  // scrollWidth, which left the final card short of centre.
+  const edgeSpacer = `calc(50% - ${cardW / 2 + CORRIDOR_GAP}px)`;
+
   // Rounding rather than a distance threshold: this guarantees exactly one
   // featured card, so two never expand at once mid-scroll.
   const activeIndex = Math.min(
     projects.length - 1,
-    Math.max(0, Math.round(scrollLeft / CORRIDOR_ITEM))
+    Math.max(0, Math.round(scrollLeft / corridorItem))
   );
 
   return (
@@ -176,14 +180,14 @@ function CorridorLayout({ projects }: LayoutProps) {
           className="flex"
           style={{ gap: CORRIDOR_GAP, transformStyle: "preserve-3d" }}
         >
-          <div aria-hidden className="shrink-0" style={{ width: EDGE_SPACER }} />
+          <div aria-hidden className="shrink-0" style={{ width: edgeSpacer }} />
 
           {projects.map((project, i) => {
             // With the spacers above and below, card i's centre sits exactly
             // i * CORRIDOR_ITEM to the right of the viewport centre at
             // scrollLeft 0 — so distance from centre is just that minus how
             // far we have scrolled.
-            const fromCentre = i * CORRIDOR_ITEM - scrollLeft;
+            const fromCentre = i * corridorItem - scrollLeft;
             const offset = trackWidth ? fromCentre / (trackWidth / 2) : 0;
             const c = Math.max(-1.6, Math.min(1.6, offset));
             const t = Math.abs(c);
@@ -197,7 +201,7 @@ function CorridorLayout({ projects }: LayoutProps) {
                 key={project.title}
                 className="shrink-0"
                 style={{
-                  width: CARD_W,
+                  width: cardW,
                   height: CARD_H,
                   scrollSnapAlign: "center",
                   transformStyle: "preserve-3d",
@@ -226,10 +230,10 @@ function CorridorLayout({ projects }: LayoutProps) {
             );
           })}
 
-          <div aria-hidden className="shrink-0" style={{ width: EDGE_SPACER }} />
+          <div aria-hidden className="shrink-0" style={{ width: edgeSpacer }} />
         </div>
       </div>
-      <p className="text-center text-xs text-gray-500 dark:text-gray-400">
+      <p className="text-center text-xs text-gray-600 dark:text-gray-400">
         Scroll sideways — the centred card turns to face you.
       </p>
     </div>
@@ -271,9 +275,13 @@ function RingLayout({ projects }: LayoutProps) {
             }}
           >
             {projects.map((project, i) => (
+              // inert as well as aria-hidden: without it, Tab lands on the
+              // Live demo / Source links of panels facing away from the
+              // viewer, with nothing announced and nothing visible.
               <div
                 key={project.title}
                 aria-hidden={i !== index}
+                inert={i !== index}
                 className="absolute left-1/2 top-1/2 h-80 w-64"
                 style={{
                   // Centring must live in the inline transform: an inline
@@ -300,7 +308,7 @@ function RingLayout({ projects }: LayoutProps) {
           className="min-w-[12rem] text-center text-sm font-medium text-gray-700 dark:text-gray-200"
         >
           {projects[index]?.title}
-          <span className="ml-2 text-xs text-gray-400">
+          <span className="ml-2 text-xs text-gray-600 dark:text-gray-400">
             {index + 1}/{projects.length}
           </span>
         </p>

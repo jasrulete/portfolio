@@ -25,11 +25,11 @@ interface Command {
 
 const SECTIONS = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "design", label: "Design Lab" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "about", label: "About" },
+  { id: "design", label: "Design Lab" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -60,6 +60,8 @@ export default function CommandPalette({
   const [selected, setSelected] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -76,10 +78,17 @@ export default function CommandPalette({
 
   useEffect(() => {
     if (open) {
+      // Remember where focus came from (the navbar button, a keystroke's
+      // target, …) so closing puts it back instead of dropping it on <body>.
+      openerRef.current = document.activeElement as HTMLElement | null;
       setQuery("");
       setSelected(0);
       inputRef.current?.focus();
+    } else if (wasOpen.current) {
+      openerRef.current?.focus?.();
+      openerRef.current = null;
     }
+    wasOpen.current = open;
   }, [open]);
 
   const commands = useMemo<Command[]>(() => {
@@ -145,7 +154,7 @@ export default function CommandPalette({
       },
       {
         id: "download-cv",
-        label: "Download CV",
+        label: "Open CV (PDF)",
         hint: "File",
         keywords: "cv curriculum vitae pdf download",
         icon: <FileText size={16} />,
@@ -156,7 +165,7 @@ export default function CommandPalette({
       },
       {
         id: "download-resume",
-        label: "Download Resume",
+        label: "Open resume (PDF)",
         hint: "File",
         keywords: "resume pdf download",
         icon: <FileText size={16} />,
@@ -277,9 +286,9 @@ export default function CommandPalette({
             aria-controls="command-palette-listbox"
             aria-autocomplete="list"
             aria-activedescendant={activeOption ? `command-option-${activeOption.id}` : undefined}
-            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none"
           />
-          <kbd className="shrink-0 text-[10px] font-semibold text-gray-400 border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5">
+          <kbd className="shrink-0 text-[10px] font-semibold text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5">
             ESC
           </kbd>
         </div>
@@ -314,14 +323,14 @@ export default function CommandPalette({
             >
               <span className="shrink-0 text-gray-400">{cmd.icon}</span>
               <span className="flex-1 truncate">{cmd.label}</span>
-              <span className="shrink-0 text-[10px] uppercase tracking-wide text-gray-400">
+              <span className="shrink-0 text-[10px] uppercase tracking-wide text-gray-500 dark:text-gray-400">
                 {cmd.hint}
               </span>
             </button>
           ))}
         </div>
 
-        <div className="px-4 py-2 border-t border-gray-200 dark:border-gray-700 text-[11px] text-gray-400 flex gap-4">
+        <div className="px-4 py-2 border-t border-gray-200 dark:border-gray-700 text-[11px] text-gray-500 dark:text-gray-400 flex gap-4">
           <span>↑↓ navigate</span>
           <span>↵ select</span>
           <span>esc close</span>

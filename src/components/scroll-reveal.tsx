@@ -34,11 +34,13 @@ export default function ScrollReveal({
     <div
       ref={ref}
       className={cn(
-        "transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100",
+        "transition-all duration-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100",
         inView ? visible[direction] : hidden[direction],
         className
       )}
-      style={{ transitionDelay: inView ? `${delay}ms` : "0ms" }}
+      // Capped here rather than at each call site: a stagger past ~100ms just
+      // leaves blank space in front of a fast scroller.
+      style={{ transitionDelay: inView ? `${Math.min(delay, 100)}ms` : "0ms" }}
     >
       {children}
     </div>

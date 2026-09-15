@@ -70,6 +70,17 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Global backstop: the per-component reduced-motion paths only cover the
+     components that opted in — hover/press transforms, the mobile menu and
+     the accordion transitions ignored the preference entirely. */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .animate-pop,
   .animate-bounce,
   .animate-pulse {

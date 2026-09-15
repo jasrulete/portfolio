@@ -11,7 +11,7 @@ export default function AboutSection() {
 
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
-      <SectionHeading title="About Me" />
+      <SectionHeading title="About" />
       <AboutGrid
         education={education}
         cvUrl={cvUrl}
@@ -57,19 +57,32 @@ function AboutGrid({
         <div>
           {/* <div className="mb-8"> */}
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-              {profile.tagline}
+              I&apos;m a full-stack web developer in Cebu City. I graduated with
+              a BS in Computer Science from the University of the Philippines
+              Cebu in July 2026. I&apos;m doing contract development work at the
+              moment, and I&apos;m open to software developer, web developer and
+              QA engineer roles.
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-              I&apos;m a computer science graduate from UP Cebu. Most of my work
-              leans quantitative — machine learning classifiers, agent-based
-              models, and simulations in Python — and I like shipping it with a
-              UI so people can actually try it.
+              Most of what I build is full-stack web work: Next.js and
+              TypeScript over PostgreSQL or SQLite. ShelfStock is a store whose
+              checkout locks the stock row so two buyers can&apos;t both take
+              the last unit, with 262 API tests behind it. Nexus CRM has
+              Playwright end-to-end tests and an eval that fires
+              prompt-injection payloads at its AI layer. On the Shopify side,
+              Kitchen Line Supply is a theme I wrote from an empty folder in
+              Liquid, and its cart, filters and mobile menu keep working with
+              JavaScript switched off. The part I like is finding what breaks
+              quietly — then fixing it and writing it down.
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Right now I&apos;m building an edge security framework for
-              smart-home IoT: lightweight ML that decides when
-              resource-constrained devices should switch between AES and
-              ChaCha20. I still write my technical reports in LaTeX, by choice.
+              My thesis was a security framework for smart-home IoT that uses a
+              decision tree to judge threat level and switches each device
+              between AES-128 and ChaCha20 based on its context; across 180
+              simulation runs it cut mean response time by 63.40% and energy use
+              by 27.39% against static encryption. I also co-wrote an
+              agent-based model of bridge degradation in NetLogo for a modelling
+              course. I still write my technical reports in LaTeX, by choice.
             </p>
           {/* </div> */}
 
@@ -79,13 +92,13 @@ function AboutGrid({
               {education.school}
             </p>
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
-              {education.campus} · {education.expected}
+              {education.campus} · Graduated {education.graduated}
             </p>
-            <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4">
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
               {education.honors}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-              Relevant courseworks
+              Relevant coursework
             </p>
             <div className="flex flex-wrap gap-2">
               {education.coursework.map((course) => (
@@ -98,7 +111,7 @@ function AboutGrid({
                     hoveredCourse === course
                       ? "bg-blue-600 text-white scale-110 shadow-md"
                       : hoveredCourse
-                        ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 scale-95"
+                        ? "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 scale-95"
                         : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/40",
                   )}
                 >

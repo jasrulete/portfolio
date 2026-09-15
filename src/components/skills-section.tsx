@@ -34,7 +34,7 @@ function SkillsContent({
 }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <SectionHeading title="Technical Skills" />
+      <SectionHeading title="Skills" />
       <p className="text-center text-gray-500 dark:text-gray-400 -mt-10 mb-10 text-sm">
         Click a category to focus{onSkillSelect && " · click a skill to see it used in projects"}
       </p>
@@ -127,11 +127,20 @@ function SkillGroupCard({
                 title={`View ${projectCount} project${projectCount > 1 ? "s" : ""} using ${item}`}
                 className={cn(
                   chipClass,
-                  "hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  // Blue text plus a visible count: on a touch screen the
+                  // hover state was the only thing separating a chip that
+                  // filters the projects grid from one that does nothing.
+                  "text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 )}
                 style={chipStyle}
               >
                 {item}
+                <span className="ml-1.5 font-semibold" aria-hidden>
+                  ·&nbsp;{projectCount}
+                </span>
+                <span className="sr-only">
+                  , {projectCount} project{projectCount > 1 ? "s" : ""}
+                </span>
               </a>
             );
           }

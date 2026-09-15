@@ -8,9 +8,9 @@ import {
 } from "./design-lab-3d";
 
 const BRAND_COLORS = [
-  { name: "Blue 600", hex: "#2563EB", className: "bg-blue-600", role: "The one accent" },
+  { name: "Blue 600", hex: "#2563EB", className: "bg-blue-600", role: "Accent fills" },
   { name: "Blue 400", hex: "#60A5FA", className: "bg-blue-400", role: "Dark-mode accent" },
-  { name: "Amber 600", hex: "#D97706", className: "bg-amber-600", role: "Highlights" },
+  { name: "Blue 500", hex: "#3B82F6", className: "bg-blue-500", role: "Focus rings" },
   { name: "Green 600", hex: "#16A34A", className: "bg-green-600", role: "Success" },
   { name: "Red 600", hex: "#DC2626", className: "bg-red-600", role: "Errors" },
 ];
@@ -67,11 +67,14 @@ export default function DesignLabSection() {
                 ))}
               </div>
               <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                One accent, no decorative gradients on content or components.
-                The desktop/mobile OS chrome uses a wallpaper gradient as a
-                deliberate skeuomorphic touch, kept separate from this content
-                system. Body text holds a 4.5:1 contrast ratio (WCAG AA) in
-                both themes.
+                One blue accent — 600 for fills, 400 on dark surfaces, 500 for
+                focus rings. Green and red are reserved for success and error
+                states, not decoration. No decorative gradients on content or
+                components; the desktop/mobile OS chrome uses a wallpaper
+                gradient as a deliberate skeuomorphic touch, kept separate from
+                this content system. Body text measures 7.56:1 in light mode
+                (gray-600 on white) and 12.0:1 in dark (gray-300 on gray-900),
+                against the 4.5:1 WCAG AA threshold.
               </p>
             </LabCard>
           </ScrollReveal>
@@ -108,7 +111,7 @@ export default function DesignLabSection() {
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <button
                   type="button"
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                 >
                   Primary
                 </button>
@@ -132,7 +135,10 @@ export default function DesignLabSection() {
               <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1.5 list-disc list-inside">
                 <li>Every interactive element has hover, focus, and active states</li>
                 <li>Keyboard focus is always visible (never `outline: none` alone)</li>
-                <li>Touch targets keep comfortable padding and spacing</li>
+                <li>
+                  White-on-blue-600 buttons measure 5.17:1, rising to 6.70:1 on
+                  hover (blue-700)
+                </li>
               </ul>
             </LabCard>
           </ScrollReveal>
@@ -155,12 +161,12 @@ export default function DesignLabSection() {
                 ))}
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                Motion conveys hierarchy, not decoration — and every animation
-                is disabled for visitors with{" "}
+                Motion conveys hierarchy, not decoration. Content reveals use
+                the 300ms Standard tier; 700ms is reserved for imagery. A global{" "}
                 <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
                   prefers-reduced-motion
-                </code>
-                .
+                </code>{" "}
+                rule cuts every transition and animation on the page to ~0ms.
               </p>
             </LabCard>
           </ScrollReveal>
@@ -242,7 +248,7 @@ function TypeSample({
 }) {
   return (
     <div>
-      <p className="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+      <p className="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">
         {label}
       </p>
       <p className={className}>{text}</p>
@@ -263,7 +269,7 @@ function ThemePreview({ variant }: { variant: "light" | "dark" }) {
     >
       <p
         className={`text-[11px] uppercase tracking-wider mb-3 ${
-          isDark ? "text-gray-500" : "text-gray-400"
+          isDark ? "text-gray-400" : "text-gray-500"
         }`}
       >
         {isDark ? "Dark" : "Light"}

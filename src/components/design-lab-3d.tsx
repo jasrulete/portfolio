@@ -13,7 +13,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import DepthCard, { DepthLayer } from "./depth-card";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
 
-const PANELS = ["Sportal", "Toxic Detector", "Minna no Nihongo", "HoneyOS", "BudgetWise"];
+const PANELS = ["ShelfStock", "Nexus CRM", "Kitchen Line", "Pulse", "AmBot"];
 
 /** 1 — Layers separated on the Z axis inside a tilting card. */
 export function DepthLayersDemo() {
@@ -71,7 +71,7 @@ export function FlipCardDemo() {
           }}
         >
           <FlipFace className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-            <p className="font-display text-sm font-bold">Sportal</p>
+            <p className="font-display text-sm font-bold">ShelfStock</p>
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Click or press Enter
             </p>
@@ -81,7 +81,7 @@ export function FlipCardDemo() {
             className="border-blue-500/40 bg-blue-600 text-white"
           >
             <p className="text-xs leading-relaxed">
-              Next.js · Prisma · MongoDB — automated bracket generation
+              Next.js · Express · PostgreSQL — row-locked checkout
             </p>
           </FlipFace>
         </div>
@@ -265,7 +265,7 @@ function DemoFrame({
 }) {
   return (
     <div className="flex flex-col">
-      <p className="mb-1 text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+      <p className="mb-1 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
         {label}
       </p>
       <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-50 p-4 dark:bg-gray-900/40">

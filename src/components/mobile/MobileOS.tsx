@@ -35,31 +35,31 @@ export default function MobileOS({
   const OpenAppComponent = openApp?.Component;
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900 text-white">
-      {/* Status bar */}
-      <div className="relative z-20 flex items-center justify-between px-4 h-10 text-xs font-display bg-black/20">
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900 text-white">
+      {/* Status bar — h-12 so its controls can reach the 44px touch minimum */}
+      <div className="relative z-20 flex shrink-0 items-center justify-between px-4 h-12 text-xs font-display bg-black/20">
         <span>{time}</span>
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenPalette}
             aria-label="Open command palette"
-            className="p-1.5 rounded-full bg-white/15 hover:bg-white/25 transition-colors"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <Search size={12} />
+            <Search size={14} aria-hidden />
           </button>
           <button
             onClick={onExit}
             aria-label="Exit mobile view"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 transition-colors"
+            className="flex h-11 items-center gap-1.5 px-4 rounded-full bg-white/15 hover:bg-white/25 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <Monitor size={12} />
+            <Monitor size={14} aria-hidden />
             Exit
           </button>
         </div>
       </div>
 
       {openApp ? (
-        <div className="absolute inset-x-0 top-10 bottom-0 z-10 flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <div className="absolute inset-x-0 top-12 bottom-0 z-10 flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
           <header className="flex items-center gap-1 px-2 h-12 shrink-0 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
             <button
               onClick={() => setOpenApp(null)}
@@ -79,7 +79,9 @@ export default function MobileOS({
           </div>
         </div>
       ) : (
-        <div className="relative h-full flex flex-col">
+        // flex-1, not h-full: h-full measured the whole viewport and pushed
+        // the dock 40px past the bottom of the screen, clipping it.
+        <div className="relative flex min-h-0 flex-1 flex-col">
           {/* Home screen clock */}
           <div className="text-center mt-10 mb-8">
             <p className="font-display text-5xl font-bold drop-shadow-lg">{time}</p>

@@ -26,7 +26,7 @@ function runCommand(raw: string): string {
 
   if (cmd === "about" || cmd === "cat about.txt") {
     const e = profile.education;
-    return `${e.degree}\n${e.school}, ${e.campus}\nExpected: ${e.expected}\nHonors: ${e.honors}`;
+    return `${e.degree}\n${e.school}, ${e.campus}\nGraduated: ${e.graduated}\nHonors: ${e.honors}`;
   }
 
   if (cmd === "skills" || cmd === "cat skills.txt") {

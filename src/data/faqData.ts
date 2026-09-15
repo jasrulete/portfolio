@@ -16,28 +16,28 @@ export const faqData: FaqEntry[] = [
     question: "Who are you?",
     keywords: ["introduce yourself", "about you", "background", "tell me about jeric"],
     answer:
-      "I'm Jeric, a BS Computer Science graduate from the University of the Philippines Cebu (July 2026). I'm based in Cebu City, Philippines, and I build full-stack web apps, AI/automation tools, and the occasional NetLogo simulation when a thesis demands it.",
+      "I'm Jeric, a BS Computer Science graduate of the University of the Philippines Cebu (July 2026), based in Cebu City. I build full-stack web apps with Next.js, TypeScript and PostgreSQL, and I write the unit, component and end-to-end tests for them. Right now I'm doing contract development work, and I'm open to other opportunities.",
   },
   {
     id: "tech-stack",
     question: "What's your tech stack?",
     keywords: ["skills", "technologies", "what do you use", "languages", "frameworks"],
     answer:
-      "Core stack: React, Next.js, TypeScript, Node.js, Python, MongoDB, Supabase, Prisma, REST APIs, WebSockets, Zustand, shadcn/ui, React Hook Form, Zod, and Tailwind CSS — plus recent hands-on work with PHP/Laravel/Blade. For AI-assisted dev I mainly use Cursor, with GitHub Copilot and ChatGPT in the mix.",
+      "TypeScript, React and Next.js on the front end; Node.js with Express, or Next.js Server Actions, on the back end; PostgreSQL, SQLite and MongoDB, with Prisma or plain SQL. For testing I use Vitest, Supertest, Testing Library, Jest and Playwright, with GitHub Actions running them on every push, and Docker Compose for local stacks. I also work in Python with pandas, have written a Shopify theme by hand in Liquid, built an Android companion app with React Native and Expo, and built a small Laravel app with login and per-user access control. I use AI coding assistants, and I disclose it where it matters — the Kitchen Line theme's README says so outright.",
   },
   {
     id: "experience",
     question: "What work experience do you have?",
     keywords: ["internship", "jobs", "employment history", "companies worked"],
     answer:
-      "I interned at Lexmark (now Xerox) in IT operations and asset management. I'm currently onboarding into a remote internship with Mvolo / MGR Products B.V., a Dutch e-commerce company.",
+      "Since July 2026 I've been doing remote full-stack contract work on SaaS web applications: a hosting migration and deployment pipelines, Stripe billing fixes, authentication hardening and automated tests. The clients and the details of their systems stay confidential. From June to August 2026 I was also a Software Developer Intern at Mvolo, a remote internship with an international founding team, working on a cross-platform React Native (Expo) app with TypeScript and Supabase. I signed an NDA, so that's as much as I can say about it. From June 2025 to January 2026 I was an Asset Management Specialist Intern at Lexmark (now Xerox) in Cebu City, where I built and maintained internal tracking tools for enterprise hardware asset lifecycle management and worked with IT teams to keep asset records consistent across systems. I've also helped run my family's rice trading business since high school: operations, inventory and deliveries.",
   },
   {
     id: "ai-agent-project",
     question: "Tell me about your local AI agent project",
     keywords: ["chatbot project", "ollama", "chromadb", "rag project", "local llm"],
     answer:
-      "I built a persistent CLI chatbot completely from scratch and running fully locally on a Windows 11 laptop with an RTX 3060 (6GB VRAM). It uses Ollama for the LLM, ChromaDB for vector storage, sentence-transformers for embeddings, and manual Hermes-style tool calling I wrote myself rather than relying on a framework's built-in agent loop. This FAQ chatbot on my site actually borrows the same retrieval philosophy, just simplified for the browser.",
+      "Hermes is a command-line chatbot that runs entirely on my own machine, with no cloud API keys. Ollama serves the model, ChromaDB stores past exchanges as sentence-transformer embeddings so it can pull relevant history back into context after a restart, and it can search the web through DuckDuckGo and read local files. I didn't use an agent framework for the tools: the model writes tool-call blocks and my own code parses and runs them. For something you can click instead, DocChat is a hosted RAG app — upload a PDF or paste a URL and it answers with page or URL citations. Both are on my GitHub rather than in the Projects section.",
   },
   {
     id: "thesis",
@@ -58,7 +58,7 @@ export const faqData: FaqEntry[] = [
     question: "What projects have you built?",
     keywords: ["portfolio projects", "what have you made", "show me your work"],
     answer:
-      "A few highlights: the IoT edge security thesis project, Sportal, a Toxic Comment Detector, a Bridge Structural Degradation Simulation in NetLogo (modeled on the Mandaue–Mactan Bridge), and Pulse. Check the Projects section above for details on each.",
+      "The ones I'd show you first: ShelfStock, a store with a row-locked checkout, 262 API tests and an Android companion app; Nexus CRM, which has an AI layer, Playwright tests and a prompt-injection eval; Kitchen Line Supply, a Shopify theme hand-written in Liquid; Pulse, a take-home assessment where I fixed a broken WebRTC app and closed two critical session vulnerabilities; my thesis on adaptive encryption for smart-home IoT; a NetLogo agent-based model of bridge degradation I co-wrote for a course; and AmBot, a backtesting pipeline whose honest result was that none of the strategies worked. They're all in the Projects section, or the Projects app in desktop mode. Smaller experiments are on my GitHub.",
   },
   {
     id: "site-features",
@@ -75,7 +75,7 @@ export const faqData: FaqEntry[] = [
       "hidden features",
     ],
     answer:
-      "More than scroll! Use the buttons in the bottom-left to switch into a desktop OS mode (draggable windows, a working terminal, playable Snake and Minesweeper, even a camera with a thumbs-up photo timer and a live gesture-recognition app) or a phone-launcher mobile mode — all three views share the same content. Press Ctrl+K (or Cmd+K) anywhere for a command palette, click any skill chip to see the projects that use it, and check the Design Lab section for the design system this site runs on.",
+      "More than scroll. On screens 640px and wider, the buttons in the bottom-left switch into a desktop OS mode (draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app) or a phone-launcher mobile mode — all three views share the same content. On any screen size, press Ctrl+K (or Cmd+K) for a command palette, which can switch view modes too, as well as jump to sections and projects. Click any skill chip to see the projects that use it, and open the Design Lab section for the design system this site runs on.",
   },
   {
     id: "how-built",
@@ -95,6 +95,6 @@ export const faqData: FaqEntry[] = [
     question: "Are you looking for work?",
     keywords: ["available for hire", "open to opportunities", "job search", "contact"],
     answer:
-      "Yes — I'm actively looking for junior developer, QA, and AI-automation roles. Feel free to reach out through the contact section, GitHub, or LinkedIn linked on this site.",
+      "I'm doing contract development work right now, and I'm open to other opportunities — software developer, web developer or QA engineer roles. You can reach me through the contact form, at rulete.jeric@gmail.com, or on GitHub and LinkedIn, both linked in the footer.",
   },
 ];

@@ -43,7 +43,7 @@ export default function GithubStatsBadge({
 
   if (!stats && failed) {
     return (
-      <span className="text-xs text-gray-400 dark:text-gray-500">
+      <span className="text-xs text-gray-500 dark:text-gray-400">
         GitHub stats unavailable
       </span>
     );

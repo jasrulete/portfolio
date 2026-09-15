@@ -30,7 +30,9 @@ function DesktopIcons() {
   };
 
   return (
-    <div className="absolute top-4 left-4 grid grid-cols-1 gap-4 sm:grid-flow-col sm:grid-rows-4 z-10">
+    // Four columns below sm: a single column of 13 icons inside an
+    // overflow-hidden desktop left the last five unreachable on a phone.
+    <div className="absolute top-4 left-4 grid grid-cols-4 gap-2 sm:grid-cols-none sm:gap-4 sm:grid-flow-col sm:grid-rows-4 z-10">
       {OS_APPS.map((app) => (
         <button
           key={app.id}
@@ -39,10 +41,12 @@ function DesktopIcons() {
             e.preventDefault();
             handleOpen(app);
           }}
-          className="flex flex-col items-center gap-1 w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60 outline-none"
+          className="flex flex-col items-center gap-1 w-16 sm:w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 focus-visible:ring-2 focus-visible:ring-white outline-none"
         >
           <span className="drop-shadow-lg">{app.icon}</span>
-          <span className="text-xs text-center drop-shadow-lg leading-tight">
+          {/* A solid scrim, not a drop shadow: white-on-sky-600 is 4.1:1 and
+              text-shadow does not count toward contrast. */}
+          <span className="text-xs text-center leading-tight rounded bg-black/40 px-1">
             {app.desktopLabel}
           </span>
         </button>

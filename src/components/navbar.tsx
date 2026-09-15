@@ -9,13 +9,14 @@ interface NavbarProps {
   onOpenPalette?: () => void;
 }
 
+// Order mirrors the section order in App.tsx. "Home" is omitted because the
+// logo to the left of this list already links to #home.
 const navLinks = [
-  { href: "#home", id: "home", label: "Home" },
-  { href: "#about", id: "about", label: "About" },
-  { href: "#skills", id: "skills", label: "Skills" },
-  { href: "#design", id: "design", label: "Design" },
   { href: "#projects", id: "projects", label: "Projects" },
   { href: "#experience", id: "experience", label: "Experience" },
+  { href: "#skills", id: "skills", label: "Skills" },
+  { href: "#about", id: "about", label: "About" },
+  { href: "#design", id: "design", label: "Design" },
   { href: "#contact", id: "contact", label: "Contact" },
 ];
 
@@ -72,7 +73,7 @@ function NavContent({
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                  "relative px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
                   activeSection === link.id
                     ? "text-blue-600 dark:text-blue-400"
                     : "text-gray-600 dark:text-gray-300 hover:text-blue-500"
@@ -84,11 +85,18 @@ function NavContent({
                 )}
               </a>
             ))}
+            <a
+              href={profile.resumeUrl}
+              download="Jeric-Rulete_Resume.pdf"
+              className="ml-2 px-3 py-1.5 rounded-full border-2 border-blue-600 dark:border-blue-400 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+            >
+              Resume
+            </a>
             {onOpenPalette && (
               <button
                 onClick={onOpenPalette}
                 aria-label="Open command palette"
-                className="flex items-center gap-1.5 ml-2 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 transition-colors"
+                className="flex items-center gap-1.5 ml-2 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 transition-colors"
               >
                 <SearchIcon />
                 <kbd className="text-[10px] font-semibold">Ctrl K</kbd>
@@ -134,6 +142,14 @@ function NavContent({
               {link.label}
             </a>
           ))}
+          <a
+            href={profile.resumeUrl}
+            download="Jeric-Rulete_Resume.pdf"
+            onClick={() => setIsMenuOpen(false)}
+            className="mt-2 block px-3 py-2 rounded-full border-2 border-blue-600 dark:border-blue-400 text-center font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors"
+          >
+            Resume
+          </a>
         </div>
       </div>
     </>

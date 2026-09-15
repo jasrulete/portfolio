@@ -1,97 +1,59 @@
-# Portfolio Website
+# Portfolio
 
-A modern portfolio website built with React, TypeScript, Vite, and Tailwind CSS.
+Jeric Rulete's personal portfolio: a single-page React app with no backend. The same
+content is presented three ways — a classic scrolling page, a simulated desktop OS with
+draggable windows, and a phone-style launcher — plus a Ctrl/Cmd+K command palette and a
+Fuse.js FAQ chatbot.
 
-## 🚀 Features
+Built with React 19, TypeScript, Vite and Tailwind CSS.
 
-- ⚡️ Built with Vite for fast development and optimized production builds
-- 🎨 Styled with Tailwind CSS for responsive and modern design
-- 📱 Fully responsive design
-- 🔍 SEO optimized
-- 🎯 TypeScript for better development experience
-- 🧪 ESLint and Prettier for code quality
+Live: https://jasrulete.github.io/portfolio/
 
-## 📦 Prerequisites
+## Getting started
 
-- Node.js (v16 or higher)
-- npm or yarn
+Requires Node.js 18 or newer (Vite 6).
 
-## 🛠️ Installation
-
-1. Clone the repository:
 ```bash
 git clone https://github.com/jasrulete/portfolio.git
-cd portfolio-web
-```
-
-2. Install dependencies:
-```bash
+cd portfolio
 npm install
-# or
-yarn install
+cp .env.example .env   # then fill in VITE_WEB3FORMS_ACCESS_KEY
+npm run dev            # http://localhost:5173
 ```
 
-3. Start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Scripts
 
-4. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Type-check (`tsc -b`), then build to `dist/` |
+| `npm run lint` | Run ESLint over the repo |
+| `npm run preview` | Serve the production build locally |
+| `npm run deploy` | Manual `gh-pages -d dist` publish (fallback only) |
 
-## 🏗️ Building for Production
+There is **no test runner configured** — `npm run test` does not exist.
 
-To create a production build:
+## Environment
 
-```bash
-npm run build
-# or
-yarn build
-```
+`VITE_WEB3FORMS_ACCESS_KEY` powers the contact form (Web3Forms). Copy `.env.example` to
+`.env` for local development. In CI it comes from the repo secret of the same name and is
+injected at build time; without it, the contact form renders but is disabled.
 
-The build artifacts will be stored in the `dist/` directory.
+## Deployment
 
-## 🧪 Testing
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which runs `npm ci && npm run
+build` and publishes `dist/` to GitHub Pages.
 
-Run the test suite:
+The site is served from the `/portfolio/` base path (`base: "/portfolio/"` in
+`vite.config.ts`), so any absolute asset path must go through `import.meta.env.BASE_URL`
+or it will 404 in production.
 
-```bash
-npm run test
-# or
-yarn test
-```
-
-## 📝 Project Structure
+## Project structure
 
 ```
-portfolio-web/
-├── src/            # Source files
-├── public/         # Static files
-├── dist/           # Production build
-├── node_modules/   # Dependencies
-├── .gitignore      # Git ignore file
-├── package.json    # Project dependencies and scripts
-├── tsconfig.json   # TypeScript configuration
-├── vite.config.ts  # Vite configuration
-└── README.md       # Project documentation
+index.html          Entry document, meta tags, CSP
+public/             Static files copied as-is (PDFs, favicon, og-image)
+src/components/     Classic sections, plus desktop/ and mobile/ OS chrome
+src/data/           profile.ts (all portfolio content), faqData.ts, skill-match.ts
+src/hooks/          Portfolio hooks; root lib/ and hooks/ hold shadcn-style utilities
 ```
-
-## 🔧 Configuration
-
-- `vite.config.ts` - Vite configuration
-- `tsconfig.json` - TypeScript configuration
-- `tailwind.config.js` - Tailwind CSS configuration
-- `postcss.config.js` - PostCSS configuration
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👥 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request

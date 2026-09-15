@@ -12,13 +12,10 @@
 //                      full case-study card would be unreadable
 
 import { useState } from "react";
-import background from "../assets/background.jpg";
-import dungeon_descent from "../assets/dungeon.png";
-import finance_app from "../assets/finance-app.png";
-import honeyos from "../assets/honeyOS.png";
-import minna_no from "../assets/minna-no.png";
-import sportal from "../assets/sportal_logo.webp";
-import toxic_detector from "../assets/Toxic-image(kaggle sourced).png";
+import kitchen_line from "../assets/kitchen-line.jpg";
+import nexus_crm from "../assets/nexus-crm.jpg";
+import pulse from "../assets/pulse.jpg";
+import shelfstock from "../assets/shelfstock.jpg";
 import { profile } from "../data/profile";
 import type { GithubStats } from "../../lib/use-github-stats";
 import GithubStatsBadge from "./github-stats-badge";
@@ -27,18 +24,19 @@ import { DepthLayer } from "./depth-card";
 export type Project = (typeof profile.projects)[number];
 
 const projectImages: Record<string, string> = {
-  "Context-Aware Edge Security Framework": background,
-  Sportal: sportal,
-  "Toxic Comment Detector": toxic_detector,
-  "Minna no Nihongo": minna_no,
-  "Portfolio Website": background,
-  "Dungeon Descent": dungeon_descent,
-  BudgetWise: finance_app,
-  HoneyOS: honeyos,
+  ShelfStock: shelfstock,
+  "Nexus CRM": nexus_crm,
+  Pulse: pulse,
+  "Kitchen Line Supply (Shopify Theme)": kitchen_line,
 };
 
-function imageFor(title: string): string {
-  return projectImages[title] ?? background;
+/**
+ * Undefined on purpose when a project has no screenshot: the banner then
+ * renders flat instead of borrowing an unrelated photo, which is what the
+ * old shared fallback image did on the two projects that lacked one.
+ */
+function imageFor(title: string): string | undefined {
+  return projectImages[title];
 }
 
 export interface ProjectCardProps {
@@ -63,11 +61,9 @@ export function ProjectCard({
       <ProjectBanner project={project} />
 
       <DepthLayer depth={16} className="p-6 flex flex-col flex-grow">
-        {"inProgress" in project && project.inProgress && (
-          <span className="inline-block self-start text-xs font-bold tracking-wide px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 mb-5">
-            IN PROGRESS
-          </span>
-        )}
+        {/* Links first: the demo and the source are the two clicks worth
+            making, and at the bottom they sat under 500px+ of case study. */}
+        <ProjectLinks project={project} className="mb-5" />
 
         <CaseStudy project={project} />
 
@@ -81,8 +77,7 @@ export function ProjectCard({
           </div>
         )}
 
-        <TagList tags={project.tags} className="mb-6" />
-        <ProjectLinks project={project} />
+        <TagList tags={project.tags} />
       </DepthLayer>
     </article>
   );
@@ -171,17 +166,31 @@ export function CompactProjectCard({
   project: Project;
   featured?: boolean;
 }) {
+  const image = imageFor(project.title);
+
   return (
     <article className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
       <div className="relative shrink-0" style={{ paddingBottom: "46%" }}>
-        <ProjectImage src={imageFor(project.title)} alt={project.title} />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent" />
-        <h3 className="absolute bottom-3 left-4 right-4 text-base font-bold text-white drop-shadow-md">
+        {image ? (
+          <>
+            <ProjectImage src={image} alt="" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent" />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gray-900" />
+        )}
+        <h3
+          className={`absolute bottom-3 left-4 right-4 text-base font-bold text-white drop-shadow-md ${
+            image ? "" : "font-display"
+          }`}
+        >
           {project.title}
         </h3>
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden p-4">
+        <ProjectLinks project={project} className="mb-3 shrink-0" small />
+
         <TagList
           tags={project.tags.slice(0, featured ? 6 : 3)}
           className="mb-3 shrink-0"
@@ -189,14 +198,10 @@ export function CompactProjectCard({
         />
 
         {featured && (
-          <div className="mb-3 flex-1 overflow-y-auto pr-1 text-left [&_dl]:mb-0 [&_dd]:text-xs">
+          <div className="flex-1 overflow-y-auto pr-1 text-left [&_dl]:mb-0 [&_dd]:text-xs">
             <CaseStudy project={project} />
           </div>
         )}
-
-        <div className="mt-auto shrink-0">
-          <ProjectLinks project={project} />
-        </div>
       </div>
     </article>
   );
@@ -216,6 +221,7 @@ function ProjectBanner({
   // the top of the banner instead of the banner itself.
   const overlayPosition =
     "absolute bottom-4 left-5 right-5 flex justify-between items-end";
+  const image = imageFor(project.title);
 
   const overlayContent = (
     <>
@@ -226,7 +232,11 @@ function ProjectBanner({
             <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
           )}
         </p>
-        <h3 className="text-2xl font-bold text-white drop-shadow-md">
+        <h3
+          className={`text-2xl font-bold text-white drop-shadow-md ${
+            image ? "" : "font-display"
+          }`}
+        >
           {project.title}
         </h3>
       </div>
@@ -249,8 +259,15 @@ function ProjectBanner({
       }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-t-xl">
-        <ProjectImage src={imageFor(project.title)} alt={project.title} />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+        {image ? (
+          <>
+            {/* alt="" — the title is announced by the h3 immediately below. */}
+            <ProjectImage src={image} alt="" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gray-900" />
+        )}
       </div>
       {flat ? (
         <div className={overlayPosition}>{overlayContent}</div>
@@ -271,9 +288,7 @@ function CaseStudy({ project }: { project: Project }) {
           The Challenge
         </dt>
         <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-          {"challenge" in project
-            ? (project.challenge as string)
-            : (project.description as string)}
+          {project.challenge}
         </dd>
       </div>
 
@@ -353,40 +368,54 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function ProjectLinks({ project }: { project: Project }) {
+/**
+ * Demo first as the primary action, source second — and nothing at all when a
+ * project has neither, rather than a "coming soon" placeholder that reads as
+ * unfinished work. Each link carries the project name for screen readers,
+ * which otherwise hear "Live demo" once per card with no way to tell them
+ * apart.
+ */
+function ProjectLinks({
+  project,
+  className,
+  small,
+}: {
+  project: Project;
+  className?: string;
+  small?: boolean;
+}) {
   const hasGithub = "github" in project && Boolean(project.github);
   const hasDemo = "demo" in project && Boolean(project.demo);
 
-  if (!hasGithub && !hasDemo) {
-    return (
-      <p className="text-sm text-gray-400 dark:text-gray-500 italic">
-        Links coming soon
-      </p>
-    );
-  }
+  if (!hasGithub && !hasDemo) return null;
+
+  const size = small ? "px-3 py-1.5 text-xs" : "px-4 py-2.5 text-sm";
+  const base = `inline-flex items-center gap-1.5 rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800 ${size}`;
 
   return (
-    <div className="flex gap-6 flex-wrap">
-      {hasGithub && (
-        <a
-          href={project.github as string}
-          className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <GithubIcon />
-          Code
-        </a>
-      )}
+    <div className={`flex gap-3 flex-wrap ${className ?? ""}`}>
       {hasDemo && (
         <a
           href={project.demo as string}
-          className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors hover:translate-x-1"
+          className={`${base} bg-blue-600 text-white hover:bg-blue-700`}
           target="_blank"
           rel="noopener noreferrer"
         >
           <ExternalIcon />
-          Live Demo
+          Live demo
+          <span className="sr-only"> for {project.title}</span>
+        </a>
+      )}
+      {hasGithub && (
+        <a
+          href={project.github as string}
+          className={`${base} border border-gray-500 text-gray-700 hover:border-blue-600 hover:text-blue-600 dark:border-gray-400 dark:text-gray-200 dark:hover:border-blue-400 dark:hover:text-blue-400`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubIcon />
+          Source
+          <span className="sr-only"> for {project.title}</span>
         </a>
       )}
     </div>
@@ -397,7 +426,7 @@ function GithubIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 mr-1"
+      className="h-4 w-4"
       fill="currentColor"
       viewBox="0 0 24 24"
       aria-hidden
@@ -411,7 +440,7 @@ function ExternalIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 mr-1"
+      className="h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

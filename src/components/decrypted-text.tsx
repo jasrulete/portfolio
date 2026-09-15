@@ -87,7 +87,11 @@ export default function DecryptedText({
   }, [text, trigger, speed, reducedMotion]);
 
   return (
-    <span ref={ref} className={className} aria-label={text}>
+    // ARIA 1.2 forbids aria-label on a generic span, and screen readers do not
+    // expose it reliably — so the real text ships as sr-only content instead,
+    // with the scrambling copy hidden from assistive tech.
+    <span ref={ref} className={className}>
+      <span className="sr-only">{text}</span>
       <span aria-hidden>{display}</span>
     </span>
   );

@@ -20,7 +20,7 @@ export function useFaqChat(fallbackAnswer: string) {
     {
       id: "intro",
       role: "bot",
-      text: "Hi! I'm a small FAQ bot trained on Jeric's background. Ask me about his skills, projects, experience, or anything else on this site.",
+      text: "Pick a question or type keywords — answers come from a short FAQ.",
     },
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);

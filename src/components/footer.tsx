@@ -1,8 +1,8 @@
-import { FaGithub, FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { profile } from "../data/profile";
 
 export default function Footer() {
-  const { social, shortName, title, expectedGraduation } = profile;
+  const { social, shortName, title, location } = profile;
 
   return (
     <footer className="bg-gray-900 text-white py-12">
@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="mb-6 md:mb-0">
             <h3 className="text-2xl font-bold">{shortName}</h3>
             <p className="text-gray-400 mt-2">
-              {title} · Graduating {expectedGraduation}
+              {title} · {location}
             </p>
           </div>
 
@@ -26,22 +26,13 @@ export default function Footer() {
               <FaGithub className="hover:scale-110 transition-transform" />
             </a>
             <a
-              href={social.facebook}
+              href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors"
-              aria-label="Facebook"
+              aria-label="LinkedIn"
             >
-              <FaFacebook className="hover:scale-110 transition-transform" />
-            </a>
-            <a
-              href={social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-              aria-label="Instagram"
-            >
-              <FaInstagram className="hover:scale-110 transition-transform" />
+              <FaLinkedin className="hover:scale-110 transition-transform" />
             </a>
           </div>
         </div>
