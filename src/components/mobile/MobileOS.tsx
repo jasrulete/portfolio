@@ -81,7 +81,7 @@ export default function MobileOS({
       ) : (
         // flex-1, not h-full: h-full measured the whole viewport and pushed
         // the dock 40px past the bottom of the screen, clipping it.
-        <div className="relative flex min-h-0 flex-1 flex-col">
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-y-auto">
           {/* Home screen clock */}
           <div className="text-center mt-10 mb-8">
             <p className="font-display text-5xl font-bold drop-shadow-lg">{time}</p>

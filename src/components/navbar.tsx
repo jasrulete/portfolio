@@ -173,6 +173,7 @@ function DarkModeToggle({
         mobile && "mr-2"
       )}
       aria-label="Toggle dark mode"
+      aria-pressed={darkMode}
     >
       {darkMode ? <SunIcon /> : <MoonIcon />}
     </button>

@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";
 import { faqData, type FaqEntry } from "../data/faqData";
+import { usePrefersReducedMotion } from "./use-prefers-reduced-motion";
 
 export interface ChatMessage {
   id: string;
@@ -24,6 +25,7 @@ export function useFaqChat(fallbackAnswer: string) {
     },
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   const fuse = useMemo(
     () =>
@@ -39,12 +41,14 @@ export function useFaqChat(fallbackAnswer: string) {
     [],
   );
 
+  // An explicit `behavior` beats the CSS `scroll-behavior: auto !important`
+  // that index.css sets under prefers-reduced-motion, so it has to be gated here.
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
+      behavior: reducedMotion ? "auto" : "smooth",
     });
-  }, [messages]);
+  }, [messages, reducedMotion]);
 
   function answerFor(query: string): string {
     const trimmed = query.trim();

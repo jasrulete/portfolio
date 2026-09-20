@@ -8,7 +8,7 @@ export default function ChatbotApp() {
   const chat = useFaqChat(FALLBACK_ANSWER);
 
   return (
-    <div className="h-full flex flex-col bg-white dark:bg-slate-900">
+    <div className="h-full flex flex-col bg-white dark:bg-gray-900">
       <FaqChatBody chat={chat} />
     </div>
   );

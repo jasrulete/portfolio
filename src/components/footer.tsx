@@ -20,7 +20,7 @@ export default function Footer() {
               href={social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="p-2 rounded-full text-gray-400 hover:text-white transition-colors"
               aria-label="GitHub"
             >
               <FaGithub className="hover:scale-110 transition-transform" />
@@ -29,7 +29,7 @@ export default function Footer() {
               href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="p-2 rounded-full text-gray-400 hover:text-white transition-colors"
               aria-label="LinkedIn"
             >
               <FaLinkedin className="hover:scale-110 transition-transform" />

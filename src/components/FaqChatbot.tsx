@@ -13,6 +13,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, X, MessageCircleQuestion } from "lucide-react";
 import { useFaqChat } from "../hooks/use-faq-chat";
+import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
 import { FaqChatBody } from "./chat-window";
 
 const FALLBACK_ANSWER =
@@ -24,13 +25,14 @@ export default function FaqChatbot() {
   const panelRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const wasOpen = useRef(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (open) {
       panelRef.current?.focus();
       chat.scrollRef.current?.scrollTo({
         top: chat.scrollRef.current.scrollHeight,
-        behavior: "smooth",
+        behavior: reducedMotion ? "auto" : "smooth",
       });
     } else if (wasOpen.current) {
       // Escape or the close button must not drop focus onto <body>.

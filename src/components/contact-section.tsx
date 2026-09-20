@@ -209,7 +209,7 @@ function ContactGrid({
           ) : (
             <p className="text-sm text-red-600 dark:text-red-400">
               Contact form requires environment setup on this host. Use the email
-              addresses on the left.
+              address on the left.
             </p>
           )}
 

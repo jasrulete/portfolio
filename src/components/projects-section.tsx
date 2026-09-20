@@ -58,7 +58,7 @@ export default function Projects({
               aria-pressed={!activeTag && filter === cat}
               className={cn(
                 "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
-                filter === cat
+                !activeTag && filter === cat
                   ? "bg-blue-600 text-white shadow-md scale-105"
                   : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:scale-105 hover:shadow",
               )}

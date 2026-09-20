@@ -90,11 +90,13 @@ function SkillGroupCard({
           e.stopPropagation();
           onSelect();
         }}
+        aria-pressed={isFocused}
         className="w-full text-left rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
       >
         <h3 className="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400 flex items-center justify-between">
           {group.title}
           <span
+            aria-hidden
             className={cn(
               "text-xs transition-transform duration-300",
               isFocused && "rotate-180"

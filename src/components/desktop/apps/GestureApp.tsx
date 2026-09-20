@@ -200,7 +200,7 @@ export default function GestureApp() {
               <button
                 type="button"
                 onClick={start}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
               >
                 <Camera size={16} />
                 Enable camera
@@ -267,7 +267,7 @@ export default function GestureApp() {
                   </span>
                   <div>
                     <p className="font-display text-sm font-bold">{g.label}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-600 dark:text-gray-300">
                       {Math.round(g.score * 100)}% sure
                     </p>
                   </div>

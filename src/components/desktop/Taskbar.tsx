@@ -35,7 +35,7 @@ export default function Taskbar({
             onClick={() => (w.minimized ? focusWindow(w.id) : minimizeWindow(w.id))}
             className={`flex items-center gap-1.5 px-3 h-9 rounded-md text-xs font-medium shrink-0 transition-colors ${
               w.minimized
-                ? "text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10"
+                ? "text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10"
                 : "bg-blue-500/10 text-blue-700 dark:text-blue-300"
             }`}
           >

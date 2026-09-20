@@ -117,6 +117,7 @@ export default function TerminalApp() {
         <span className="text-gray-400 mr-1">:~$</span>
         <input
           autoFocus
+          aria-label="Terminal command"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 bg-transparent outline-none text-green-400"

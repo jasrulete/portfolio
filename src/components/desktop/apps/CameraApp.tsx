@@ -234,7 +234,7 @@ export default function CameraApp() {
               <button
                 type="button"
                 onClick={start}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
               >
                 <Camera size={16} />
                 Enable camera
@@ -278,7 +278,7 @@ export default function CameraApp() {
               aria-pressed={hands === "on"}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-colors disabled:opacity-60 ${
                 hands === "on"
-                  ? "bg-blue-600 hover:bg-blue-500 text-white"
+                  ? "bg-blue-600 hover:bg-blue-700 text-white"
                   : "border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-blue-500"
               }`}
             >
@@ -288,7 +288,7 @@ export default function CameraApp() {
             <button
               type="button"
               onClick={capture}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
             >
               <Camera size={14} />
               Snap
@@ -337,7 +337,7 @@ export default function CameraApp() {
             <a
               href={snapshot}
               download="camera-snapshot.png"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
             >
               <Download size={14} />
               Download

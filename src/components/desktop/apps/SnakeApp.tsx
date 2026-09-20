@@ -146,7 +146,7 @@ export default function SnakeApp() {
         <button
           type="button"
           onClick={() => (gameOver || !running ? reset() : setRunning(false))}
-          className="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold"
+          className="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold"
         >
           {running ? "Pause" : gameOver ? "Restart" : "Start"}
         </button>

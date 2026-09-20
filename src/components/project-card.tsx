@@ -116,7 +116,7 @@ export function FlipProjectCard({ project }: { project: Project }) {
             <button
               type="button"
               onClick={() => setFlipped(true)}
-              className="mt-auto self-start rounded-full bg-blue-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              className="mt-auto self-start rounded-full bg-blue-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               View case study →
             </button>
@@ -135,7 +135,7 @@ export function FlipProjectCard({ project }: { project: Project }) {
           <div className="flex-1 overflow-y-auto">
             <CaseStudy project={project} />
           </div>
-          <div className="shrink-0 pt-4 border-t border-gray-100 dark:border-gray-700">
+          <div className="shrink-0 pt-4">
             <ProjectLinks project={project} />
             <button
               type="button"

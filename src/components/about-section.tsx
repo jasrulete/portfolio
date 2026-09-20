@@ -111,7 +111,7 @@ function AboutGrid({
                     hoveredCourse === course
                       ? "bg-blue-600 text-white scale-110 shadow-md"
                       : hoveredCourse
-                        ? "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 scale-95"
+                        ? "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 scale-95"
                         : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/40",
                   )}
                 >
@@ -147,7 +147,7 @@ function AboutGrid({
             <a
               href={resumeUrl}
               download="Jeric-Rulete_Resume.pdf"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-400 text-gray-600 dark:text-gray-300 dark:border-gray-500 font-semibold hover:bg-gray-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-500 text-gray-600 dark:text-gray-300 dark:border-gray-500 font-semibold hover:bg-gray-600 hover:text-white dark:hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
