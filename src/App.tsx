@@ -45,6 +45,13 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem(THEME_KEY, darkMode ? "dark" : "light");
+    // Hand the pre-paint script's inline <html> background back to React. The
+    // script in index.html sets it before the stylesheet loads so a
+    // dark-preferring visitor sees no white frame; without this line it would
+    // stay dark behind the page after a toggle to light mode.
+    document.documentElement.style.backgroundColor = darkMode
+      ? "#111827"
+      : "";
   }, [darkMode]);
 
   useEffect(() => {

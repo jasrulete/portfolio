@@ -1,4 +1,6 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+// lucide-react was already a dependency; these two glyphs were the only reason
+// the site carried a second icon package, so that package is gone.
+import { Github, Linkedin } from "lucide-react";
 import { profile } from "../data/profile";
 
 export default function Footer({
@@ -27,7 +29,7 @@ export default function Footer({
               className="p-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               aria-label="GitHub"
             >
-              <FaGithub />
+              <Github size={24} aria-hidden />
             </a>
             <a
               href={social.linkedin}
@@ -36,7 +38,7 @@ export default function Footer({
               className="p-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               aria-label="LinkedIn"
             >
-              <FaLinkedin />
+              <Linkedin size={24} aria-hidden />
             </a>
           </div>
         </div>

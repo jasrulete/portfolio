@@ -69,8 +69,12 @@ export default function Projects({
             state is the final state. No observer, no opacity-0 start, so a
             fast scroller never sees an empty box. */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {filtered.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+          {filtered.map((project, i) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              priority={i === 0}
+            />
           ))}
         </div>
 

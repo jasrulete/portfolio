@@ -31,13 +31,19 @@ function imageFor(title: string): string | undefined {
 
 export interface ProjectCardProps {
   project: Project;
+  /**
+   * Set on the first card in the grid only. Its banner is the largest thing
+   * above the fold after the hero text, so it loads eagerly at high priority;
+   * every other banner stays lazy.
+   */
+  priority?: boolean;
 }
 
 /** Full case-study card. */
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, priority = false }: ProjectCardProps) {
   return (
     <article className="card-enter bg-white dark:bg-gray-800 rounded-xl shadow-sm flex flex-col h-full border border-gray-300 dark:border-gray-700 hover:border-blue-600/60 dark:hover:border-blue-400/60 transition-colors duration-150">
-      <ProjectBanner project={project} />
+      <ProjectBanner project={project} priority={priority} />
 
       <div className="p-5 sm:p-6 flex flex-col flex-grow">
         {/* Links first: the demo and the source are the two clicks worth
@@ -52,7 +58,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
   );
 }
 
-function ProjectBanner({ project }: { project: Project }) {
+function ProjectBanner({
+  project,
+  priority,
+}: {
+  project: Project;
+  priority: boolean;
+}) {
   const image = imageFor(project.title);
 
   return (
@@ -61,7 +73,7 @@ function ProjectBanner({ project }: { project: Project }) {
         {image ? (
           <>
             {/* alt="" — the title is announced by the h3 immediately below. */}
-            <ProjectImage src={image} alt="" />
+            <ProjectImage src={image} alt="" priority={priority} />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
           </>
         ) : (
@@ -138,9 +150,13 @@ function TagList({
   return (
     <div className={`flex flex-wrap gap-2 ${className ?? ""}`}>
       {tags.map((tag) => (
+        // gray-100/gray-700, not white/gray-800: the card itself is
+        // white/gray-800, so a chip in the card colour had only a 1.47:1
+        // hairline to separate it. Text stays over the 4.5:1 floor —
+        // gray-600 on gray-100 is 6.85:1, gray-300 on gray-700 is 7.00:1.
         <span
           key={tag}
-          className="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-full font-medium text-xs px-3 py-1.5"
+          className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-full font-medium text-xs px-3 py-1.5"
         >
           {tag}
         </span>
@@ -149,7 +165,24 @@ function TagList({
   );
 }
 
-function ProjectImage({ src, alt }: { src: string; alt: string }) {
+/**
+ * Every screenshot in src/assets is 1280×769. The attributes are stated so a
+ * client with no CSS (or a slow one) knows the intrinsic size; the banner's
+ * own aspect box is what actually reserves the space, so there is no shift
+ * either way.
+ */
+const SHOT_WIDTH = 1280;
+const SHOT_HEIGHT = 769;
+
+function ProjectImage({
+  src,
+  alt,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  priority: boolean;
+}) {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -160,7 +193,10 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        loading="lazy"
+        width={SHOT_WIDTH}
+        height={SHOT_HEIGHT}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         decoding="async"
         onLoad={() => setLoaded(true)}
         ref={(el) => {

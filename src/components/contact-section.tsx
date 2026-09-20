@@ -26,19 +26,54 @@ export default function Contact() {
     email: "",
     message: "",
   });
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<React.ReactNode>("");
   // Status drives the colour of the result line. Deriving it from the message
   // text ("sent") painted "Sending..." in error red.
   const [status, setStatus] = useState<Status>("idle");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // hCaptcha is the largest third-party payload on the page and most visitors
+  // never reach this form, so the widget mounts only once someone actually
+  // starts filling it in — first focus or first keystroke, whichever comes
+  // first.
+  const [captchaArmed, setCaptchaArmed] = useState(false);
+  const [captchaCompact, setCaptchaCompact] = useState(false);
   const captchaRef = useRef<HCaptcha>(null);
   const isSubmitting = status === "sending";
+
+  const armCaptcha = () => {
+    if (captchaArmed) return;
+    // The standard widget is 303px wide and overflows the column below ~335px.
+    // Read once, here, because changing size after mount means re-rendering
+    // the challenge anyway.
+    setCaptchaCompact(window.matchMedia("(max-width: 399px)").matches);
+    setCaptchaArmed(true);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    armCaptcha();
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Ad blockers and corporate proxies block hCaptcha outright. Without this
+  // the form is simply unusable with no explanation and no way out.
+  const handleCaptchaError = () => {
+    setStatus("error");
+    setResult(
+      <>
+        The CAPTCHA could not load — it may be blocked on this network. Email me
+        at{" "}
+        <a
+          href={`mailto:${profile.formEmail}`}
+          className="rounded underline underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        >
+          {profile.formEmail}
+        </a>{" "}
+        instead.
+      </>
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -119,9 +154,13 @@ export default function Contact() {
           formConfigured={formConfigured}
           isSubmitting={isSubmitting}
           captchaRef={captchaRef}
+          captchaArmed={captchaArmed}
+          captchaCompact={captchaCompact}
+          onFieldActivity={armCaptcha}
           onChange={handleChange}
           onSubmit={handleSubmit}
           onCaptchaVerify={(token) => setCaptchaToken(token || null)}
+          onCaptchaError={handleCaptchaError}
         />
       </div>
     </section>
@@ -135,19 +174,27 @@ function ContactGrid({
   formConfigured,
   isSubmitting,
   captchaRef,
+  captchaArmed,
+  captchaCompact,
+  onFieldActivity,
   onChange,
   onSubmit,
   onCaptchaVerify,
+  onCaptchaError,
 }: {
   formData: FormFields;
-  result: string;
+  result: React.ReactNode;
   status: Status;
   formConfigured: boolean;
   isSubmitting: boolean;
   captchaRef: React.RefObject<HCaptcha | null>;
+  captchaArmed: boolean;
+  captchaCompact: boolean;
+  onFieldActivity: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onCaptchaVerify: (token: string) => void;
+  onCaptchaError: () => void;
 }) {
   const statusClass =
     status === "success"
@@ -168,6 +215,7 @@ function ContactGrid({
           autoComplete="name"
           value={formData.name}
           onChange={onChange}
+          onFocus={onFieldActivity}
           required
           maxLength={100}
         />
@@ -179,6 +227,7 @@ function ContactGrid({
           autoComplete="email"
           value={formData.email}
           onChange={onChange}
+          onFocus={onFieldActivity}
           required
         />
         <div>
@@ -190,6 +239,7 @@ function ContactGrid({
             name="message"
             value={formData.message}
             onChange={onChange}
+            onFocus={onFieldActivity}
             required
             rows={5}
             placeholder="Write your message here..."
@@ -198,13 +248,17 @@ function ContactGrid({
         </div>
 
         {formConfigured ? (
-          <HCaptcha
-            sitekey={HCAPTCHA_SITE_KEY}
-            reCaptchaCompat={false}
-            onVerify={onCaptchaVerify}
-            onExpire={() => onCaptchaVerify("")}
-            ref={captchaRef}
-          />
+          captchaArmed && (
+            <HCaptcha
+              sitekey={HCAPTCHA_SITE_KEY}
+              size={captchaCompact ? "compact" : "normal"}
+              reCaptchaCompat={false}
+              onVerify={onCaptchaVerify}
+              onExpire={() => onCaptchaVerify("")}
+              onError={onCaptchaError}
+              ref={captchaRef}
+            />
+          )
         ) : (
           <p className="text-sm text-red-600 dark:text-red-400">
             Contact form requires environment setup on this host. Use the email
@@ -310,6 +364,7 @@ function FormField({
   name,
   value,
   onChange,
+  onFocus,
   type = "text",
   autoComplete,
   required,
@@ -320,6 +375,7 @@ function FormField({
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFocus?: () => void;
   type?: string;
   autoComplete?: string;
   required?: boolean;
@@ -338,6 +394,7 @@ function FormField({
         maxLength={maxLength}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
         required={required}
         className="w-full px-4 py-2.5 border border-gray-500 dark:border-gray-400 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
       />

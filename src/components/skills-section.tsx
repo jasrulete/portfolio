@@ -36,9 +36,13 @@ export function StackBlock({
                 ? countProjectsUsingSkill(item)
                 : 0;
               // The chips no longer sit inside a card, so they carry their own
-              // hairline boundary.
+              // hairline boundary. The two surfaces are deliberate: an inert
+              // chip is filled (gray-100/gray-700) so it reads against a white
+              // or gray-800 card, and a linked chip stays on the card colour
+              // because blue-400 on gray-700 measures 4.05:1 — under the 4.5:1
+              // floor — while blue-400 on gray-800 is 5.77:1.
               const chipClass =
-                "text-xs px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 transition-colors duration-150";
+                "text-xs px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 transition-colors duration-150";
 
               if (projectCount > 0 && onSkillSelect) {
                 return (
@@ -52,7 +56,7 @@ export function StackBlock({
                       // Blue text plus a visible count: on a touch screen the
                       // hover state was the only thing separating a chip that
                       // filters the projects grid from one that does nothing.
-                      "text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white active:bg-blue-700 active:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900",
+                      "bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white active:bg-blue-700 active:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900",
                     )}
                   >
                     {item}
@@ -67,7 +71,10 @@ export function StackBlock({
               }
 
               return (
-                <span key={item} className={chipClass}>
+                <span
+                  key={item}
+                  className={cn(chipClass, "bg-gray-100 dark:bg-gray-700")}
+                >
                   {item}
                 </span>
               );
