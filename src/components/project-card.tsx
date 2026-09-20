@@ -1,15 +1,8 @@
 // project-card.tsx
 //
-// The card presentations shared by every projects layout. Split out of
-// projects-section.tsx once the section gained a layout switcher: the section
-// now owns filtering and layout choice, while this file owns how a single
-// project renders.
-//
-// Three variants, because layout genuinely drives density:
-//   ProjectCard        full case study — grid
-//   FlipProjectCard    summary front, case study on the back face — flip
-//   CompactProjectCard image/title/tags/links — ring and corridor, where a
-//                      full case-study card would be unreadable
+// How a single project renders. Split out of projects-section.tsx when that
+// section briefly owned several layouts; the section now owns only the skill
+// filter, and this file owns the one card presentation left.
 
 import { useState } from "react";
 import kitchen_line from "../assets/kitchen-line.jpg";
@@ -17,9 +10,6 @@ import nexus_crm from "../assets/nexus-crm.jpg";
 import pulse from "../assets/pulse.jpg";
 import shelfstock from "../assets/shelfstock.jpg";
 import { profile } from "../data/profile";
-import type { GithubStats } from "../../lib/use-github-stats";
-import GithubStatsBadge from "./github-stats-badge";
-import { DepthLayer } from "./depth-card";
 
 export type Project = (typeof profile.projects)[number];
 
@@ -41,223 +31,32 @@ function imageFor(title: string): string | undefined {
 
 export interface ProjectCardProps {
   project: Project;
-  stats?: GithubStats;
-  statsLoading?: boolean;
-  statsFailed?: boolean;
 }
 
-/** Full case-study card — the grid layout's presentation. */
-export function ProjectCard({
-  project,
-  stats,
-  statsLoading,
-  statsFailed,
-}: ProjectCardProps) {
+/** Full case-study card. */
+export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg flex flex-col h-full border border-gray-100 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-colors duration-300"
-      style={{ transformStyle: "preserve-3d" }}
-    >
+    <article className="bg-white dark:bg-gray-800 rounded-xl shadow-lg flex flex-col h-full border border-gray-100 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-colors duration-300">
       <ProjectBanner project={project} />
 
-      <DepthLayer depth={16} className="p-6 flex flex-col flex-grow">
+      <div className="p-6 flex flex-col flex-grow">
         {/* Links first: the demo and the source are the two clicks worth
             making, and at the bottom they sat under 500px+ of case study. */}
         <ProjectLinks project={project} className="mb-5" />
 
         <CaseStudy project={project} />
 
-        {"github" in project && project.github && (
-          <div className="mb-3">
-            <GithubStatsBadge
-              stats={stats}
-              loading={statsLoading}
-              failed={statsFailed}
-            />
-          </div>
-        )}
-
         <TagList tags={project.tags} />
-      </DepthLayer>
-    </article>
-  );
-}
-
-/**
- * Summary on the front, case study on the back face.
- *
- * The card is an <article> with a button inside — not a button wrapping the
- * card. A <button> may only contain phrasing content, so nesting headings and
- * links inside one is invalid and would collapse the whole card into a single
- * accessible name. The face turned away is marked `inert` so its controls
- * never collect focus while invisible.
- */
-export function FlipProjectCard({ project }: { project: Project }) {
-  const [flipped, setFlipped] = useState(false);
-
-  return (
-    <article className="h-[36rem]" style={{ perspective: "1400px" }}>
-      <div
-        className="relative h-full w-full transition-transform duration-500 motion-reduce:transition-none"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-        }}
-      >
-        {/* Front */}
-        <div
-          inert={flipped}
-          className="absolute inset-0 flex flex-col rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <ProjectBanner project={project} flat />
-          <div className="p-6 flex flex-col flex-grow">
-            <TagList tags={project.tags} className="mb-4" />
-            <button
-              type="button"
-              onClick={() => setFlipped(true)}
-              className="mt-auto self-start rounded-full bg-blue-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-            >
-              View case study →
-            </button>
-          </div>
-        </div>
-
-        {/* Back */}
-        <div
-          inert={!flipped}
-          className="absolute inset-0 flex flex-col rounded-xl border border-blue-500/40 bg-white dark:bg-gray-800 p-6 shadow-lg"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <h3 className="font-display text-lg font-bold mb-4 shrink-0">
-            {project.title}
-          </h3>
-          <div className="flex-1 overflow-y-auto">
-            <CaseStudy project={project} />
-          </div>
-          <div className="shrink-0 pt-4">
-            <ProjectLinks project={project} />
-            <button
-              type="button"
-              onClick={() => setFlipped(false)}
-              className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
-            >
-              ← Back
-            </button>
-          </div>
-        </div>
       </div>
     </article>
   );
 }
 
-/**
- * Image, title, tags and links — for the ring and corridor layouts.
- *
- * `featured` expands the content to include the case study. The card's box
- * stays the same size either way: in the corridor the width feeds the scroll
- * maths, so a card that changed size while centred would shift every other
- * card's position and fight the very centring that triggered it.
- */
-export function CompactProjectCard({
-  project,
-  featured,
-}: {
-  project: Project;
-  featured?: boolean;
-}) {
+function ProjectBanner({ project }: { project: Project }) {
   const image = imageFor(project.title);
 
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
-      <div className="relative shrink-0" style={{ paddingBottom: "46%" }}>
-        {image ? (
-          <>
-            <ProjectImage src={image} alt="" />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent" />
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-gray-900" />
-        )}
-        <h3
-          className={`absolute bottom-3 left-4 right-4 text-base font-bold text-white drop-shadow-md ${
-            image ? "" : "font-display"
-          }`}
-        >
-          {project.title}
-        </h3>
-      </div>
-
-      <div className="flex flex-1 flex-col overflow-hidden p-4">
-        <ProjectLinks project={project} className="mb-3 shrink-0" small />
-
-        <TagList
-          tags={project.tags.slice(0, featured ? 6 : 3)}
-          className="mb-3 shrink-0"
-          small
-        />
-
-        {featured && (
-          <div className="flex-1 overflow-y-auto pr-1 text-left [&_dl]:mb-0 [&_dd]:text-xs">
-            <CaseStudy project={project} />
-          </div>
-        )}
-      </div>
-    </article>
-  );
-}
-
-function ProjectBanner({
-  project,
-  flat,
-}: {
-  project: Project;
-  flat?: boolean;
-}) {
-  // The positioning must sit on whichever element is the outermost overlay
-  // box. DepthLayer applies a transform, and a transform makes an element the
-  // containing block for absolutely-positioned descendants — so nesting an
-  // `absolute` div inside it would anchor the title to a zero-height box at
-  // the top of the banner instead of the banner itself.
-  const overlayPosition =
-    "absolute bottom-4 left-5 right-5 flex justify-between items-end";
-  const image = imageFor(project.title);
-
-  const overlayContent = (
-    <>
-      <div>
-        <p className="text-sm text-blue-300 font-medium mb-1 drop-shadow-md">
-          {project.period}
-          {"subtitle" in project && project.subtitle && (
-            <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
-          )}
-        </p>
-        <h3
-          className={`text-2xl font-bold text-white drop-shadow-md ${
-            image ? "" : "font-display"
-          }`}
-        >
-          {project.title}
-        </h3>
-      </div>
-      {"category" in project && (
-        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
-          {project.category}
-        </span>
-      )}
-    </>
-  );
-
-  return (
-    // The clip lives on the inner box rather than here: any non-visible
-    // overflow on an ancestor collapses the card's 3D context back to flat.
-    <div
-      className="relative rounded-t-xl"
-      style={{
-        paddingBottom: "35%",
-        transformStyle: flat ? undefined : "preserve-3d",
-      }}
-    >
+    <div className="relative rounded-t-xl" style={{ paddingBottom: "35%" }}>
       <div className="absolute inset-0 overflow-hidden rounded-t-xl">
         {image ? (
           <>
@@ -269,13 +68,28 @@ function ProjectBanner({
           <div className="absolute inset-0 bg-gray-900" />
         )}
       </div>
-      {flat ? (
-        <div className={overlayPosition}>{overlayContent}</div>
-      ) : (
-        <DepthLayer depth={38} className={overlayPosition}>
-          {overlayContent}
-        </DepthLayer>
-      )}
+      <div className="absolute bottom-4 left-5 right-5 flex justify-between items-end">
+        <div>
+          <p className="text-sm text-blue-300 font-medium mb-1 drop-shadow-md">
+            {project.period}
+            {"subtitle" in project && project.subtitle && (
+              <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
+            )}
+          </p>
+          <h3
+            className={`text-2xl font-bold text-white drop-shadow-md ${
+              image ? "" : "font-display"
+            }`}
+          >
+            {project.title}
+          </h3>
+        </div>
+        {"category" in project && (
+          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
+            {project.category}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
@@ -321,20 +135,16 @@ function CaseStudy({ project }: { project: Project }) {
 function TagList({
   tags,
   className,
-  small,
 }: {
   tags: readonly string[];
   className?: string;
-  small?: boolean;
 }) {
   return (
     <div className={`flex flex-wrap gap-2 ${className ?? ""}`}>
       {tags.map((tag) => (
         <span
           key={tag}
-          className={`bg-gray-50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full font-medium ${
-            small ? "text-[10px] px-2 py-0.5" : "text-xs px-3 py-1.5"
-          }`}
+          className="bg-gray-50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full font-medium text-xs px-3 py-1.5"
         >
           {tag}
         </span>
@@ -378,19 +188,17 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
 function ProjectLinks({
   project,
   className,
-  small,
 }: {
   project: Project;
   className?: string;
-  small?: boolean;
 }) {
   const hasGithub = "github" in project && Boolean(project.github);
   const hasDemo = "demo" in project && Boolean(project.demo);
 
   if (!hasGithub && !hasDemo) return null;
 
-  const size = small ? "px-3 py-1.5 text-xs" : "px-4 py-2.5 text-sm";
-  const base = `inline-flex items-center gap-1.5 rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800 ${size}`;
+  const base =
+    "inline-flex items-center gap-1.5 rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800 px-4 py-2.5 text-sm";
 
   return (
     <div className={`flex gap-3 flex-wrap ${className ?? ""}`}>
