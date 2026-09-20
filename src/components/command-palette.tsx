@@ -4,7 +4,6 @@ import {
   Moon,
   Sun,
   MonitorSmartphone,
-  Smartphone,
   LayoutTemplate,
   Github,
   ExternalLink,
@@ -33,12 +32,11 @@ const SECTIONS = [
   { id: "contact", label: "Contact" },
 ];
 
-type ViewMode = "classic" | "desktop" | "mobile";
+type ViewMode = "classic" | "desktop";
 
 const VIEW_MODES: { id: ViewMode; label: string }[] = [
   { id: "classic", label: "Switch to classic view" },
   { id: "desktop", label: "Switch to desktop OS view" },
-  { id: "mobile", label: "Switch to mobile app view" },
 ];
 
 export default function CommandPalette({
@@ -127,12 +125,10 @@ export default function CommandPalette({
         id: `view-${m.id}`,
         label: m.label,
         hint: "Action",
-        keywords: "mode view os windows phone classic desktop mobile switch",
+        keywords: "mode view os windows classic desktop switch",
         icon:
           m.id === "desktop" ? (
             <MonitorSmartphone size={16} />
-          ) : m.id === "mobile" ? (
-            <Smartphone size={16} />
           ) : (
             <LayoutTemplate size={16} />
           ),

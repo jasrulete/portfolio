@@ -1,5 +1,4 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { MonitorSmartphone, Smartphone } from "lucide-react";
 import Hero from "./components/hero-section";
 import AboutSection from "./components/about-section";
 import SkillsSection from "./components/skills-section";
@@ -10,17 +9,15 @@ import ContactSection from "./components/contact-section";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import ScrollProgress from "./components/scroll-progress";
-import FaqChatbot from "./components/FaqChatbot";
 import CommandPalette from "./components/command-palette";
 import ModeLoadingFallback from "./components/mode-loading-fallback";
 
-// Only the classic view (the default) ships eagerly — the desktop-OS and
-// mobile-launcher trees (plus every app they contain) are fetched only when
-// a visitor actually switches into that mode.
+// Only the classic view (the default) ships eagerly — the desktop-OS tree
+// (plus every app it contains) is fetched only when a visitor actually
+// switches into that mode.
 const DesktopOS = lazy(() => import("./components/desktop/DesktopOS"));
-const MobileOS = lazy(() => import("./components/mobile/MobileOS"));
 
-type ViewMode = "classic" | "desktop" | "mobile";
+type ViewMode = "classic" | "desktop";
 const MODE_KEY = "portfolio-view-mode";
 const THEME_KEY = "portfolio-theme";
 
@@ -33,12 +30,18 @@ function App() {
       window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false
     );
   });
-  // sessionStorage, not localStorage: trying the OS modes once should not
-  // strand a later visitor (e.g. reopening the link from an email) in the
+  // `?view=desktop` first, so the desktop OS has a real, linkable URL; then
+  // sessionStorage, not localStorage, because trying the OS mode once should
+  // not strand a later visitor (e.g. reopening the link from an email) in the
   // fake OS. The choice survives a reload, not the tab.
   const [mode, setMode] = useState<ViewMode>(() => {
     if (typeof window === "undefined") return "classic";
-    return (sessionStorage.getItem(MODE_KEY) as ViewMode) || "classic";
+    if (new URLSearchParams(location.search).get("view") === "desktop") {
+      return "desktop";
+    }
+    return sessionStorage.getItem(MODE_KEY) === "desktop"
+      ? "desktop"
+      : "classic";
   });
   const [projectTag, setProjectTag] = useState<string | null>(null);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -80,20 +83,6 @@ function App() {
     );
   }
 
-  if (mode === "mobile") {
-    return (
-      <div className={darkMode ? "dark" : ""}>
-        {palette}
-        <Suspense fallback={<ModeLoadingFallback />}>
-          <MobileOS
-            onExit={() => setMode("classic")}
-            onOpenPalette={() => setPaletteOpen(true)}
-          />
-        </Suspense>
-      </div>
-    );
-  }
-
   return (
     <div className={darkMode ? "dark" : ""}>
       {palette}
@@ -122,28 +111,7 @@ function App() {
           <DesignLabSection />
           <ContactSection />
         </main>
-        <Footer />
-        {/* Fixed widgets — after <main> in the DOM on purpose, so they sit at
-            the end of the tab order instead of ahead of the content. */}
-        <div className="fixed bottom-5 left-5 z-50 hidden sm:flex flex-col gap-2">
-          <button
-            onClick={() => setMode("desktop")}
-            className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-500 dark:border-gray-400 text-gray-700 dark:text-gray-300 text-xs font-medium shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-            title="Switch to desktop OS view"
-          >
-            <MonitorSmartphone size={14} />
-            Desktop mode
-          </button>
-          <button
-            onClick={() => setMode("mobile")}
-            className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-500 dark:border-gray-400 text-gray-700 dark:text-gray-300 text-xs font-medium shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-            title="Switch to mobile app view"
-          >
-            <Smartphone size={14} />
-            Mobile mode
-          </button>
-        </div>
-        <FaqChatbot />
+        <Footer onDesktopMode={() => setMode("desktop")} />
       </div>
     </div>
   );

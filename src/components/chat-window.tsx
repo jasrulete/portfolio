@@ -1,5 +1,5 @@
 // Shared FAQ-chat body — message list, suggestion chips, and input form —
-// reused by both FaqChatbot's floating widget and ChatbotApp's embedded view.
+// rendered by ChatbotApp, the desktop OS "Ask Me" app.
 
 import { Send } from "lucide-react";
 import type { FaqChat } from "../hooks/use-faq-chat";

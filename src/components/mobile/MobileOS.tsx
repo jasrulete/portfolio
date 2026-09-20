@@ -1,3 +1,4 @@
+// Intentionally unlinked: nothing renders this today, pending the owner's decision on whether mobile mode returns.
 import { Suspense, useEffect, useState } from "react";
 import { ChevronLeft, Monitor, Search } from "lucide-react";
 import { profile } from "../../data/profile";
