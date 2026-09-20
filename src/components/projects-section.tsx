@@ -21,6 +21,17 @@ export default function Projects({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Projects" />
 
+        {/* The Design Lab is its own page now; this is one of its two entry
+            points (the other is in the footer). */}
+        <p className="text-center -mt-10 mb-10 text-sm">
+          <a
+            href={`${import.meta.env.BASE_URL}design/`}
+            className="rounded text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+          >
+            The design system behind this site →
+          </a>
+        </p>
+
         {activeTag && (
           <div className="flex justify-center -mt-6 mb-10">
             <button

@@ -42,6 +42,14 @@ export default function Footer({
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p className="mb-3 text-sm">
+            <a
+              href={`${import.meta.env.BASE_URL}design/`}
+              className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+            >
+              Design system →
+            </a>
+          </p>
           {/* The only in-page entry point to the desktop-OS mode, besides the
               command palette and the ?view=desktop link. */}
           {onDesktopMode && (
