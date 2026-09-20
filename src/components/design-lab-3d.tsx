@@ -4,9 +4,9 @@
 // the Design Lab the same way the colour tokens and motion tiers are: as
 // something a visitor can actually poke at, not a screenshot.
 //
-// Everything here is CSS 3D on real DOM — no WebGL, no dependencies. That is
-// a deliberate choice for content: the cards stay focusable, selectable and
-// screen-reader legible, which a <canvas> gallery could never be.
+// Everything here is CSS 3D on real DOM — no WebGL, no 3D library. That is a
+// deliberate choice: the text stays selectable and screen-reader legible and
+// the controls stay real buttons, which a <canvas> gallery could never be.
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -250,7 +250,9 @@ function RingButton({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="rounded-full border border-gray-300 p-2 text-gray-600 transition-colors hover:border-blue-500 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-600 dark:text-gray-300"
+      // inline-flex + p-3 around a 16px icon is exactly 40px, the site's
+      // minimum for an icon button. A line box would have made it taller.
+      className="inline-flex items-center justify-center rounded-lg border border-gray-500 p-3 text-gray-600 transition-colors duration-150 hover:border-blue-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-gray-400 dark:text-gray-300 dark:focus-visible:ring-offset-gray-800"
     >
       {children}
     </button>
