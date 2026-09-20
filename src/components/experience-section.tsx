@@ -42,8 +42,57 @@ export default function ExperienceSection() {
               </article>
             </ScrollReveal>
           ))}
+
+          <Education />
         </div>
       </div>
     </section>
+  );
+}
+
+// Education sits with the work history, not with the bio. The coursework
+// chips are inert labels: the old hover enlarge/dim was mouse-only, with no
+// keyboard or touch equivalent, and revealed nothing.
+function Education() {
+  const { education, cvUrl } = profile;
+
+  return (
+    <div className="pt-6">
+      <h3 className="text-xl font-bold mb-4">Education</h3>
+      <article className="rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 p-5">
+        <h4 className="text-lg font-semibold mb-1">{education.degree}</h4>
+        <p className="text-blue-600 dark:text-blue-400 font-medium">
+          {education.school}
+        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+          {education.campus} · Graduated {education.graduated}
+        </p>
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+          {education.honors}
+        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          Relevant coursework
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {education.coursework.map((course) => (
+            <span
+              key={course}
+              className="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+            >
+              {course}
+            </span>
+          ))}
+        </div>
+        <p className="mt-4 text-sm">
+          <a
+            href={cvUrl}
+            download="Jeric-Rulete_CV.pdf"
+            className="rounded text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+          >
+            Full CV (PDF) — longer academic version
+          </a>
+        </p>
+      </article>
+    </div>
   );
 }

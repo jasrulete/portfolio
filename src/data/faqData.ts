@@ -74,7 +74,7 @@ export const faqData: FaqEntry[] = [
       "hidden features",
     ],
     answer:
-      "More than scroll. Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme, and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and open the Design Lab section for the design system this site runs on.",
+      "More than scroll. Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme, and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and the design system this site runs on has its own page, linked under the Projects heading and in the footer.",
   },
   {
     id: "how-built",

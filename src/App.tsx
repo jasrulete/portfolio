@@ -1,8 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import Hero from "./components/hero-section";
 import AboutSection from "./components/about-section";
-import SkillsSection from "./components/skills-section";
-import DesignLabSection from "./components/design-lab-section";
 import ProjectsSection from "./components/projects-section";
 import ExperienceSection from "./components/experience-section";
 import ContactSection from "./components/contact-section";
@@ -53,6 +51,17 @@ function App() {
   useEffect(() => {
     sessionStorage.setItem(MODE_KEY, mode);
   }, [mode]);
+
+  // `?view=desktop` is a one-shot deep link. Leaving it in the address bar
+  // would make it win on every later reload, so a visitor who exits to the
+  // classic view and refreshes lands back in the OS. The line above has
+  // already persisted the mode to sessionStorage, which survives the reload.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has("view")) return;
+    url.searchParams.delete("view");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -106,9 +115,7 @@ function App() {
             onClearTag={() => setProjectTag(null)}
           />
           <ExperienceSection />
-          <SkillsSection onSkillSelect={setProjectTag} />
-          <AboutSection />
-          <DesignLabSection />
+          <AboutSection onSkillSelect={setProjectTag} />
           <ContactSection />
         </main>
         <Footer onDesktopMode={() => setMode("desktop")} />

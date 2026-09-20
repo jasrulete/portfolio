@@ -22,13 +22,14 @@ interface Command {
   action: () => void;
 }
 
+// Mirrors App.tsx's section order, plus "Stack" — the skills list is a
+// sub-block of About now, so this is how it stays directly reachable.
 const SECTIONS = [
   { id: "home", label: "Home" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
   { id: "about", label: "About" },
-  { id: "design", label: "Design Lab" },
+  { id: "stack", label: "Stack" },
   { id: "contact", label: "Contact" },
 ];
 
