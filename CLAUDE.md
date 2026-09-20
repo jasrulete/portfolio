@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run preview` — serve the production build locally
 - `npm run deploy` — manual `gh-pages -d dist` publish (rarely needed; see Deployment)
 
-There is no test runner configured, despite the README's "Testing" section. Do not assume `npm run test` exists.
+There is no test runner configured. Do not assume `npm run test` exists.
 
 ## Deployment
 
