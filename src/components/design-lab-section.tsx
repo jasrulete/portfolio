@@ -1,4 +1,3 @@
-import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 import {
   DepthLayersDemo,
@@ -36,192 +35,178 @@ const MOTION_TIERS = [
 
 export default function DesignLabSection() {
   return (
-    <section id="design" className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section id="design" className="py-14 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading title="Design Lab" />
-        <p className="text-center text-gray-500 dark:text-gray-400 -mt-10 mb-12 text-sm max-w-2xl mx-auto">
+        <SectionHeading title="Design Lab" className="mb-3" />
+        <p className="text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 text-sm max-w-2xl">
           The design system behind this site — tokens, components, and motion
           rules, documented the way I&apos;d hand them to a team.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <ScrollReveal>
-            <LabCard title="Color tokens">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                {BRAND_COLORS.map((c) => (
-                  <div key={c.name}>
-                    <div className={`h-12 rounded-lg shadow-inner ${c.className}`} />
-                    <p className="mt-2 text-sm font-medium">{c.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      <code>{c.hex}</code> · {c.role}
-                    </p>
+          <LabCard title="Color tokens">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+              {BRAND_COLORS.map((c) => (
+                <div key={c.name}>
+                  <div className={`h-12 rounded-lg shadow-inner ${c.className}`} />
+                  <p className="mt-2 text-sm font-medium">{c.name}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">
+                    <code>{c.hex}</code> · {c.role}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-2">
+              Neutral ramp
+            </p>
+            <div className="flex rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+              {NEUTRAL_RAMP.map((cls) => (
+                <div key={cls} className={`h-8 flex-1 ${cls}`} />
+              ))}
+            </div>
+            <p className="mt-3 text-xs text-gray-600 dark:text-gray-300">
+              One blue accent — 600 for fills, 400 on dark surfaces, 500 for
+              focus rings. Green and red are reserved for success and error
+              states, not decoration. No decorative gradients on content. The
+              gradients that do ship are functional: scrims behind text on
+              project images, the cursor-tracked sheen that gives the 3D
+              cards their specular highlight, and the desktop/mobile OS
+              wallpaper, which is chrome rather than content. Body text
+              measures 7.56:1 in light mode
+              (gray-600 on white) and 12.0:1 in dark (gray-300 on gray-900),
+              against the 4.5:1 WCAG AA threshold.
+            </p>
+          </LabCard>
+
+          <LabCard title="Typography scale">
+            <div className="space-y-5">
+              <TypeSample
+                label="Display · JetBrains Mono · text-4xl / bold"
+                className="font-display text-4xl font-bold"
+                text="Building useful things"
+              />
+              <TypeSample
+                label="Heading · JetBrains Mono · text-2xl / bold"
+                className="font-display text-2xl font-bold"
+                text="Section headings"
+              />
+              <TypeSample
+                label="Body · text-base 16px / text-lg 18px · line-height 1.5+"
+                className="text-base text-gray-600 dark:text-gray-300"
+                text="Long-form copy — About, the hero and section intros — is 16 to 18px."
+              />
+              <TypeSample
+                label="Dense body · text-sm 14px"
+                className="text-sm text-gray-600 dark:text-gray-300"
+                text="Case studies, experience bullets and form fields are 14px. That is the floor for running text."
+              />
+              <TypeSample
+                label="Caption · text-xs 12px · labels 10–11px"
+                className="text-xs font-medium text-gray-600 dark:text-gray-300"
+                text="Tags, metadata and keyboard hints: 12px, down to 10px for compact chips and kbd."
+              />
+            </div>
+          </LabCard>
+
+          <LabCard title="Components & states">
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <button
+                type="button"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              >
+                Primary
+              </button>
+              <button
+                type="button"
+                className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold py-2.5 px-6 rounded-full hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              >
+                Outline
+              </button>
+              <button
+                type="button"
+                disabled
+                className="bg-blue-600 text-white font-bold py-2.5 px-6 rounded-full opacity-50 cursor-not-allowed"
+              >
+                Disabled
+              </button>
+              <span className="text-sm px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700">
+                Tag chip
+              </span>
+            </div>
+            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1.5 list-disc list-inside">
+              <li>Every interactive element has hover, focus, and active states</li>
+              <li>Keyboard focus is always visible (never `outline: none` alone)</li>
+              <li>
+                White-on-blue-600 buttons measure 5.17:1, rising to 6.70:1 on
+                hover (blue-700)
+              </li>
+            </ul>
+          </LabCard>
+
+          <LabCard title="Motion system">
+            <div className="grid grid-cols-3 gap-4 mb-5">
+              {MOTION_TIERS.map((tier) => (
+                <div key={tier.label} className="text-center">
+                  <div className="h-20 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center group cursor-pointer">
+                    <div
+                      className={`w-8 h-8 rounded-lg bg-blue-600 transition-transform ${tier.duration} group-hover:-translate-y-3 group-hover:rotate-6`}
+                    />
                   </div>
-                ))}
-              </div>
-              <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-                Neutral ramp
-              </p>
-              <div className="flex rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                {NEUTRAL_RAMP.map((cls) => (
-                  <div key={cls} className={`h-8 flex-1 ${cls}`} />
-                ))}
-              </div>
-              <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                One blue accent — 600 for fills, 400 on dark surfaces, 500 for
-                focus rings. Green and red are reserved for success and error
-                states, not decoration. No decorative gradients on content. The
-                gradients that do ship are functional: scrims behind text on
-                project images, the cursor-tracked sheen that gives the 3D
-                cards their specular highlight, and the desktop/mobile OS
-                wallpaper, which is chrome rather than content. Body text
-                measures 7.56:1 in light mode
-                (gray-600 on white) and 12.0:1 in dark (gray-300 on gray-900),
-                against the 4.5:1 WCAG AA threshold.
-              </p>
-            </LabCard>
-          </ScrollReveal>
+                  <p className="mt-2 text-sm font-medium">{tier.label}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">
+                    {tier.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Motion conveys hierarchy, not decoration. Content reveals use
+              the 300ms Standard tier; 700ms is reserved for imagery. A global{" "}
+              <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                prefers-reduced-motion
+              </code>{" "}
+              rule cuts every transition and animation on the page to ~0ms.
+            </p>
+          </LabCard>
 
-          <ScrollReveal delay={100}>
-            <LabCard title="Typography scale">
-              <div className="space-y-5">
-                <TypeSample
-                  label="Display · JetBrains Mono · text-4xl / bold"
-                  className="font-display text-4xl font-bold"
-                  text="Building useful things"
-                />
-                <TypeSample
-                  label="Heading · JetBrains Mono · text-2xl / bold"
-                  className="font-display text-2xl font-bold"
-                  text="Section headings"
-                />
-                <TypeSample
-                  label="Body · text-base 16px / text-lg 18px · line-height 1.5+"
-                  className="text-base text-gray-600 dark:text-gray-300"
-                  text="Long-form copy — About, the hero and section intros — is 16 to 18px."
-                />
-                <TypeSample
-                  label="Dense body · text-sm 14px"
-                  className="text-sm text-gray-600 dark:text-gray-300"
-                  text="Case studies, experience bullets and form fields are 14px. That is the floor for running text."
-                />
-                <TypeSample
-                  label="Caption · text-xs 12px · labels 10–11px"
-                  className="text-xs font-medium text-gray-500 dark:text-gray-400"
-                  text="Tags, metadata and keyboard hints: 12px, down to 10px for compact chips and kbd."
-                />
+          <div className="lg:col-span-2">
+            <LabCard title="Depth & 3D">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <DepthLayersDemo />
+                <FlipCardDemo />
+                <ScrollDepthDemo />
+                <RingCarouselDemo />
               </div>
-            </LabCard>
-          </ScrollReveal>
-
-          <ScrollReveal delay={150}>
-            <LabCard title="Components & states">
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <button
-                  type="button"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                >
-                  Primary
-                </button>
-                <button
-                  type="button"
-                  className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-semibold py-2.5 px-6 rounded-full hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                >
-                  Outline
-                </button>
-                <button
-                  type="button"
-                  disabled
-                  className="bg-blue-600 text-white font-bold py-2.5 px-6 rounded-full opacity-50 cursor-not-allowed"
-                >
-                  Disabled
-                </button>
-                <span className="text-sm px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700">
-                  Tag chip
-                </span>
-              </div>
-              <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1.5 list-disc list-inside">
-                <li>Every interactive element has hover, focus, and active states</li>
-                <li>Keyboard focus is always visible (never `outline: none` alone)</li>
-                <li>
-                  White-on-blue-600 buttons measure 5.17:1, rising to 6.70:1 on
-                  hover (blue-700)
-                </li>
-              </ul>
-            </LabCard>
-          </ScrollReveal>
-
-          <ScrollReveal delay={200}>
-            <LabCard title="Motion system">
-              <div className="grid grid-cols-3 gap-4 mb-5">
-                {MOTION_TIERS.map((tier) => (
-                  <div key={tier.label} className="text-center">
-                    <div className="h-20 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center group cursor-pointer">
-                      <div
-                        className={`w-8 h-8 rounded-lg bg-blue-600 transition-transform ${tier.duration} group-hover:-translate-y-3 group-hover:rotate-6`}
-                      />
-                    </div>
-                    <p className="mt-2 text-sm font-medium">{tier.label}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {tier.note}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Motion conveys hierarchy, not decoration. Content reveals use
-                the 300ms Standard tier; 700ms is reserved for imagery. A global{" "}
+              <p className="mt-5 text-sm text-gray-600 dark:text-gray-300">
+                All four are CSS 3D on real DOM — no WebGL, no dependencies.
+                That is deliberate for content: these stay focusable,
+                selectable and screen-reader legible, which a{" "}
+                <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                  canvas
+                </code>{" "}
+                gallery could not be. Under{" "}
                 <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
                   prefers-reduced-motion
                 </code>{" "}
-                rule cuts every transition and animation on the page to ~0ms.
+                every tilt, flip and rotation stops; what is left is static
+                Z-offset, which doesn&apos;t move.
               </p>
             </LabCard>
-          </ScrollReveal>
+          </div>
 
-          {/* col-span must live on ScrollReveal itself — it renders the grid
-              item, so the class does nothing on a nested wrapper. */}
-          <ScrollReveal delay={250} className="lg:col-span-2">
-            <div>
-              <LabCard title="Depth & 3D">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <DepthLayersDemo />
-                  <FlipCardDemo />
-                  <ScrollDepthDemo />
-                  <RingCarouselDemo />
-                </div>
-                <p className="mt-5 text-sm text-gray-600 dark:text-gray-300">
-                  All four are CSS 3D on real DOM — no WebGL, no dependencies.
-                  That is deliberate for content: these stay focusable,
-                  selectable and screen-reader legible, which a{" "}
-                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
-                    canvas
-                  </code>{" "}
-                  gallery could not be. Under{" "}
-                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
-                    prefers-reduced-motion
-                  </code>{" "}
-                  every tilt, flip and rotation stops; what is left is static
-                  Z-offset, which doesn&apos;t move.
-                </p>
-              </LabCard>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={300} className="lg:col-span-2">
-            <div>
-              <LabCard title="One token set, two themes">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <ThemePreview variant="light" />
-                  <ThemePreview variant="dark" />
-                </div>
-                <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-                  Dark mode is a first-class theme seeded from your system
-                  preference — not an inverted afterthought. Try the toggle in
-                  the navbar.
-                </p>
-              </LabCard>
-            </div>
-          </ScrollReveal>
+          <div className="lg:col-span-2">
+            <LabCard title="One token set, two themes">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <ThemePreview variant="light" />
+                <ThemePreview variant="dark" />
+              </div>
+              <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+                Dark mode is a first-class theme seeded from your system
+                preference — not an inverted afterthought. Try the toggle in
+                the navbar.
+              </p>
+            </LabCard>
+          </div>
         </div>
       </div>
     </section>
@@ -256,7 +241,7 @@ function TypeSample({
 }) {
   return (
     <div>
-      <p className="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">
+      <p className="text-xs uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1">
         {label}
       </p>
       <p className={className}>{text}</p>
@@ -276,8 +261,8 @@ function ThemePreview({ variant }: { variant: "light" | "dark" }) {
       }`}
     >
       <p
-        className={`text-[11px] uppercase tracking-wider mb-3 ${
-          isDark ? "text-gray-400" : "text-gray-500"
+        className={`text-xs uppercase tracking-wider mb-3 ${
+          isDark ? "text-gray-300" : "text-gray-600"
         }`}
       >
         {isDark ? "Dark" : "Light"}

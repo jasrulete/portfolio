@@ -130,7 +130,7 @@ export default function SnakeApp() {
         if (d.x === -x && d.y === -y) return;
         nextDirRef.current = { x, y };
       }}
-      className="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-display font-bold active:scale-90 transition-transform"
+      className="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-display font-bold transition-transform"
     >
       {label}
     </button>
@@ -142,7 +142,7 @@ export default function SnakeApp() {
         <span>
           Score: <strong className="text-blue-600 dark:text-blue-400">{score}</strong>
         </span>
-        <span className="text-gray-500 dark:text-gray-400">Best: {best}</span>
+        <span className="text-gray-600 dark:text-gray-300">Best: {best}</span>
         <button
           type="button"
           onClick={() => (gameOver || !running ? reset() : setRunning(false))}

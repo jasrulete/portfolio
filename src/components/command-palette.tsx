@@ -266,11 +266,11 @@ export default function CommandPalette({
         role="dialog"
         aria-modal="true"
         aria-label="Command palette"
-        className="w-full max-w-lg rounded-xl bg-white dark:bg-gray-800 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+        className="w-full max-w-lg rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-300 dark:border-gray-700 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 px-4 border-b border-gray-200 dark:border-gray-700">
-          <Search size={18} className="shrink-0 text-gray-400" />
+        <div className="flex items-center gap-3 px-4 border-b border-gray-300 dark:border-gray-700">
+          <Search size={18} className="shrink-0 text-gray-600 dark:text-gray-300" aria-hidden />
           <input
             ref={inputRef}
             value={query}
@@ -283,9 +283,9 @@ export default function CommandPalette({
             aria-controls="command-palette-listbox"
             aria-autocomplete="list"
             aria-activedescendant={activeOption ? `command-option-${activeOption.id}` : undefined}
-            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-300 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
           />
-          <kbd className="shrink-0 text-[10px] font-semibold text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5">
+          <kbd className="shrink-0 text-xs font-semibold text-gray-600 dark:text-gray-300 border border-gray-500 dark:border-gray-400 rounded px-1.5 py-0.5">
             ESC
           </kbd>
         </div>
@@ -298,7 +298,7 @@ export default function CommandPalette({
           className="max-h-[50vh] overflow-y-auto py-2"
         >
           {filtered.length === 0 && (
-            <p className="px-4 py-6 text-sm text-center text-gray-500 dark:text-gray-400">
+            <p className="px-4 py-6 text-sm text-gray-600 dark:text-gray-300">
               No commands match &ldquo;{query}&rdquo;
             </p>
           )}
@@ -312,22 +312,24 @@ export default function CommandPalette({
               aria-selected={i === selected}
               onMouseEnter={() => setSelected(i)}
               onClick={() => cmd.action()}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors duration-150 ${
                 i === selected
                   ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
-                  : "text-gray-700 dark:text-gray-300"
+                  : "text-gray-900 dark:text-white"
               }`}
             >
-              <span className="shrink-0 text-gray-400">{cmd.icon}</span>
+              <span className="shrink-0 text-gray-600 dark:text-gray-300" aria-hidden>
+                {cmd.icon}
+              </span>
               <span className="flex-1 truncate">{cmd.label}</span>
-              <span className="shrink-0 text-[10px] uppercase tracking-wide text-gray-500 dark:text-gray-400">
+              <span className="shrink-0 text-xs uppercase tracking-wide text-gray-600 dark:text-gray-300">
                 {cmd.hint}
               </span>
             </button>
           ))}
         </div>
 
-        <div className="px-4 py-2 border-t border-gray-200 dark:border-gray-700 text-[11px] text-gray-500 dark:text-gray-400 flex gap-4">
+        <div className="px-4 py-2 border-t border-gray-300 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 flex gap-4">
           <span>↑↓ navigate</span>
           <span>↵ select</span>
           <span>esc close</span>

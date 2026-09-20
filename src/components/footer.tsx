@@ -14,7 +14,7 @@ export default function Footer({
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <h3 className="text-2xl font-bold">{shortName}</h3>
-            <p className="text-gray-400 mt-2">
+            <p className="text-gray-300 mt-2">
               {title} · {location}
             </p>
           </div>
@@ -24,28 +24,28 @@ export default function Footer({
               href={social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full text-gray-400 hover:text-white transition-colors"
+              className="p-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               aria-label="GitHub"
             >
-              <FaGithub className="hover:scale-110 transition-transform" />
+              <FaGithub />
             </a>
             <a
               href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full text-gray-400 hover:text-white transition-colors"
+              className="p-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               aria-label="LinkedIn"
             >
-              <FaLinkedin className="hover:scale-110 transition-transform" />
+              <FaLinkedin />
             </a>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="mb-3 text-sm">
             <a
               href={`${import.meta.env.BASE_URL}design/`}
-              className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
             >
               Design system →
             </a>
@@ -57,13 +57,13 @@ export default function Footer({
               <button
                 type="button"
                 onClick={onDesktopMode}
-                className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               >
                 I also built this site as a desktop OS →
               </button>
             </p>
           )}
-          <p className="text-gray-400">
+          <p className="text-gray-300">
             &copy; {new Date().getFullYear()} {shortName}. All rights reserved.
           </p>
         </div>

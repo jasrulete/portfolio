@@ -32,12 +32,12 @@ export function DepthLayersDemo() {
           </DepthLayer>
           <DepthLayer depth={34} className="mt-3">
             <p className="font-display text-sm font-bold">Project title</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-gray-600 dark:text-gray-300">
               Lifts toward you
             </p>
           </DepthLayer>
           <DepthLayer depth={58} className="mt-3">
-            <span className="inline-block rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-semibold text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
+            <span className="inline-block rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
               Front-most
             </span>
           </DepthLayer>
@@ -75,7 +75,7 @@ export function FlipCardDemo() {
         >
           <FlipFace className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <p className="font-display text-sm font-bold">ShelfStock</p>
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
               Click or press Enter
             </p>
           </FlipFace>
@@ -158,7 +158,7 @@ export function ScrollDepthDemo() {
             return (
               <div
                 key={name}
-                className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white p-2 text-center text-[11px] font-medium shadow-md dark:border-gray-700 dark:bg-gray-800"
+                className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white p-2 text-center text-xs font-medium shadow-md dark:border-gray-700 dark:bg-gray-800"
                 style={style}
               >
                 {name}
@@ -222,7 +222,7 @@ export function RingCarouselDemo() {
         >
           <ChevronLeft size={16} />
         </RingButton>
-        <p className="min-w-[7rem] text-center text-xs text-gray-500 dark:text-gray-400" aria-live="polite">
+        <p className="min-w-[7rem] text-center text-xs text-gray-600 dark:text-gray-300" aria-live="polite">
           {PANELS[index]}
         </p>
         <RingButton
@@ -268,13 +268,13 @@ function DemoFrame({
 }) {
   return (
     <div className="flex flex-col">
-      <p className="mb-1 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+      <p className="mb-1 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300">
         {label}
       </p>
       <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-50 p-4 dark:bg-gray-900/40">
         {children}
       </div>
-      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">{note}</p>
+      <p className="mt-2 text-xs text-gray-600 dark:text-gray-300">{note}</p>
     </div>
   );
 }

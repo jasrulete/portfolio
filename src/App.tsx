@@ -6,7 +6,6 @@ import ExperienceSection from "./components/experience-section";
 import ContactSection from "./components/contact-section";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
-import ScrollProgress from "./components/scroll-progress";
 import CommandPalette from "./components/command-palette";
 import ModeLoadingFallback from "./components/mode-loading-fallback";
 
@@ -95,10 +94,10 @@ function App() {
   return (
     <div className={darkMode ? "dark" : ""}>
       {palette}
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-150">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blue-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blue-600 focus:text-white focus:px-4 focus:py-2.5 focus:rounded-lg"
         >
           Skip to content
         </a>
@@ -107,7 +106,6 @@ function App() {
           toggleDarkMode={toggleDarkMode}
           onOpenPalette={() => setPaletteOpen(true)}
         />
-        <ScrollProgress />
         <main id="main-content">
           <Hero />
           <ProjectsSection

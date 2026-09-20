@@ -197,7 +197,7 @@ export default function CameraApp() {
 
   return (
     <div className="p-4 flex flex-col items-center gap-3">
-      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
         Everything runs in your browser — video never leaves your device.
       </p>
 
@@ -312,7 +312,7 @@ export default function CameraApp() {
           </div>
           <p
             role="status"
-            className="font-display text-xs h-4 text-gray-500 dark:text-gray-400 text-center"
+            className="font-display text-xs h-4 text-gray-600 dark:text-gray-300 text-center"
           >
             {hands === "loading" &&
               "Downloading gesture model (~8 MB, first time only)…"}

@@ -36,10 +36,10 @@ export interface ProjectCardProps {
 /** Full case-study card. */
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="bg-white dark:bg-gray-800 rounded-xl shadow-lg flex flex-col h-full border border-gray-100 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-colors duration-300">
+    <article className="card-enter bg-white dark:bg-gray-800 rounded-xl shadow-sm flex flex-col h-full border border-gray-300 dark:border-gray-700 hover:border-blue-600/60 dark:hover:border-blue-400/60 transition-colors duration-150">
       <ProjectBanner project={project} />
 
-      <div className="p-6 flex flex-col flex-grow">
+      <div className="p-5 sm:p-6 flex flex-col flex-grow">
         {/* Links first: the demo and the source are the two clicks worth
             making, and at the bottom they sat under 500px+ of case study. */}
         <ProjectLinks project={project} className="mb-5" />
@@ -76,11 +76,7 @@ function ProjectBanner({ project }: { project: Project }) {
               <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
             )}
           </p>
-          <h3
-            className={`text-2xl font-bold text-white drop-shadow-md ${
-              image ? "" : "font-display"
-            }`}
-          >
+          <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-md">
             {project.title}
           </h3>
         </div>
@@ -98,7 +94,7 @@ function CaseStudy({ project }: { project: Project }) {
   return (
     <dl className="space-y-5 mb-6 flex-grow">
       <div>
-        <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-gray-400 mb-1">
+        <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1">
           The Challenge
         </dt>
         <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -108,7 +104,7 @@ function CaseStudy({ project }: { project: Project }) {
 
       {"architecture" in project && (
         <div>
-          <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-gray-400 mb-1">
+          <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1">
             Architecture &amp; Execution
           </dt>
           <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -118,9 +114,9 @@ function CaseStudy({ project }: { project: Project }) {
       )}
 
       {"outcome" in project && (
-        <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+        <div className="pt-4 border-t border-gray-300 dark:border-gray-700">
           <dt className="sr-only">Outcome</dt>
-          <dd className="text-sm font-medium text-gray-900 dark:text-gray-200">
+          <dd className="text-sm font-medium text-gray-900 dark:text-white">
             <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">
               Outcome:
             </span>
@@ -144,7 +140,7 @@ function TagList({
       {tags.map((tag) => (
         <span
           key={tag}
-          className="bg-gray-50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full font-medium text-xs px-3 py-1.5"
+          className="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-full font-medium text-xs px-3 py-1.5"
         >
           {tag}
         </span>
@@ -170,7 +166,7 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
         ref={(el) => {
           if (el?.complete) setLoaded(true);
         }}
-        className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-700 hover:scale-105 ${
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-200 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -198,14 +194,14 @@ function ProjectLinks({
   if (!hasGithub && !hasDemo) return null;
 
   const base =
-    "inline-flex items-center gap-1.5 rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800 px-4 py-2.5 text-sm";
+    "inline-flex items-center gap-1.5 rounded-lg font-semibold transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800 px-5 py-3 text-sm";
 
   return (
     <div className={`flex gap-3 flex-wrap ${className ?? ""}`}>
       {hasDemo && (
         <a
           href={project.demo as string}
-          className={`${base} bg-blue-600 text-white hover:bg-blue-700`}
+          className={`${base} bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -217,7 +213,7 @@ function ProjectLinks({
       {hasGithub && (
         <a
           href={project.github as string}
-          className={`${base} border border-gray-500 text-gray-700 hover:border-blue-600 hover:text-blue-600 dark:border-gray-400 dark:text-gray-200 dark:hover:border-blue-400 dark:hover:text-blue-400`}
+          className={`${base} border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white active:bg-blue-700 active:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white`}
           target="_blank"
           rel="noopener noreferrer"
         >

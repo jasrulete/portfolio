@@ -8,8 +8,8 @@ import SectionHeading from "./section-heading";
 // same content in its own window.
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-20 bg-white dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-14 sm:py-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Skills" />
         <StackBlock />
       </div>
@@ -38,7 +38,7 @@ export function StackBlock({
               // The chips no longer sit inside a card, so they carry their own
               // hairline boundary.
               const chipClass =
-                "text-sm px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 transition-colors duration-300";
+                "text-xs px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 transition-colors duration-150";
 
               if (projectCount > 0 && onSkillSelect) {
                 return (
@@ -52,7 +52,7 @@ export function StackBlock({
                       // Blue text plus a visible count: on a touch screen the
                       // hover state was the only thing separating a chip that
                       // filters the projects grid from one that does nothing.
-                      "text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                      "text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white active:bg-blue-700 active:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900",
                     )}
                   >
                     {item}

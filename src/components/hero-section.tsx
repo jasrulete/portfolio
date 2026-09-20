@@ -9,7 +9,7 @@ const CTA_FOCUS =
 export default function Hero() {
   return (
     <section id="home" className="pt-10 pb-12 sm:pt-16 sm:pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
           {profile.shortName}
           <span className="text-blue-600 dark:text-blue-400">_</span>
@@ -27,14 +27,14 @@ export default function Hero() {
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <a
             href="#projects"
-            className={`inline-flex items-center rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 active:bg-blue-800 ${CTA_FOCUS}`}
+            className={`inline-flex items-center rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-blue-700 active:bg-blue-800 ${CTA_FOCUS}`}
           >
             View projects
           </a>
           <a
             href={profile.resumeUrl}
             download="Jeric-Rulete_Resume.pdf"
-            className={`inline-flex items-center rounded-full border border-blue-600 px-5 py-3 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white ${CTA_FOCUS}`}
+            className={`inline-flex items-center rounded-lg border border-blue-600 px-5 py-3 text-sm font-semibold text-blue-600 transition-colors duration-150 hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white ${CTA_FOCUS}`}
           >
             Resume (PDF)
           </a>
@@ -45,14 +45,14 @@ export default function Hero() {
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${CTA_FOCUS}`}
+            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 ${CTA_FOCUS}`}
           >
             GitHub
           </a>
           <span aria-hidden> · </span>
           <a
             href={`mailto:${profile.personalEmail}`}
-            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${CTA_FOCUS}`}
+            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 ${CTA_FOCUS}`}
           >
             {profile.personalEmail}
           </a>
