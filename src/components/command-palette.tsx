@@ -286,7 +286,7 @@ export default function CommandPalette({
             aria-controls="command-palette-listbox"
             aria-autocomplete="list"
             aria-activedescendant={activeOption ? `command-option-${activeOption.id}` : undefined}
-            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none"
+            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
           />
           <kbd className="shrink-0 text-[10px] font-semibold text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5">
             ESC

@@ -13,7 +13,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import DepthCard, { DepthLayer } from "./depth-card";
 import { usePrefersReducedMotion } from "../hooks/use-prefers-reduced-motion";
 
-const PANELS = ["ShelfStock", "Nexus CRM", "Kitchen Line", "Pulse", "AmBot"];
+// Neutral demo labels on purpose: this is a motion demo, not a second copy of
+// the projects list, which drifted out of sync with profile.ts the last time it
+// carried project names.
+const PANELS = ["Tokens", "Typography", "Components", "Motion", "Depth"];
 
 /** 1 — Layers separated on the Z axis inside a tilting card. */
 export function DepthLayersDemo() {
@@ -214,7 +217,7 @@ export function RingCarouselDemo() {
 
       <div className="mt-2 flex items-center gap-3">
         <RingButton
-          label="Previous project"
+          label="Previous panel"
           onClick={() => setIndex((i) => (i - 1 + PANELS.length) % PANELS.length)}
         >
           <ChevronLeft size={16} />
@@ -223,7 +226,7 @@ export function RingCarouselDemo() {
           {PANELS[index]}
         </p>
         <RingButton
-          label="Next project"
+          label="Next panel"
           onClick={() => setIndex((i) => (i + 1) % PANELS.length)}
         >
           <ChevronRight size={16} />

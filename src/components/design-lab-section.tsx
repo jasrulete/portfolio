@@ -69,10 +69,12 @@ export default function DesignLabSection() {
               <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
                 One blue accent — 600 for fills, 400 on dark surfaces, 500 for
                 focus rings. Green and red are reserved for success and error
-                states, not decoration. No decorative gradients on content or
-                components; the desktop/mobile OS chrome uses a wallpaper
-                gradient as a deliberate skeuomorphic touch, kept separate from
-                this content system. Body text measures 7.56:1 in light mode
+                states, not decoration. No decorative gradients on content. The
+                gradients that do ship are functional: scrims behind text on
+                project images, the cursor-tracked sheen that gives the 3D
+                cards their specular highlight, and the desktop/mobile OS
+                wallpaper, which is chrome rather than content. Body text
+                measures 7.56:1 in light mode
                 (gray-600 on white) and 12.0:1 in dark (gray-300 on gray-900),
                 against the 4.5:1 WCAG AA threshold.
               </p>
@@ -93,14 +95,19 @@ export default function DesignLabSection() {
                   text="Section headings"
                 />
                 <TypeSample
-                  label="Body · text-base / regular · line-height 1.5+"
+                  label="Body · text-base 16px / text-lg 18px · line-height 1.5+"
                   className="text-base text-gray-600 dark:text-gray-300"
-                  text="Body copy stays at 16px minimum for comfortable reading on every device."
+                  text="Long-form copy — About, the hero and section intros — is 16 to 18px."
                 />
                 <TypeSample
-                  label="Caption · text-sm / medium"
-                  className="text-sm font-medium text-gray-500 dark:text-gray-400"
-                  text="Supporting details and metadata"
+                  label="Dense body · text-sm 14px"
+                  className="text-sm text-gray-600 dark:text-gray-300"
+                  text="Case studies, experience bullets and form fields are 14px. That is the floor for running text."
+                />
+                <TypeSample
+                  label="Caption · text-xs 12px · labels 10–11px"
+                  className="text-xs font-medium text-gray-500 dark:text-gray-400"
+                  text="Tags, metadata and keyboard hints: 12px, down to 10px for compact chips and kbd."
                 />
               </div>
             </LabCard>
@@ -189,11 +196,12 @@ export default function DesignLabSection() {
                   <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
                     canvas
                   </code>{" "}
-                  gallery could not be. Depth collapses to flat layout under{" "}
+                  gallery could not be. Under{" "}
                   <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
                     prefers-reduced-motion
-                  </code>
-                  .
+                  </code>{" "}
+                  every tilt, flip and rotation stops; what is left is static
+                  Z-offset, which doesn&apos;t move.
                 </p>
               </LabCard>
             </div>
