@@ -14,9 +14,7 @@ interface NavbarProps {
 const navLinks = [
   { href: "#projects", id: "projects", label: "Projects" },
   { href: "#experience", id: "experience", label: "Experience" },
-  { href: "#skills", id: "skills", label: "Skills" },
   { href: "#about", id: "about", label: "About" },
-  { href: "#design", id: "design", label: "Design" },
   { href: "#contact", id: "contact", label: "Contact" },
 ];
 
@@ -60,10 +58,10 @@ function NavContent({
           <div className="flex items-center">
             <a
               href="#home"
-              className="font-display text-xl font-bold text-gray-900 dark:text-white"
+              className="rounded font-display text-xl font-bold text-gray-900 dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
             >
               {profile.shortName}
-              <span className="text-blue-500">_</span>
+              <span className="text-blue-600 dark:text-blue-400">_</span>
             </a>
           </div>
 
@@ -73,22 +71,22 @@ function NavContent({
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
+                  "relative px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
                   activeSection === link.id
                     ? "text-blue-600 dark:text-blue-400"
-                    : "text-gray-600 dark:text-gray-300 hover:text-blue-500"
+                    : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
                 )}
               >
                 {link.label}
                 {activeSection === link.id && (
-                  <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-blue-500 rounded-full" />
+                  <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-blue-600 dark:bg-blue-400" />
                 )}
               </a>
             ))}
             <a
               href={profile.resumeUrl}
               download="Jeric-Rulete_Resume.pdf"
-              className="ml-2 px-3 py-1.5 rounded-full border-2 border-blue-600 dark:border-blue-400 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+              className="ml-2 px-4 py-2.5 rounded-lg border border-blue-600 dark:border-blue-400 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
             >
               Resume
             </a>
@@ -96,10 +94,10 @@ function NavContent({
               <button
                 onClick={onOpenPalette}
                 aria-label="Open command palette"
-                className="flex items-center gap-1.5 ml-2 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 transition-colors"
+                className="flex items-center gap-1.5 ml-2 px-3 py-2.5 rounded-lg border border-gray-500 dark:border-gray-400 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-600 dark:hover:border-blue-400 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
               >
                 <SearchIcon />
-                <kbd className="text-[10px] font-semibold">Ctrl K</kbd>
+                <kbd className="text-xs font-semibold">Ctrl K</kbd>
               </button>
             )}
             <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
@@ -109,7 +107,7 @@ function NavContent({
             <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} mobile />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="p-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
               aria-label="Toggle menu"
               aria-expanded={isMenuOpen}
             >
@@ -122,17 +120,17 @@ function NavContent({
       <div
         inert={!isMenuOpen}
         className={cn(
-          "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+          "md:hidden overflow-hidden transition-all duration-200 ease-out",
           isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-100 dark:border-gray-700">
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 shadow-md border-t border-gray-300 dark:border-gray-700">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={cn(
-                "block px-3 py-2 rounded-md transition-colors",
+                "block px-3 py-2.5 rounded-lg transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
                 activeSection === link.id
                   ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
                   : "hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -146,7 +144,7 @@ function NavContent({
             href={profile.resumeUrl}
             download="Jeric-Rulete_Resume.pdf"
             onClick={() => setIsMenuOpen(false)}
-            className="mt-2 block px-3 py-2 rounded-full border-2 border-blue-600 dark:border-blue-400 text-center font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors"
+            className="mt-2 block px-3 py-2.5 rounded-lg border border-blue-600 dark:border-blue-400 text-center font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
           >
             Resume
           </a>
@@ -169,7 +167,7 @@ function DarkModeToggle({
     <button
       onClick={onToggle}
       className={cn(
-        "p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 active:scale-90",
+        "p-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
         mobile && "mr-2"
       )}
       aria-label="Toggle dark mode"

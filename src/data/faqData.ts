@@ -67,7 +67,6 @@ export const faqData: FaqEntry[] = [
       "easter eggs",
       "view modes",
       "desktop mode",
-      "mobile mode",
       "command palette",
       "ctrl k",
       "design lab",
@@ -75,7 +74,7 @@ export const faqData: FaqEntry[] = [
       "hidden features",
     ],
     answer:
-      "More than scroll. On screens 640px and wider, the buttons in the bottom-left switch into a desktop OS mode (draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app) or a phone-launcher mobile mode — all three views share the same content. On any screen size, press Ctrl+K (or Cmd+K) for a command palette, which can switch view modes too, as well as jump to sections and projects. Click any skill chip to see the projects that use it, and open the Design Lab section for the design system this site runs on.",
+      "More than scroll. Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme, and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and the design system this site runs on has its own page, linked under the Projects heading and in the footer.",
   },
   {
     id: "how-built",
@@ -88,7 +87,7 @@ export const faqData: FaqEntry[] = [
       "what powers this website",
     ],
     answer:
-      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. Fun fact: this chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things Jeric actually wrote. Project cards pull live GitHub stats (cached in sessionStorage for an hour), images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
+      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. Fun fact: this chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things Jeric actually wrote. Images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
   },
   {
     id: "hire-you",

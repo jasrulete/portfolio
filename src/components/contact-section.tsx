@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { profile } from "../data/profile";
-import ScrollReveal from "./scroll-reveal";
 import SectionHeading from "./section-heading";
 
 /** Web3Forms free plan requires this site key — not your personal hCaptcha key. */
@@ -27,19 +26,54 @@ export default function Contact() {
     email: "",
     message: "",
   });
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<React.ReactNode>("");
   // Status drives the colour of the result line. Deriving it from the message
   // text ("sent") painted "Sending..." in error red.
   const [status, setStatus] = useState<Status>("idle");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // hCaptcha is the largest third-party payload on the page and most visitors
+  // never reach this form, so the widget mounts only once someone actually
+  // starts filling it in — first focus or first keystroke, whichever comes
+  // first.
+  const [captchaArmed, setCaptchaArmed] = useState(false);
+  const [captchaCompact, setCaptchaCompact] = useState(false);
   const captchaRef = useRef<HCaptcha>(null);
   const isSubmitting = status === "sending";
+
+  const armCaptcha = () => {
+    if (captchaArmed) return;
+    // The standard widget is 303px wide and overflows the column below ~335px.
+    // Read once, here, because changing size after mount means re-rendering
+    // the challenge anyway.
+    setCaptchaCompact(window.matchMedia("(max-width: 399px)").matches);
+    setCaptchaArmed(true);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    armCaptcha();
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Ad blockers and corporate proxies block hCaptcha outright. Without this
+  // the form is simply unusable with no explanation and no way out.
+  const handleCaptchaError = () => {
+    setStatus("error");
+    setResult(
+      <>
+        The CAPTCHA could not load — it may be blocked on this network. Email me
+        at{" "}
+        <a
+          href={`mailto:${profile.formEmail}`}
+          className="rounded underline underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        >
+          {profile.formEmail}
+        </a>{" "}
+        instead.
+      </>
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,8 +140,11 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="contact"
+      className="py-14 sm:py-20 border-t border-gray-300 dark:border-gray-700"
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Contact" />
 
         <ContactGrid
@@ -117,9 +154,13 @@ export default function Contact() {
           formConfigured={formConfigured}
           isSubmitting={isSubmitting}
           captchaRef={captchaRef}
+          captchaArmed={captchaArmed}
+          captchaCompact={captchaCompact}
+          onFieldActivity={armCaptcha}
           onChange={handleChange}
           onSubmit={handleSubmit}
           onCaptchaVerify={(token) => setCaptchaToken(token || null)}
+          onCaptchaError={handleCaptchaError}
         />
       </div>
     </section>
@@ -133,19 +174,27 @@ function ContactGrid({
   formConfigured,
   isSubmitting,
   captchaRef,
+  captchaArmed,
+  captchaCompact,
+  onFieldActivity,
   onChange,
   onSubmit,
   onCaptchaVerify,
+  onCaptchaError,
 }: {
   formData: FormFields;
-  result: string;
+  result: React.ReactNode;
   status: Status;
   formConfigured: boolean;
   isSubmitting: boolean;
   captchaRef: React.RefObject<HCaptcha | null>;
+  captchaArmed: boolean;
+  captchaCompact: boolean;
+  onFieldActivity: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onCaptchaVerify: (token: string) => void;
+  onCaptchaError: () => void;
 }) {
   const statusClass =
     status === "success"
@@ -155,79 +204,82 @@ function ContactGrid({
         : "text-red-600 dark:text-red-400";
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <ScrollReveal direction="left">
-        <ContactInfo />
-      </ScrollReveal>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
+      <ContactInfo />
 
-      <ScrollReveal direction="right" delay={150}>
-        <form onSubmit={onSubmit} className="space-y-6">
-          <FormField
-            label="Name"
-            id="name"
-            name="name"
-            autoComplete="name"
-            value={formData.name}
+      <form onSubmit={onSubmit} className="space-y-6">
+        <FormField
+          label="Name"
+          id="name"
+          name="name"
+          autoComplete="name"
+          value={formData.name}
+          onChange={onChange}
+          onFocus={onFieldActivity}
+          required
+          maxLength={100}
+        />
+        <FormField
+          label="Your email"
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          value={formData.email}
+          onChange={onChange}
+          onFocus={onFieldActivity}
+          required
+        />
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium mb-1">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
             onChange={onChange}
+            onFocus={onFieldActivity}
             required
-            maxLength={100}
+            rows={5}
+            placeholder="Write your message here..."
+            className="w-full px-4 py-2.5 border border-gray-500 dark:border-gray-400 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <FormField
-            label="Your email"
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            value={formData.email}
-            onChange={onChange}
-            required
-          />
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-1">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={onChange}
-              required
-              rows={5}
-              placeholder="Write your message here..."
-              className="w-full px-4 py-2 border border-gray-500 dark:border-gray-400 rounded-md dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+        </div>
 
-          {formConfigured ? (
+        {formConfigured ? (
+          captchaArmed && (
             <HCaptcha
               sitekey={HCAPTCHA_SITE_KEY}
+              size={captchaCompact ? "compact" : "normal"}
               reCaptchaCompat={false}
               onVerify={onCaptchaVerify}
               onExpire={() => onCaptchaVerify("")}
+              onError={onCaptchaError}
               ref={captchaRef}
             />
-          ) : (
-            <p className="text-sm text-red-600 dark:text-red-400">
-              Contact form requires environment setup on this host. Use the email
-              address on the left.
-            </p>
-          )}
+          )
+        ) : (
+          <p className="text-sm text-red-600 dark:text-red-400">
+            Contact form requires environment setup on this host. Use the email
+            address on the left.
+          </p>
+        )}
 
-          <button
-            type="submit"
-            disabled={!formConfigured || isSubmitting}
-            className="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-          >
-            {isSubmitting ? "Sending..." : "Send Message"}
-          </button>
+        <button
+          type="submit"
+          disabled={!formConfigured || isSubmitting}
+          className="inline-flex items-center px-5 py-3 text-sm font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600"
+        >
+          {isSubmitting ? "Sending..." : "Send Message"}
+        </button>
 
-          {result && (
-            <p role="status" className={`mt-4 text-sm ${statusClass}`}>
-              {result}
-            </p>
-          )}
-        </form>
-      </ScrollReveal>
+        {result && (
+          <p role="status" className={`mt-4 text-sm ${statusClass}`}>
+            {result}
+          </p>
+        )}
+      </form>
     </div>
   );
 }
@@ -248,9 +300,9 @@ function ContactInfo() {
                 <li key={address}>
                   <a
                     href={`mailto:${address}`}
-                    className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                    className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150"
                   >
-                    <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">
+                    <span className="text-xs text-gray-600 dark:text-gray-300 mr-2">
                       {label}:
                     </span>
                     {address}
@@ -267,7 +319,7 @@ function ContactInfo() {
           content={
             <a
               href={`tel:${profile.phone.replace(/\s/g, "")}`}
-              className="text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors"
+              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150"
             >
               {profile.phone}
             </a>
@@ -297,7 +349,7 @@ function ContactRow({
 }) {
   return (
     <div className="flex items-start">
-      <div className="mr-4 mt-1 text-blue-500 shrink-0">{icon}</div>
+      <div className="mr-4 mt-1 text-blue-600 dark:text-blue-400 shrink-0">{icon}</div>
       <div>
         <h4 className="text-lg font-medium">{title}</h4>
         {content}
@@ -312,6 +364,7 @@ function FormField({
   name,
   value,
   onChange,
+  onFocus,
   type = "text",
   autoComplete,
   required,
@@ -322,6 +375,7 @@ function FormField({
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFocus?: () => void;
   type?: string;
   autoComplete?: string;
   required?: boolean;
@@ -340,8 +394,9 @@ function FormField({
         maxLength={maxLength}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
         required={required}
-        className="w-full px-4 py-2 border border-gray-500 dark:border-gray-400 rounded-md dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2.5 border border-gray-500 dark:border-gray-400 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );
@@ -349,7 +404,7 @@ function FormField({
 
 function MailIcon() {
   return (
-    <svg className="h-6 w-6 text-blue-500 mr-4 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+    <svg className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-4 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
   );

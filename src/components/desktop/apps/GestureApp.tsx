@@ -173,7 +173,7 @@ export default function GestureApp() {
 
   return (
     <div className="p-4 flex flex-col items-center gap-3">
-      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
         Recognizes 7 hand gestures with MediaPipe — fully in your browser,
         nothing is uploaded.
       </p>
@@ -241,18 +241,18 @@ export default function GestureApp() {
             className="min-h-[4.5rem] w-full max-w-md flex items-center justify-center gap-3"
           >
             {model === "loading" && (
-              <p className="font-display text-sm text-gray-500 dark:text-gray-400">
+              <p className="font-display text-sm text-gray-600 dark:text-gray-300">
                 Downloading gesture model (~8 MB, first time only)…
               </p>
             )}
             {model === "error" && (
-              <p className="font-display text-sm text-gray-500 dark:text-gray-400">
+              <p className="font-display text-sm text-gray-600 dark:text-gray-300">
                 Couldn&apos;t load the gesture model. Check your connection and
                 reopen the app.
               </p>
             )}
             {model === "on" && detected.length === 0 && (
-              <p className="font-display text-sm text-gray-500 dark:text-gray-400">
+              <p className="font-display text-sm text-gray-600 dark:text-gray-300">
                 Show a hand to the camera…
               </p>
             )}

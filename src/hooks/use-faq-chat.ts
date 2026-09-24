@@ -1,6 +1,5 @@
-// Shared FAQ-chat state/logic for the floating widget (FaqChatbot) and the
-// desktop/mobile chatbot app (ChatbotApp) — previously duplicated by hand
-// across both files, letting them drift out of sync.
+// FAQ-chat state/logic for the desktop OS "Ask Me" app (ChatbotApp). It was
+// shared with a floating homepage widget until that widget was removed.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";

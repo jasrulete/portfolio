@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="%BASE_URL%logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The design system behind jasrulete.github.io/portfolio — colour, type, spacing, motion and depth tokens, documented."
+    />
+    <meta name="theme-color" content="#111827" />
+    <!--
+      Same meta CSP as the homepage (GitHub Pages can't set response headers).
+      This page talks to Google Fonts only, but the policy is kept identical so
+      the two entries can't drift apart.
+
+      'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' in script-src is the
+      pre-paint theme script below. See the warning above that script.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://api.github.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+    />
+    <!--
+      PRE-PAINT THEME SCRIPT — DO NOT EDIT THE LINE BELOW.
+
+      Byte-for-byte identical to the one in index.html, and allowed by the same
+      sha256 hash in the CSP above. Changing it by even one byte — including
+      whitespace — silently breaks the theme: the browser refuses to run the
+      script and the only symptom is a console CSP error and a white flash on a
+      dark-preferring visitor's first paint. If you change one entry, change the
+      other and recompute the hash for both.
+    -->
+    <script>(function(){try{var t=localStorage.getItem("portfolio-theme");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;if(d){document.documentElement.style.backgroundColor="#111827";document.documentElement.classList.add("dark-preload")}}catch(e){}})()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Design system | Jeric Rulete</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/design-main.tsx"></script>
+  </body>
+</html>

@@ -121,7 +121,7 @@ export default function Window({ win }: { win: WindowState }) {
       role="dialog"
       aria-label={win.title}
       tabIndex={-1}
-      className="fixed flex flex-col rounded-lg overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-gray-800 outline-none"
+      className="fixed flex flex-col rounded-lg overflow-hidden shadow-md border border-black/10 dark:border-white/10 bg-white dark:bg-gray-800 outline-none"
       style={style}
       onPointerDown={() => focusWindow(win.id)}
     >

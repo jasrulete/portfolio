@@ -157,7 +157,7 @@ export default function MinesweeperApp() {
         <span aria-label="Mines remaining">
           <span aria-hidden>⚑</span> {MINES - flags}
         </span>
-        <span className="text-gray-500 dark:text-gray-400">{seconds}s</span>
+        <span className="text-gray-600 dark:text-gray-300">{seconds}s</span>
         <button
           type="button"
           onClick={() => setFlagMode((f) => !f)}
@@ -224,7 +224,7 @@ export default function MinesweeperApp() {
         )}
       </div>
 
-      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
         Right-click (or Flag mode) to flag · first click is always safe
       </p>
     </div>
