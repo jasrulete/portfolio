@@ -1,3 +1,4 @@
+// Intentionally unlinked: nothing renders this today, pending the owner's decision on whether mobile mode returns.
 import { Suspense, useEffect, useState } from "react";
 import { ChevronLeft, Monitor, Search } from "lucide-react";
 import { profile } from "../../data/profile";
@@ -81,7 +82,7 @@ export default function MobileOS({
       ) : (
         // flex-1, not h-full: h-full measured the whole viewport and pushed
         // the dock 40px past the bottom of the screen, clipping it.
-        <div className="relative flex min-h-0 flex-1 flex-col">
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-y-auto">
           {/* Home screen clock */}
           <div className="text-center mt-10 mb-8">
             <p className="font-display text-5xl font-bold drop-shadow-lg">{time}</p>
@@ -99,7 +100,7 @@ export default function MobileOS({
                 onClick={() => handleOpen(app)}
                 className="flex flex-col items-center gap-1.5 group"
               >
-                <span className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/15 group-hover:bg-white/25 group-active:scale-90 transition-all drop-shadow-lg">
+                <span className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/15 group-hover:bg-white/25 transition-all drop-shadow-lg">
                   {app.icon}
                 </span>
                 <span className="text-xs drop-shadow">{app.label}</span>
@@ -116,7 +117,7 @@ export default function MobileOS({
                   key={app.id}
                   onClick={() => handleOpen(app)}
                   aria-label={app.label}
-                  className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/15 hover:bg-white/25 active:scale-90 transition-all"
+                  className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/15 hover:bg-white/25 transition-all"
                 >
                   {app.icon}
                 </button>

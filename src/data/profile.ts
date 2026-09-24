@@ -120,8 +120,10 @@ export const profile = {
         "262 API tests (Vitest and Supertest), 59 component tests (Testing Library) and Docker-based end-to-end smoke tests run in GitHub Actions on every pull request and every push to main; the companion app runs type-checking, lint and Jest in CI. On 40k rows, indexed search measured 8.9 ms against 1,039 ms for a sequential scan. Live on Vercel.",
       tags: [
         "Next.js",
+        "React",
         "TypeScript",
         "Express",
+        "Node.js",
         "PostgreSQL",
         "Vitest",
         "Supertest",
@@ -149,6 +151,7 @@ export const profile = {
         "Vitest unit tests for scoring, validation and rate limiting; Playwright end-to-end tests for auth and CRM flows; and an eval harness that runs fixture contacts through the real actions with three prompt-injection payloads. CI on GitHub Actions, live on Vercel with a seeded demo workspace.",
       tags: [
         "Next.js",
+        "React",
         "TypeScript",
         "Prisma",
         "SQLite",
@@ -190,7 +193,7 @@ export const profile = {
         "Next.js and TypeScript with PostgreSQL via Prisma for presence and signaling over HTTP polling, and WebRTC data channels and media for chat and video. The root causes: a heartbeat updateMany with an empty where clause, a message-type mismatch between sender and receiver, a busy flag cleared on decline but not on end, and ICE candidates flushed before the remote description was set.",
       outcome:
         "Audited 7 security issues — 2 critical (session impersonation, and reading or deleting another user's signaling queue), 2 high, 2 medium, 1 low — and shipped fixes: a server-issued secret checked on every protected endpoint, create-only joins with UUID validation, payload-size and ownership checks, per-IP rate limits returning 429 with Retry-After, and baseline security headers. Also fixed 4 functional bugs and one regression my own security changes introduced. Every phase is written up in NOTES.md, including the limits I didn't solve: no TURN server, and per-IP rate limiting only.",
-      tags: ["Next.js", "TypeScript", "WebRTC", "Prisma", "PostgreSQL"],
+      tags: ["Next.js", "React", "TypeScript", "WebRTC", "Prisma", "PostgreSQL"],
       github: "https://github.com/jasrulete/Idea-Venture-Application",
       demo: "https://idea-venture-application.vercel.app",
       category: "Web",
@@ -257,8 +260,7 @@ export const profile = {
       org: "Mvolo · Remote (Netherlands)",
       period: "June 2026 – August 2026",
       highlights: [
-        "Remote internship with an international founding team, working on a cross-platform mobile app built with React Native (Expo), TypeScript and Supabase",
-        "Set up the project's monorepo scaffolding, built onboarding and timeline screens, and wrote a design spec for local data persistence",
+        "Remote internship with an international founding team; the product and its internals are covered by an NDA",
       ],
     },
     {

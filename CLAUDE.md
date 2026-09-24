@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run preview` — serve the production build locally
 - `npm run deploy` — manual `gh-pages -d dist` publish (rarely needed; see Deployment)
 
-There is no test runner configured, despite the README's "Testing" section. Do not assume `npm run test` exists.
+There is no test runner configured. Do not assume `npm run test` exists.
 
 ## Deployment
 
@@ -27,15 +27,18 @@ The site is served from the `/portfolio/` base path (`vite.config.ts` `base: "/p
 React 19 + TypeScript + Vite + Tailwind CSS. Single-page app, no backend — all dynamic behavior is client-side.
 
 ### View modes
-`src/App.tsx` renders one of three entirely separate UIs, chosen by a `ViewMode` (`"classic" | "desktop" | "mobile"`) persisted to `sessionStorage` under `portfolio-view-mode` — deliberately per-tab, so trying an OS mode once doesn't strand a later visitor in it (dark mode is persisted separately, and permanently, to `localStorage` under `portfolio-theme`):
+`src/App.tsx` renders one of two entirely separate UIs, chosen by a `ViewMode` (`"classic" | "desktop"`) persisted to `sessionStorage` under `portfolio-view-mode` — deliberately per-tab, so trying an OS mode once doesn't strand a later visitor in it (dark mode is persisted separately, and permanently, to `localStorage` under `portfolio-theme`):
 
-- **Classic** — a conventional scrolling portfolio: `hero-section` → `projects-section` → `experience-section` → `skills-section` → `about-section` → `design-lab-section` → `contact-section` → `footer`, plus a fixed `FaqChatbot` and `ScrollProgress`. Floating bottom-left buttons (hidden below `sm`, rendered after `<Footer />` so they sit last in the tab order) switch to the other two modes. Section order is mirrored in `navbar.tsx`, `src/hooks/use-active-section.ts` and `command-palette.tsx` — change all four together.
+- **Classic** — a conventional scrolling portfolio, five sections: `hero-section` → `projects-section` → `experience-section` (work history, then an Education block) → `about-section` (bio, then the `StackBlock` skills chips exported from `skills-section.tsx`) → `contact-section` → `footer`, plus `ScrollProgress`. Section order is mirrored in `navbar.tsx`, `src/hooks/use-active-section.ts` and `command-palette.tsx` — change all four together. Desktop mode is reached from a quiet footer link, the command palette, or the `?view=desktop` query parameter (applied on first mount, then stripped with `history.replaceState` so later reloads honour `sessionStorage`).
 - **Desktop** — a simulated OS in `src/components/desktop/`. `DesktopOS` wraps everything in `WindowManagerProvider`, renders draggable desktop icons, a `WindowLayer`, and a `Taskbar`. Each icon opens an app from `desktop/apps/` (About, Projects, Skills, Design Lab, Experience, Contact, Terminal, Chatbot, Camera, Gestures, Snake, Minesweeper) inside a `Window`; "Resume.pdf" is an external link instead of a window. The Camera app uses `getUserMedia` client-side only and must release its `MediaStream` tracks on unmount; the Camera and Gestures apps lazy-load `@mediapipe/tasks-vision` (dynamic import, shared GestureRecognizer model) with WASM/model fetched from CDN at runtime — keep the CDN version pinned to the installed package version. Shared camera plumbing lives in `src/hooks/use-camera-stream.ts`. A thumbs-up gesture in the Camera app starts a 3s photo timer. On viewports under 768px, windows open maximized.
-- **Mobile** — a simulated phone launcher in `src/components/mobile/MobileOS.tsx`: status bar with clock and Exit button, app-icon grid, and a dock. Tapping an icon renders the corresponding `desktop/apps/*App.tsx` component full-screen with a back header — it reuses the desktop app components directly, so it needs no content edits of its own.
+- **Mobile** — `src/components/mobile/MobileOS.tsx` still exists but is **intentionally unlinked**: nothing imports it and no UI reaches it, pending a decision on whether to delete it. Don't wire it back up without asking.
 
-A `CommandPalette` (`src/components/command-palette.tsx`, Ctrl/Cmd+K) is mounted in all three modes: section-jump commands appear only in classic; theme, view-mode switching, and project/link commands appear everywhere.
+A `CommandPalette` (`src/components/command-palette.tsx`, Ctrl/Cmd+K) is mounted in both modes: section-jump commands (plus a `stack` jump) appear only in classic; theme, view-mode switching, and project/link commands appear everywhere.
 
-The modes re-present the same content through different chrome. When editing portfolio *content*, expect to touch both a classic `*-section.tsx` and its `desktop/apps/*App.tsx` counterpart; mobile picks the change up automatically.
+The modes re-present the same content through different chrome. When editing portfolio *content*, expect to touch both a classic `*-section.tsx` and its `desktop/apps/*App.tsx` counterpart.
+
+### Multi-page build
+`vite.config.ts` declares two entries: `index.html` (the app) and `design/index.html` → `src/design-main.tsx` → `design-lab-page.tsx`, which builds to `dist/design/` and is served at `/portfolio/design/`. There is no router. Adding a page means adding an entry, not a route.
 
 ### Window manager
 `src/components/desktop/window-manager.tsx` is a React Context (`useWindowManager`) holding an array of `WindowState`. It owns open/close/focus/minimize/maximize/bounds, a monotonically increasing z-index ref for stacking, and a cascade offset so new windows don't perfectly overlap. `Window.tsx` consumes this context for drag/resize. There is no external state library — this context is the only global store.
@@ -44,13 +47,10 @@ The modes re-present the same content through different chrome. When editing por
 `src/data/profile.ts` is the single source of truth for identity, contact info, project filters, and asset URLs — components read from it rather than hardcoding. `src/data/faqData.ts` backs the chatbot. `src/data/skill-match.ts` maps skill names to project tags (with aliases like HTML5→HTML) to power the skills-section chips that filter the projects grid.
 
 ### Design system
-Single blue-600 accent, no decorative gradients on content or components, JetBrains Mono for headings via the `font-display` Tailwind class (loaded from Google Fonts in `index.html`). The desktop/mobile OS chrome (`DesktopOS.tsx`, `MobileOS.tsx`) uses a wallpaper gradient as a deliberate skeuomorphic touch, kept separate from the content design system. The system is documented in-site by `design-lab-section.tsx` — if you change tokens, update that section so it stays truthful. All animation respects `prefers-reduced-motion` (see `src/hooks/use-prefers-reduced-motion.ts`, used by `decrypted-text.tsx`, `count-up.tsx`, and the hero).
+Single blue-600 accent, no decorative gradients on content or components, JetBrains Mono for headings via the `font-display` Tailwind class (loaded from Google Fonts in `index.html`). The desktop OS chrome (`DesktopOS.tsx`) uses a wallpaper gradient as a deliberate skeuomorphic touch, kept separate from the content design system. The system is documented in-site by `design-lab-section.tsx`, which now renders on its own page at `/portfolio/design/` rather than on the homepage — if you change tokens, update it so it stays truthful. All animation respects `prefers-reduced-motion` (see `src/hooks/use-prefers-reduced-motion.ts`, used by `decrypted-text.tsx`, `count-up.tsx`, and the hero).
 
 ### Zero-backend "AI"
-`FaqChatbot.tsx` (and `desktop/apps/ChatbotApp.tsx`) is **not** an LLM — it uses Fuse.js fuzzy search over `faqData.ts` for client-side retrieval. It can only surface pre-written answers, never generates text. Do not wire it to an API.
-
-### Live GitHub stats
-`lib/use-github-stats.ts` fetches stars/forks/language/last-push from the public GitHub API for each project with a `github` URL, cached in `sessionStorage` for 1 hour (unauthenticated, 60 req/hr/IP). Surfaced via `github-stats-badge.tsx`.
+`desktop/apps/ChatbotApp.tsx` is **not** an LLM — it uses Fuse.js fuzzy search over `faqData.ts` for client-side retrieval. It can only surface pre-written answers, never generates text. Do not wire it to an API. It lives only inside desktop mode, which keeps Fuse.js out of the homepage bundle; don't move it back to the classic page.
 
 ## Conventions
 

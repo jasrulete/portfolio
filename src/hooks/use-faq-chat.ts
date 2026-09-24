@@ -1,10 +1,10 @@
-// Shared FAQ-chat state/logic for the floating widget (FaqChatbot) and the
-// desktop/mobile chatbot app (ChatbotApp) — previously duplicated by hand
-// across both files, letting them drift out of sync.
+// FAQ-chat state/logic for the desktop OS "Ask Me" app (ChatbotApp). It was
+// shared with a floating homepage widget until that widget was removed.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";
 import { faqData, type FaqEntry } from "../data/faqData";
+import { usePrefersReducedMotion } from "./use-prefers-reduced-motion";
 
 export interface ChatMessage {
   id: string;
@@ -24,6 +24,7 @@ export function useFaqChat(fallbackAnswer: string) {
     },
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   const fuse = useMemo(
     () =>
@@ -39,12 +40,14 @@ export function useFaqChat(fallbackAnswer: string) {
     [],
   );
 
+  // An explicit `behavior` beats the CSS `scroll-behavior: auto !important`
+  // that index.css sets under prefers-reduced-motion, so it has to be gated here.
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
+      behavior: reducedMotion ? "auto" : "smooth",
     });
-  }, [messages]);
+  }, [messages, reducedMotion]);
 
   function answerFor(query: string): string {
     const trimmed = query.trim();

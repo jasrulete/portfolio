@@ -1,5 +1,5 @@
 // Shared FAQ-chat body — message list, suggestion chips, and input form —
-// reused by both FaqChatbot's floating widget and ChatbotApp's embedded view.
+// rendered by ChatbotApp, the desktop OS "Ask Me" app.
 
 import { Send } from "lucide-react";
 import type { FaqChat } from "../hooks/use-faq-chat";
@@ -37,7 +37,7 @@ export function FaqChatBody({ chat }: { chat: FaqChat }) {
             <button
               key={s.id}
               onClick={() => chat.send(s.question)}
-              className="rounded-full border border-gray-400 px-3 py-1.5 text-xs text-gray-600 hover:border-blue-600 hover:text-blue-600 dark:border-gray-500 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="rounded-full border border-gray-500 px-3 py-1.5 text-xs text-gray-600 hover:border-blue-600 hover:text-blue-600 dark:border-gray-500 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               {s.question}
             </button>

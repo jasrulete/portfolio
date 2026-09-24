@@ -30,7 +30,7 @@ export const faqData: FaqEntry[] = [
     question: "What work experience do you have?",
     keywords: ["internship", "jobs", "employment history", "companies worked"],
     answer:
-      "Since July 2026 I've been doing remote full-stack contract work on SaaS web applications: a hosting migration and deployment pipelines, Stripe billing fixes, authentication hardening and automated tests. The clients and the details of their systems stay confidential. From June to August 2026 I was also a Software Developer Intern at Mvolo, a remote internship with an international founding team, working on a cross-platform React Native (Expo) app with TypeScript and Supabase. I signed an NDA, so that's as much as I can say about it. From June 2025 to January 2026 I was an Asset Management Specialist Intern at Lexmark (now Xerox) in Cebu City, where I built and maintained internal tracking tools for enterprise hardware asset lifecycle management and worked with IT teams to keep asset records consistent across systems. I've also helped run my family's rice trading business since high school: operations, inventory and deliveries.",
+      "Since July 2026 I've been doing remote full-stack contract work on SaaS web applications: a hosting migration and deployment pipelines, Stripe billing fixes, authentication hardening and automated tests. The clients and the details of their systems stay confidential. From June to August 2026 I was also a Software Developer Intern at Mvolo, a remote internship with an international founding team. The product and its internals are covered by an NDA, so that's as much as I can say about it. From June 2025 to January 2026 I was an Asset Management Specialist Intern at Lexmark (now Xerox) in Cebu City, where I built and maintained internal tracking tools for enterprise hardware asset lifecycle management and worked with IT teams to keep asset records consistent across systems. I've also helped run my family's rice trading business since high school: operations, inventory and deliveries.",
   },
   {
     id: "ai-agent-project",
@@ -67,7 +67,6 @@ export const faqData: FaqEntry[] = [
       "easter eggs",
       "view modes",
       "desktop mode",
-      "mobile mode",
       "command palette",
       "ctrl k",
       "design lab",
@@ -75,7 +74,7 @@ export const faqData: FaqEntry[] = [
       "hidden features",
     ],
     answer:
-      "More than scroll. On screens 640px and wider, the buttons in the bottom-left switch into a desktop OS mode (draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app) or a phone-launcher mobile mode — all three views share the same content. On any screen size, press Ctrl+K (or Cmd+K) for a command palette, which can switch view modes too, as well as jump to sections and projects. Click any skill chip to see the projects that use it, and open the Design Lab section for the design system this site runs on.",
+      "More than scroll. Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme, and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and the design system this site runs on has its own page, linked under the Projects heading and in the footer.",
   },
   {
     id: "how-built",
@@ -88,7 +87,7 @@ export const faqData: FaqEntry[] = [
       "what powers this website",
     ],
     answer:
-      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. Fun fact: this chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things Jeric actually wrote. Project cards pull live GitHub stats (cached in sessionStorage for an hour), images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
+      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. Fun fact: this chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things Jeric actually wrote. Images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
   },
   {
     id: "hire-you",

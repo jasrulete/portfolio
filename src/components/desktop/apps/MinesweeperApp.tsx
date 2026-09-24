@@ -22,7 +22,7 @@ const NUMBER_COLORS = [
   "text-amber-700 dark:text-amber-500",
   "text-teal-600 dark:text-teal-400",
   "text-gray-800 dark:text-gray-200",
-  "text-gray-500",
+  "text-gray-600 dark:text-gray-300",
 ];
 
 function emptyBoard(): Cell[][] {
@@ -157,7 +157,7 @@ export default function MinesweeperApp() {
         <span aria-label="Mines remaining">
           <span aria-hidden>⚑</span> {MINES - flags}
         </span>
-        <span className="text-gray-500 dark:text-gray-400">{seconds}s</span>
+        <span className="text-gray-600 dark:text-gray-300">{seconds}s</span>
         <button
           type="button"
           onClick={() => setFlagMode((f) => !f)}
@@ -173,7 +173,7 @@ export default function MinesweeperApp() {
         <button
           type="button"
           onClick={reset}
-          className="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold"
+          className="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold"
         >
           Reset
         </button>
@@ -224,7 +224,7 @@ export default function MinesweeperApp() {
         )}
       </div>
 
-      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
         Right-click (or Flag mode) to flag · first click is always safe
       </p>
     </div>

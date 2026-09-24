@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+    <link rel="icon" type="image/png" href="%BASE_URL%logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -15,15 +15,35 @@
       talks to: Web3Forms (contact form), GitHub API (project stats),
       hCaptcha (contact form), Google Fonts, and jsDelivr/Google Storage
       (MediaPipe WASM + model, loaded by the Camera/Gestures apps).
+
+      'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' in script-src is the
+      pre-paint theme script below. See the warning above that script.
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://api.github.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+      content="default-src 'self'; script-src 'self' 'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://api.github.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
     />
+    <!--
+      PRE-PAINT THEME SCRIPT — DO NOT EDIT THE LINE BELOW.
+
+      It runs before the stylesheet so a dark-preferring visitor never sees a
+      white first frame. The CSP above allows it by a sha256 hash of its exact
+      bytes, so changing it by even one byte — including whitespace, a quote
+      style or a line break — silently breaks the theme: the browser refuses to
+      run the script and the only symptom is a console CSP error and a white
+      flash. If you must change it, take the text between the script tags
+      exactly as written — no leading or trailing whitespace, no line break —
+      run it through sha256, base64 the digest, and replace the
+      'sha256-...' entry in the policy above with the result.
+
+      Keep this identical to design/index.html, which carries the same script
+      and the same hash.
+    -->
+    <script>(function(){try{var t=localStorage.getItem("portfolio-theme");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;if(d){document.documentElement.style.backgroundColor="#111827";document.documentElement.classList.add("dark-preload")}}catch(e){}})()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <meta property="og:type" content="website" />
@@ -48,9 +68,82 @@
       content="https://jasrulete.github.io/portfolio/og-image.jpg"
     />
     <title>Jeric Rulete | Portfolio</title>
+    <!--
+      Person structured data. Every value is copied by hand from
+      src/data/profile.ts (name, title, portfolio, social, education.school,
+      location) — an HTML file can't import it, so if any of those change in
+      profile.ts, change them here too. Deliberately limited to facts that
+      don't drift: no project list, no job list, no llms.txt.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jeric Ashley S. Rulete",
+        "jobTitle": "Full-stack web developer",
+        "url": "https://jasrulete.github.io/portfolio/",
+        "sameAs": [
+          "https://github.com/jasrulete",
+          "https://www.linkedin.com/in/jeric-ashley-rulete-002b23364/"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of the Philippines"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cebu City",
+          "addressCountry": "Philippines"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <!--
+      With JavaScript off, blocked, or the chunk 404ing, the div above stays
+      empty. Facts only, and only facts that don't drift: no project list,
+      because it would go stale against profile.ts and nobody would notice.
+    -->
+    <noscript>
+      <div
+        style="
+          max-width: 40rem;
+          margin: 0 auto;
+          padding: 2rem 1rem;
+          font-family: system-ui, sans-serif;
+          line-height: 1.6;
+        "
+      >
+        <h1>Jeric Rulete</h1>
+        <p>
+          Full-stack web developer · BS Computer Science, UP Cebu (2026) · Cebu
+          City, Philippines
+        </p>
+        <p>
+          This site needs JavaScript to display its content. Everything worth
+          seeing is also reachable from the links below.
+        </p>
+        <ul>
+          <li>
+            Email:
+            <a href="mailto:rulete.jeric@gmail.com">rulete.jeric@gmail.com</a>
+          </li>
+          <li>
+            GitHub:
+            <a href="https://github.com/jasrulete"
+              >https://github.com/jasrulete</a
+            >
+          </li>
+          <li>
+            Résumé (PDF):
+            <a href="%BASE_URL%Jeric-Rulete_Resume.pdf"
+              >Jeric-Rulete_Resume.pdf</a
+            >
+          </li>
+        </ul>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

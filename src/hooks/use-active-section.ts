@@ -2,15 +2,7 @@ import { useEffect, useState } from "react";
 
 // Must stay in DOM order: pick() walks this list and keeps the last section
 // that has crossed the marker line.
-const SECTION_IDS = [
-  "home",
-  "projects",
-  "experience",
-  "skills",
-  "about",
-  "design",
-  "contact",
-];
+const SECTION_IDS = ["home", "projects", "experience", "about", "contact"];
 
 export function useActiveSection() {
   const [activeId, setActiveId] = useState("home");
