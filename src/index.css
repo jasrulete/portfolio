@@ -27,6 +27,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* The project cards' "How it was built" summary uses Tailwind's `list-none`
+   to drop the default disclosure triangle in favour of its own chevron. That
+   is enough everywhere except WebKit before 16.4, which still paints
+   ::-webkit-details-marker and would show two markers. */
+summary::-webkit-details-marker {
+  display: none;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
