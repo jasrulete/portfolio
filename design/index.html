@@ -16,12 +16,12 @@
       This page talks to Google Fonts only, but the policy is kept identical so
       the two entries can't drift apart.
 
-      'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' in script-src is the
+      'sha256-TuSmE2YP+LVnHaNArOXMODUr6jQvUOglJbo6fvpTxA0=' in script-src is the
       pre-paint theme script below. See the warning above that script.
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+      content="default-src 'self'; script-src 'self' 'sha256-TuSmE2YP+LVnHaNArOXMODUr6jQvUOglJbo6fvpTxA0=' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
     />
     <!--
       PRE-PAINT THEME SCRIPT — DO NOT EDIT THE LINE BELOW.
@@ -33,7 +33,7 @@
       dark-preferring visitor's first paint. If you change one entry, change the
       other and recompute the hash for both.
     -->
-    <script>(function(){try{var t=localStorage.getItem("portfolio-theme");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;if(d){document.documentElement.style.backgroundColor="#111827";document.documentElement.classList.add("dark-preload")}}catch(e){}})()</script>
+    <script>(function(){try{var t=localStorage.getItem("portfolio-theme");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;if(d){document.documentElement.style.backgroundColor="#111827";document.documentElement.style.colorScheme="dark";document.documentElement.classList.add("dark-preload")}}catch(e){}})()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -53,6 +53,7 @@ function App() {
     document.documentElement.style.backgroundColor = darkMode
       ? "#111827"
       : "";
+    document.documentElement.style.colorScheme = darkMode ? "dark" : "light";
   }, [darkMode]);
 
   useEffect(() => {
