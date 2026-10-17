@@ -19,9 +19,13 @@ export default function Hero() {
           {profile.title} · {profile.location}
         </p>
 
+        {/* Both audiences, named symmetrically and in one sentence. "Open to
+            roles" on its own read as temporary to anyone considering hiring
+            him for a project; leading with project work would read as flight
+            risk to an employer. Neither half ranks above the other. */}
         <p className="mt-3 max-w-2xl text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-          {profile.tagline} I&apos;m open to software developer, web developer
-          and QA engineer roles.
+          {profile.tagline} I&apos;m available for contract and freelance work,
+          and open to software developer, web developer and QA engineer roles.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -41,6 +45,16 @@ export default function Hero() {
         </div>
 
         <p className="mt-6 text-sm text-gray-600 dark:text-gray-300">
+          {/* A text link in a row that already exists, not a third button:
+              the hero holds two actions and there is no room above the fold
+              for a new one. */}
+          <a
+            href="#work-with-me"
+            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 ${CTA_FOCUS}`}
+          >
+            Work with me
+          </a>
+          <span aria-hidden> · </span>
           <a
             href={profile.github}
             target="_blank"

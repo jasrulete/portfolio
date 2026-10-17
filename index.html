@@ -2,26 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      SVG first; logo.png stays as the fallback for anything that can't render
+      it. Both go through %BASE_URL% — a root-absolute /favicon.svg 404s under
+      the /portfolio/ base path.
+    -->
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="icon" type="image/png" href="%BASE_URL%logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      One string, used verbatim for description, og:description and
+      twitter:description below. 152 characters, so nothing truncates. The
+      degree lives in the Person JSON-LD, the <noscript> block and the page
+      itself; in a 160-character link preview the working-developer facts and
+      Shopify earn the room instead.
+    -->
     <meta
       name="description"
-      content="Jeric Ashley S. Rulete — full-stack web developer in Cebu City. BS Computer Science, UP Cebu (2026). Next.js, TypeScript and PostgreSQL projects, with tests."
+      content="Full-stack web developer in Cebu City. Next.js, TypeScript, PostgreSQL and Shopify themes written from scratch. Demo, source and tests on every project."
     />
     <meta name="theme-color" content="#111827" />
     <!--
       GitHub Pages can't set response headers, but browsers still enforce a
       CSP delivered via meta tag. Scoped to the origins this site actually
-      talks to: Web3Forms (contact form), GitHub API (project stats),
-      hCaptcha (contact form), Google Fonts, and jsDelivr/Google Storage
-      (MediaPipe WASM + model, loaded by the Camera/Gestures apps).
+      talks to: Web3Forms (contact form), hCaptcha (contact form), Google
+      Fonts, and jsDelivr/Google Storage (MediaPipe WASM + model, loaded by
+      the Camera/Gestures apps). The GitHub API origin was dropped from
+      connect-src when the GitHub-stats badge was deleted — no code path
+      fetches it any more.
 
       'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' in script-src is the
       pre-paint theme script below. See the warning above that script.
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://api.github.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+      content="default-src 'self'; script-src 'self' 'sha256-YCNoNHUFyk60wYGnnrYLqoTrNMzBeAI+tkkgu3yl5ks=' 'wasm-unsafe-eval' https://*.hcaptcha.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.hcaptcha.com; connect-src 'self' https://api.web3forms.com https://cdn.jsdelivr.net https://storage.googleapis.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://hcaptcha.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
     />
     <!--
       PRE-PAINT THEME SCRIPT — DO NOT EDIT THE LINE BELOW.
@@ -50,7 +65,7 @@
     <meta property="og:title" content="Jeric Rulete | Portfolio" />
     <meta
       property="og:description"
-      content="Full-stack web developer in Cebu City. BS Computer Science, UP Cebu (2026). Next.js, TypeScript and PostgreSQL projects, with automated tests."
+      content="Full-stack web developer in Cebu City. Next.js, TypeScript, PostgreSQL and Shopify themes written from scratch. Demo, source and tests on every project."
     />
     <meta property="og:url" content="https://jasrulete.github.io/portfolio/" />
     <meta
@@ -61,7 +76,7 @@
     <meta name="twitter:title" content="Jeric Rulete | Portfolio" />
     <meta
       name="twitter:description"
-      content="Full-stack web developer in Cebu City. BS Computer Science, UP Cebu (2026). Next.js, TypeScript and PostgreSQL projects, with automated tests."
+      content="Full-stack web developer in Cebu City. Next.js, TypeScript, PostgreSQL and Shopify themes written from scratch. Demo, source and tests on every project."
     />
     <meta
       name="twitter:image"
