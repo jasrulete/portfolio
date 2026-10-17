@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    Hand-drawn, square, no font dependency: "JR" over the brand's blue cursor
+    underscore. Colours are the shipped tokens — gray-900 #111827 (the same
+    hex as theme-color), white, blue-600 #2563eb. The square is opaque on
+    purpose, so the mark survives a light tab strip as well as a dark one;
+    logo.png, the previous and only icon, is white artwork on transparency and
+    disappears on a light one. Paths only, so nothing here needs a webfont.
+  -->
+  <rect width="32" height="32" rx="6" fill="#111827" />
+  <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 7.5V15a3.5 3.5 0 0 1-7 0" />
+    <path d="M18.5 18.5v-11h3.5a3.25 3.25 0 0 1 0 6.5h-3.5" />
+    <path d="M21.5 14l4 4.5" />
+  </g>
+  <rect x="6" y="22.5" width="20" height="3.5" rx="1.75" fill="#2563eb" />
+</svg>

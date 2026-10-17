@@ -49,11 +49,11 @@ const MOTION_TIERS = [
  * output changes, change these, or the page starts lying again.
  */
 const PAYLOAD = {
-  home: { html: "2.62", css: "7.13", js: "94.24", total: "104.0" },
+  home: { html: "2.95", css: "7.20", js: "94.97", total: "105.1" },
   // This page's own HTML and JS embed content-hashed filenames, so printing a
   // number here changes it by up to 0.01 kB. Both are quoted to 1 dp, which is
   // stable across builds.
-  design: { html: "1.4", css: "7.13", js: "74.8", total: "83.3" },
+  design: { html: "1.5", css: "7.2", js: "74.8", total: "83.5" },
 };
 
 export default function DesignLabSection() {

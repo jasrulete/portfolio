@@ -1,11 +1,13 @@
 # Portfolio
 
 Jeric Rulete's personal portfolio: a single-page React app with no backend. The same
-content is presented three ways — a classic scrolling page, a simulated desktop OS with
-draggable windows, and a phone-style launcher — plus a Ctrl/Cmd+K command palette and a
-Fuse.js FAQ chatbot.
+content is presented two ways — a classic scrolling page and a simulated desktop OS with
+draggable windows — plus a Ctrl/Cmd+K command palette in both. The desktop OS carries a
+few extras that never load on the homepage, including a Fuse.js search over a
+hand-written FAQ.
 
-Built with React 19, TypeScript, Vite and Tailwind CSS.
+Built with React 19, TypeScript, Vite and Tailwind CSS. A second build entry at
+`/design/` documents the design system.
 
 Live: https://jasrulete.github.io/portfolio/
 
@@ -52,8 +54,9 @@ or it will 404 in production.
 
 ```
 index.html          Entry document, meta tags, CSP
-public/             Static files copied as-is (PDFs, favicon, og-image)
-src/components/     Classic sections, plus desktop/ and mobile/ OS chrome
+design/index.html   Second build entry — the design-system page at /design/
+public/             Static files copied as-is (PDFs, favicons, og-image)
+src/components/     Classic sections, plus desktop/ OS chrome (mobile/ is unlinked)
 src/data/           profile.ts (all portfolio content), faqData.ts, skill-match.ts
 src/hooks/          Portfolio hooks; root lib/ and hooks/ hold shadcn-style utilities
 ```

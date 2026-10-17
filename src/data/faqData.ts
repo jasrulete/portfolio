@@ -94,6 +94,6 @@ export const faqData: FaqEntry[] = [
     question: "Are you looking for work?",
     keywords: ["available for hire", "open to opportunities", "job search", "contact"],
     answer:
-      "I'm doing contract development work right now, and I'm open to other opportunities — software developer, web developer or QA engineer roles. You can reach me through the contact form, at rulete.jeric@gmail.com, or on GitHub and LinkedIn, both linked in the footer.",
+      "I'm doing contract development work right now, and I take on client projects — web apps, Shopify themes and AI integrations, and I'm happy to talk about anything else you need built. Project work is quoted once we've scoped it together. I'm also open to software developer, web developer or QA engineer roles. Email rulete.jeric@gmail.com or use the contact form and I'll reply within one business day; GitHub and LinkedIn are in the footer.",
   },
 ];

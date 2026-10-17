@@ -3,6 +3,7 @@ import Hero from "./components/hero-section";
 import AboutSection from "./components/about-section";
 import ProjectsSection from "./components/projects-section";
 import ExperienceSection from "./components/experience-section";
+import WorkWithMeSection from "./components/work-with-me-section";
 import ContactSection from "./components/contact-section";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
@@ -121,6 +122,9 @@ function App() {
           />
           <ExperienceSection />
           <AboutSection onSkillSelect={setProjectTag} />
+          {/* Deliberately not in the four-file nav order: an additive stop on
+              the scroll, not a fifth nav destination. See the component. */}
+          <WorkWithMeSection />
           <ContactSection />
         </main>
         <Footer onDesktopMode={() => setMode("desktop")} />

@@ -50,9 +50,24 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
             making, and at the bottom they sat under 500px+ of case study. */}
         <ProjectLinks project={project} className="mb-5" />
 
-        <CaseStudy project={project} />
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          {project.description}
+        </p>
 
-        <TagList tags={project.tags} />
+        {/* Native <details>, so the full case study stays in the DOM for a
+            crawler, a link preview and a screen reader while the index stays
+            scannable. No JS, nothing to hydrate, instant under reduced
+            motion. */}
+        <details className="group mt-4 mb-6 border-t border-gray-200 dark:border-gray-700 pt-4">
+          <summary className="cursor-pointer list-none inline-flex items-center gap-2 rounded-lg py-2.5 text-sm font-semibold text-blue-600 dark:text-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800">
+            <ChevronIcon />
+            How it was built
+            <span className="sr-only"> — {project.title}</span>
+          </summary>
+          <CaseStudy project={project} />
+        </details>
+
+        <TagList tags={project.tags} className="mt-auto" />
       </div>
     </article>
   );
@@ -68,7 +83,10 @@ function ProjectBanner({
   const image = imageFor(project.title);
 
   return (
-    <div className="relative rounded-t-xl" style={{ paddingBottom: "35%" }}>
+    // aspect-video, not the old 35% letterbox: the screenshots are 1280×769
+    // (≈1.67:1) and a 2.86:1 box cropped roughly their top and bottom third
+    // away. The card can afford the height now the case study is collapsed.
+    <div className="relative rounded-t-xl aspect-video">
       <div className="absolute inset-0 overflow-hidden rounded-t-xl">
         {image ? (
           <>
@@ -80,23 +98,19 @@ function ProjectBanner({
           <div className="absolute inset-0 bg-gray-900" />
         )}
       </div>
-      <div className="absolute bottom-4 left-5 right-5 flex justify-between items-end">
-        <div>
-          <p className="text-sm text-blue-300 font-medium mb-1 drop-shadow-md">
-            {project.period}
-            {"subtitle" in project && project.subtitle && (
-              <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
-            )}
-          </p>
-          <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-md">
-            {project.title}
-          </h3>
-        </div>
-        {"category" in project && (
-          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
-            {project.category}
-          </span>
-        )}
+      {/* The glass category badge that used to sit here is gone: the category
+          filter it referred to was removed, and it put text on a blurred
+          photograph, which the design system does not allow. */}
+      <div className="absolute bottom-4 left-5 right-5">
+        <p className="text-sm text-blue-300 font-medium mb-1 drop-shadow-md">
+          {project.period}
+          {"subtitle" in project && project.subtitle && (
+            <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
+          )}
+        </p>
+        <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-md">
+          {project.title}
+        </h3>
       </div>
     </div>
   );
@@ -104,7 +118,7 @@ function ProjectBanner({
 
 function CaseStudy({ project }: { project: Project }) {
   return (
-    <dl className="space-y-5 mb-6 flex-grow">
+    <dl className="space-y-5 mt-4">
       <div>
         <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1">
           The Challenge
@@ -259,6 +273,31 @@ function ProjectLinks({
         </a>
       )}
     </div>
+  );
+}
+
+/**
+ * Points right when the disclosure is shut and down when it is open. The
+ * rotation rides the global prefers-reduced-motion backstop in index.css,
+ * which clamps every transition to 0.01ms.
+ */
+function ChevronIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4 shrink-0 transition-transform duration-150 group-open:rotate-90"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 5l7 7-7 7"
+      />
+    </svg>
   );
 }
 

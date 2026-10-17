@@ -16,6 +16,12 @@ type FormFields = {
   name: string;
   email: string;
   message: string;
+  /**
+   * Optional and never blocking. It is the whole measurement plan: the site
+   * has no analytics, and which channel produced an enquiry is the one thing
+   * a page-view counter could not answer anyway.
+   */
+  source: string;
 };
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -25,6 +31,7 @@ export default function Contact() {
     name: "",
     email: "",
     message: "",
+    source: "",
   });
   const [result, setResult] = useState<React.ReactNode>("");
   // Status drives the colour of the result line. Deriving it from the message
@@ -107,6 +114,7 @@ export default function Contact() {
     formPayload.append("name", formData.name);
     formPayload.append("email", formData.email);
     formPayload.append("message", formData.message);
+    formPayload.append("source", formData.source);
     formPayload.append("subject", `Portfolio message from ${safeName}`);
     formPayload.append("from_name", formData.name);
     formPayload.append("replyto", formData.email);
@@ -123,7 +131,7 @@ export default function Contact() {
       if (data.success) {
         setStatus("success");
         setResult("Message sent! I'll get back to you soon.");
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", source: "" });
         setCaptchaToken(null);
         captchaRef.current?.resetCaptcha();
       } else {
@@ -196,9 +204,12 @@ function ContactGrid({
   onCaptchaVerify: (token: string) => void;
   onCaptchaError: () => void;
 }) {
+  // green-800, not green-600: on the gray-50 page surface green-600 measures
+  // ≈3.15:1, under the 4.5:1 floor this site publishes for itself. green-800
+  // is 6.82:1; dark mode keeps green-400 at 10.19:1 on gray-900.
   const statusClass =
     status === "success"
-      ? "text-green-600 dark:text-green-400"
+      ? "text-green-800 dark:text-green-400"
       : status === "sending"
         ? "text-gray-600 dark:text-gray-300"
         : "text-red-600 dark:text-red-400";
@@ -246,6 +257,16 @@ function ContactGrid({
             className="w-full px-4 py-2.5 border border-gray-500 dark:border-gray-400 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
+        {/* Not required, not validated, and an empty value still submits. */}
+        <FormField
+          label="How did you find me? (optional)"
+          id="source"
+          name="source"
+          value={formData.source}
+          onChange={onChange}
+          onFocus={onFieldActivity}
+        />
 
         {formConfigured ? (
           captchaArmed && (
