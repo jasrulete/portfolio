@@ -49,11 +49,11 @@ const MOTION_TIERS = [
  * output changes, change these, or the page starts lying again.
  */
 const PAYLOAD = {
-  home: { html: "2.95", css: "7.20", js: "94.97", total: "105.1" },
+  home: { html: "2.95", css: "7.24", js: "95.01", total: "105.2" },
   // This page's own HTML and JS embed content-hashed filenames, so printing a
   // number here changes it by up to 0.01 kB. Both are quoted to 1 dp, which is
   // stable across builds.
-  design: { html: "1.5", css: "7.2", js: "74.8", total: "83.5" },
+  design: { html: "1.5", css: "7.2", js: "74.9", total: "83.6" },
 };
 
 export default function DesignLabSection() {
@@ -105,19 +105,20 @@ export default function DesignLabSection() {
               (gray-300 on gray-900) and{" "}
               <strong className="font-semibold">9.95:1</strong> in a card
               (gray-300 on gray-800). The floor here is 4.5:1 for all text,
-              including large text.
+              including large text. Selected text is blue-900 on blue-200 at
+              7.29:1, fixed in both themes.
             </p>
           </LabCard>
 
           <LabCard title="Typography scale">
             <div className="space-y-5">
               <TypeSample
-                label="Display · JetBrains Mono · text-4xl → sm:text-5xl / bold"
+                label="Display · JetBrains Mono · text-4xl → sm:text-5xl → lg:text-6xl / bold / tracking-tight"
                 className="font-display text-4xl font-bold"
                 text="Building useful things"
               />
               <TypeSample
-                label="Heading · JetBrains Mono · text-2xl → sm:text-3xl / bold"
+                label="Heading · JetBrains Mono · text-2xl → sm:text-3xl / bold / tracking-tight"
                 className="font-display text-2xl font-bold"
                 text="Section headings"
               />
@@ -127,9 +128,9 @@ export default function DesignLabSection() {
                 text="Long-form copy — the hero lines and the About bio — runs 16 to 20px."
               />
               <TypeSample
-                label="Dense body · text-sm 14px"
+                label="Metadata · text-sm 14px"
                 className="text-sm text-gray-600 dark:text-gray-300"
-                text="Case studies, experience bullets and section intros are 14px. That is the floor for running text."
+                text="Dates, form labels, buttons, nav links and quiet link rows are 14px. Running prose is 16px or larger."
               />
               <TypeSample
                 label="Caption · text-xs 12px · hard floor"
