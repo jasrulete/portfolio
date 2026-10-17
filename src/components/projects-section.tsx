@@ -19,7 +19,7 @@ export default function Projects({
   return (
     <section
       id="projects"
-      className="py-14 sm:py-20 border-t border-gray-300 dark:border-gray-700"
+      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Projects" className="mb-3" />

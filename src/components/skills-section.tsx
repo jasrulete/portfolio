@@ -8,8 +8,8 @@ import SectionHeading from "./section-heading";
 // same content in its own window.
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-14 sm:py-20">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-16 sm:py-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Skills" />
         <StackBlock />
       </div>

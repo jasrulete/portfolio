@@ -150,9 +150,9 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-14 sm:py-20 border-t border-gray-300 dark:border-gray-700"
+      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Contact" />
 
         <ContactGrid
@@ -310,7 +310,7 @@ function ContactInfo() {
 
   return (
     <div>
-      <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
+      <h3 className="text-2xl font-semibold tracking-tight mb-6">Contact Information</h3>
       <div className="space-y-6">
         <div className="flex items-start">
           <MailIcon />

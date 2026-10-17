@@ -8,11 +8,11 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-14 sm:py-20 border-t border-gray-300 dark:border-gray-700"
+      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Experience" />
-        <div className="space-y-6 max-w-3xl">
+        <div className="space-y-6 sm:space-y-8 max-w-3xl">
           {profile.experience.map((item) => (
             <article
               key={item.title}
@@ -22,7 +22,7 @@ export default function ExperienceSection() {
                 <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">
                   {item.period}
                 </p>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
@@ -33,7 +33,7 @@ export default function ExperienceSection() {
                 {item.highlights.map((highlight) => (
                   <li
                     key={highlight}
-                    className="text-gray-600 dark:text-gray-300 text-sm flex gap-3"
+                    className="text-gray-600 dark:text-gray-300 text-base flex gap-3"
                   >
                     <span
                       aria-hidden
@@ -41,7 +41,7 @@ export default function ExperienceSection() {
                     >
                       ▹
                     </span>
-                    <span className="leading-relaxed">{highlight}</span>
+                    <span className="max-w-prose leading-relaxed">{highlight}</span>
                   </li>
                 ))}
               </ul>
@@ -63,7 +63,7 @@ function Education() {
 
   return (
     <div className="pt-6">
-      <h3 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+      <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">
         Education
       </h3>
       <article className="rounded-xl shadow-sm border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6">

@@ -11,16 +11,16 @@ export default function AboutSection({
   return (
     <section
       id="about"
-      className="py-14 sm:py-20 border-t border-gray-300 dark:border-gray-700"
+      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="About" />
         <AboutGrid />
         <div className="mt-12">
           {/* scroll-mt clears the sticky navbar for the palette's "Go to Stack". */}
           <h3
             id="stack"
-            className="text-xl sm:text-2xl font-bold mb-6 scroll-mt-20 text-gray-900 dark:text-white"
+            className="text-xl sm:text-2xl font-bold tracking-tight mb-6 scroll-mt-20 text-gray-900 dark:text-white"
           >
             Stack
           </h3>
@@ -47,15 +47,15 @@ function AboutGrid() {
         </div>
       </div>
 
-      <div>
-        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+      <div className="prose-flow max-w-prose">
+        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
           I&apos;m a full-stack web developer in Cebu City. I graduated with a
           BS in Computer Science from the University of the Philippines Cebu
           in July 2026. I&apos;m doing contract development work at the
           moment, and I&apos;m open to software developer, web developer and
           QA engineer roles.
         </p>
-        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
           Most of what I build is full-stack web work: Next.js and TypeScript
           over PostgreSQL or SQLite. ShelfStock is a store whose checkout
           locks the stock row so two buyers can&apos;t both take the last

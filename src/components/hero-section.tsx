@@ -8,9 +8,9 @@ const CTA_FOCUS =
 
 export default function Hero() {
   return (
-    <section id="home" className="pt-10 pb-12 sm:pt-16 sm:pb-20">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
+    <section id="home" className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">
           {profile.shortName}
           <span className="text-blue-600 dark:text-blue-400">_</span>
         </h1>
@@ -23,7 +23,7 @@ export default function Hero() {
             roles" on its own read as temporary to anyone considering hiring
             him for a project; leading with project work would read as flight
             risk to an employer. Neither half ranks above the other. */}
-        <p className="mt-3 max-w-2xl text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+        <p className="mt-3 max-w-prose text-base text-gray-600 dark:text-gray-300 leading-relaxed">
           {profile.tagline} I&apos;m available for contract and freelance work,
           and open to software developer, web developer and QA engineer roles.
         </p>

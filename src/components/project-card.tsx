@@ -50,7 +50,7 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
             making, and at the bottom they sat under 500px+ of case study. */}
         <ProjectLinks project={project} className="mb-5" />
 
-        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+        <p className="text-base max-w-prose text-gray-600 dark:text-gray-300 leading-relaxed">
           {project.description}
         </p>
 
@@ -108,7 +108,7 @@ function ProjectBanner({
             <span className="text-gray-300 font-normal"> · {project.subtitle}</span>
           )}
         </p>
-        <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-md">
+        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-md">
           {project.title}
         </h3>
       </div>
@@ -118,12 +118,12 @@ function ProjectBanner({
 
 function CaseStudy({ project }: { project: Project }) {
   return (
-    <dl className="space-y-5 mt-4">
+    <dl className="space-y-6 mt-4">
       <div>
         <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1">
           The Challenge
         </dt>
-        <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+        <dd className="text-base max-w-prose text-gray-600 dark:text-gray-300 leading-relaxed">
           {project.challenge}
         </dd>
       </div>
@@ -133,7 +133,7 @@ function CaseStudy({ project }: { project: Project }) {
           <dt className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1">
             Architecture &amp; Execution
           </dt>
-          <dd className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          <dd className="text-base max-w-prose text-gray-600 dark:text-gray-300 leading-relaxed">
             {project.architecture as string}
           </dd>
         </div>
@@ -142,7 +142,7 @@ function CaseStudy({ project }: { project: Project }) {
       {"outcome" in project && (
         <div className="pt-4 border-t border-gray-300 dark:border-gray-700">
           <dt className="sr-only">Outcome</dt>
-          <dd className="text-sm font-medium text-gray-900 dark:text-white">
+          <dd className="text-base max-w-prose font-medium text-gray-900 dark:text-white leading-relaxed">
             <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">
               Outcome:
             </span>

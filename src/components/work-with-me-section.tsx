@@ -20,12 +20,12 @@ export default function WorkWithMeSection() {
   return (
     <section
       id="work-with-me"
-      className="py-14 sm:py-20 border-t border-gray-300 dark:border-gray-700 scroll-mt-20"
+      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700 scroll-mt-20"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Work with me" />
 
-        <div className="max-w-2xl space-y-4 text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+        <div className="max-w-prose prose-flow text-base text-gray-600 dark:text-gray-300 leading-relaxed">
           <p>
             What I build — and what there is a demo and source for on this
             page: full-stack web apps (ShelfStock, Nexus CRM), Shopify themes

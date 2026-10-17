@@ -19,7 +19,7 @@ export default function SectionHeading({
 }) {
   return (
     <div className={className}>
-      <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+      <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
         <DecryptedText text={title} trigger="view" speed={30} />
       </h2>
       <div className="mt-3 w-8 h-0.5 bg-blue-600" aria-hidden />
