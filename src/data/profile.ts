@@ -260,7 +260,9 @@ export const profile = {
       org: "Mvolo · Remote (Netherlands)",
       period: "June 2026 – August 2026",
       highlights: [
-        "Remote internship with an international founding team; the product and its internals are covered by an NDA",
+        "Built the mobile client for a cross-platform app in React Native (Expo) and TypeScript: a multi-step onboarding wizard, a day-planning timeline view, and bilingual English/Dutch interface support",
+        "Set up the project's pnpm monorepo — mobile and desktop apps over shared core and ui-shared packages — and kept the Expo and build toolchain working through scaffolding, Metro and workspace fixes",
+        "Wrote the typed data layer in the shared core package: a Supabase client factory with auth wrappers and a Result type, idempotent batch writes for onboarding, non-destructive seeding, plus Vitest coverage and a persistence design spec reviewed before implementation",
       ],
     },
     {
