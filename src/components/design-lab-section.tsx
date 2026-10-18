@@ -49,7 +49,7 @@ const MOTION_TIERS = [
  * output changes, change these, or the page starts lying again.
  */
 const PAYLOAD = {
-  home: { html: "2.95", css: "7.24", js: "95.01", total: "105.2" },
+  home: { html: "2.95", css: "7.24", js: "95.26", total: "105.5" },
   // This page's own HTML and JS embed content-hashed filenames, so printing a
   // number here changes it by up to 0.01 kB. Both are quoted to 1 dp, which is
   // stable across builds.
@@ -62,8 +62,9 @@ export default function DesignLabSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Design Lab" className="mb-3" />
         <p className="text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 text-sm max-w-2xl">
-          The design system behind this site — tokens, components, and motion
-          rules, documented the way I&apos;d hand them to a team.
+          The design system behind this site: the tokens, components and
+          motion rules it actually ships, with the measured contrast ratios
+          and gzipped build sizes.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -135,13 +136,13 @@ export default function DesignLabSection() {
               <TypeSample
                 label="Caption · text-xs 12px · hard floor"
                 className="text-xs font-medium text-gray-600 dark:text-gray-300"
-                text="Tags, metadata and keyboard hints are 12px. Nothing in the codebase is smaller — there is not one arbitrary font size in src/."
+                text="Tags, metadata and keyboard hints are 12px. Nothing in the codebase is smaller. There is not one arbitrary font size in src/."
               />
             </div>
             <p className="mt-5 text-xs text-gray-600 dark:text-gray-300">
               In page content, monospace has one job: the name in the hero and
               the navbar, the section headings, and the cursor mark after it.
-              Everything else, card titles included, is the system sans stack —
+              Everything else, card titles included, is the system sans stack;
               no body webfont is loaded, and exactly two weights of JetBrains
               Mono are fetched, 500 and 700.
             </p>
@@ -188,7 +189,7 @@ export default function DesignLabSection() {
               </li>
               <li>
                 <code className="text-xs">focus:outline-none</code> never ships
-                alone — there is not one instance of it in the codebase without
+                alone: there is not one instance of it in the codebase without
                 a replacement. In page content the ring is 2px blue-500 sitting
                 2px off the control in the surface colour; text fields take it
                 inset so the field doesn&apos;t jump
@@ -229,7 +230,7 @@ export default function DesignLabSection() {
               <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
                 animation-timeline: view()
               </code>{" "}
-              — and no JavaScript: no scroll listener, no observer, and no{" "}
+              — and no JavaScript: no scroll listener, no observer and no{" "}
               <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
                 opacity: 0
               </code>{" "}
@@ -254,9 +255,9 @@ export default function DesignLabSection() {
                 <RingCarouselDemo />
               </div>
               <p className="mt-5 text-sm text-gray-600 dark:text-gray-300">
-                All four are CSS 3D on real DOM — no WebGL, no 3D library. That
-                is deliberate: the text stays selectable and screen-reader
-                legible and the controls stay real buttons, which a{" "}
+                All four are CSS 3D on real DOM — no WebGL, no 3D library. The
+                text stays selectable and screen-reader legible and the controls
+                stay real buttons, which a{" "}
                 <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
                   canvas
                 </code>{" "}
@@ -266,7 +267,7 @@ export default function DesignLabSection() {
                 </code>{" "}
                 the cursor tilt and the scroll depth switch off entirely, and
                 the flip and the ring change state instantly instead of
-                animating — the content is never withheld, only the movement.
+                animating. Nothing is hidden; only the movement stops.
                 None of this ships on the homepage: it lives here, on its own
                 page, so a visitor who came to read the work doesn&apos;t
                 download it.
@@ -281,10 +282,9 @@ export default function DesignLabSection() {
                 <ThemePreview variant="dark" />
               </div>
               <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-                Dark mode is a first-class theme, not an inverted afterthought:
-                a stored choice wins, otherwise the system preference decides.
-                An inline script in the page head applies it before the
-                stylesheet loads, so a dark-preferring visitor never gets a
+                Dark mode follows a stored choice first, then the system
+                preference. An inline script in the page head applies it before
+                the stylesheet loads, so a dark-preferring visitor never gets a
                 white first frame. The toggle itself lives in the portfolio
                 navbar; this page has no navbar, so it follows whatever you last
                 chose there.
@@ -345,7 +345,7 @@ export default function DesignLabSection() {
                 </table>
               </div>
               <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-                Gzipped, on a cold load, excluding images — copied out of this
+                Gzipped, on a cold load, excluding images: copied out of this
                 project&apos;s{" "}
                 <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
                   npm run build
