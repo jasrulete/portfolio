@@ -30,7 +30,7 @@ export const faqData: FaqEntry[] = [
     question: "What work experience do you have?",
     keywords: ["internship", "jobs", "employment history", "companies worked"],
     answer:
-      "Since July 2026 I've been doing remote full-stack contract work on SaaS web applications: a hosting migration and deployment pipelines, Stripe billing fixes, authentication hardening and automated tests. The clients and the details of their systems stay confidential. From June to August 2026 I was also a Software Developer Intern at Mvolo, a remote internship with an international founding team. The product and its internals are covered by an NDA, so that's as much as I can say about it. From June 2025 to January 2026 I was an Asset Management Specialist Intern at Lexmark (now Xerox) in Cebu City, where I built and maintained internal tracking tools for enterprise hardware asset lifecycle management and worked with IT teams to keep asset records consistent across systems. I've also helped run my family's rice trading business since high school: operations, inventory and deliveries.",
+      "Since July 2026 I've been doing remote full-stack contract work on SaaS web applications: a hosting migration and deployment pipelines, Stripe billing fixes, authentication hardening and automated tests. The clients and the details of their systems stay confidential. From June to August 2026 I was also a Software Developer Intern at Mvolo, a remote internship with an international founding team, where I built the mobile client for a cross-platform app in React Native (Expo) and TypeScript: a multi-step onboarding wizard, a day-planning timeline view and bilingual English/Dutch interface support. I also set up the project's pnpm monorepo behind the mobile and desktop apps and wrote the typed Supabase data layer in the shared core package, with Vitest coverage and a persistence design spec reviewed before implementation. The product and its internals are covered by an NDA, so that's as much as I can say about it. From June 2025 to January 2026 I was an Asset Management Specialist Intern at Lexmark (now Xerox) in Cebu City, where I built and maintained internal tracking tools for enterprise hardware asset lifecycle management and worked with IT teams to keep asset records consistent across systems. I've also helped run my family's rice trading business since high school: operations, inventory and deliveries.",
   },
   {
     id: "ai-agent-project",
@@ -44,7 +44,7 @@ export const faqData: FaqEntry[] = [
     question: "What was your thesis about?",
     keywords: ["undergraduate thesis", "research", "iot security", "capstone"],
     answer:
-      "My thesis, 'Design and Evaluation of a Context-Aware Edge Security Framework for Smart Home IoT Devices,' introduced a Contextual Quadruple (device criticality, battery level, RSSI, and an ML-inferred threat level) to adaptively switch between AES-128 and ChaCha20 encryption. Across 180 simulation runs on the CICIoT2023 dataset, it achieved a 63.40% reduction in mean response time and a 27.39% reduction in energy consumption, both statistically significant at p < 0.001.",
+      "My thesis, 'Design and Evaluation of a Context-Aware Edge Security Framework for Smart Home IoT Devices,' introduced a Contextual Quadruple (device criticality, battery level, RSSI, and an ML-inferred threat level) to adaptively switch between AES-128 and ChaCha20 encryption. Across 180 simulation runs on the CICIoT2023 dataset, it achieved a 63.40% reduction in mean response time and a 27.39% reduction in energy consumption, both statistically significant at p < 0.001. It also improved accuracy-per-joule by 38.06%, and detection accuracy was statistically unchanged against the baseline (63.22% vs 63.05%, p = 0.126) — the adaptive switching cost no accuracy.",
   },
   {
     id: "languages",
@@ -74,7 +74,7 @@ export const faqData: FaqEntry[] = [
       "hidden features",
     ],
     answer:
-      "More than scroll. Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme, and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and the design system this site runs on has its own page, linked under the Projects heading and in the footer.",
+      "Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and the design system this site runs on has its own page, linked under the Projects heading and in the footer.",
   },
   {
     id: "how-built",
@@ -87,7 +87,7 @@ export const faqData: FaqEntry[] = [
       "what powers this website",
     ],
     answer:
-      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. Fun fact: this chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things Jeric actually wrote. Images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
+      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. This chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things I actually wrote. Images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
   },
   {
     id: "hire-you",

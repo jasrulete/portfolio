@@ -1,6 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
+  // Every `hover:` utility is emitted inside
+  // `@media (hover: hover) and (pointer: fine)`, after mikewilcockdesign.com,
+  // which gates its pointer-dependent interactions at `(pointer: coarse)`.
+  // Touch browsers apply :hover on tap and keep it until the next tap, which
+  // left buttons and project cards stuck in their hover colour. `active:`
+  // states are not affected, so press feedback on touch is unchanged.
+  // Known cost: the Design Lab motion demo (design-lab-section.tsx:215-218)
+  // is driven by `group-hover:` and therefore no longer demonstrates anything
+  // on a touch device. See motion-devices-spec.md §3.7.
+  future: { hoverOnlyWhenSupported: true },
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "*.{js,ts,jsx,tsx,mdx}",

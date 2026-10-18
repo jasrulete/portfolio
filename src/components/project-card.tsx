@@ -42,7 +42,7 @@ export interface ProjectCardProps {
 /** Full case-study card. */
 export function ProjectCard({ project, priority = false }: ProjectCardProps) {
   return (
-    <article className="card-enter bg-white dark:bg-gray-800 rounded-xl shadow-sm flex flex-col h-full border border-gray-300 dark:border-gray-700 hover:border-blue-600/60 dark:hover:border-blue-400/60 transition-colors duration-150">
+    <article className="card-enter bg-white dark:bg-gray-800 rounded-xl shadow-sm flex flex-col h-full border border-gray-300 dark:border-gray-700 hover:border-blue-600/60 dark:hover:border-blue-400/60 has-[:focus-visible]:border-blue-600/60 dark:has-[:focus-visible]:border-blue-400/60 transition-colors duration-150">
       <ProjectBanner project={project} priority={priority} />
 
       <div className="p-5 sm:p-6 flex flex-col flex-grow">
@@ -58,7 +58,7 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
             crawler, a link preview and a screen reader while the index stays
             scannable. No JS, nothing to hydrate, instant under reduced
             motion. */}
-        <details className="group mt-4 mb-6 border-t border-gray-200 dark:border-gray-700 pt-4">
+        <details className="disclosure-grow group mt-4 mb-6 border-t border-gray-200 dark:border-gray-700 pt-4">
           <summary className="cursor-pointer list-none inline-flex items-center gap-2 rounded-lg py-2.5 text-sm font-semibold text-blue-600 dark:text-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800">
             <ChevronIcon />
             How it was built
