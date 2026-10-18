@@ -3,7 +3,7 @@
 // swap-in is seamless rather than a flash of blank/white screen.
 export default function ModeLoadingFallback() {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900">
+    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-sky-700 to-blue-900">
       <div className="h-8 w-8 rounded-full bg-white/30 animate-pulse" aria-hidden />
     </div>
   );
