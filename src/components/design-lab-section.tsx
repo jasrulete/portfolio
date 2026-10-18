@@ -39,7 +39,7 @@ const MOTION_TIERS = [
   {
     label: "Standard",
     duration: "duration-200",
-    note: "200ms · mobile menu, image fade-in",
+    note: "200ms · mobile menu, image fade-in, case-study disclosure",
   },
 ];
 
@@ -49,11 +49,11 @@ const MOTION_TIERS = [
  * output changes, change these, or the page starts lying again.
  */
 const PAYLOAD = {
-  home: { html: "2.95", css: "7.24", js: "95.26", total: "105.5" },
+  home: { html: "2.96", css: "7.39", js: "95.38", total: "105.7" },
   // This page's own HTML and JS embed content-hashed filenames, so printing a
   // number here changes it by up to 0.01 kB. Both are quoted to 1 dp, which is
   // stable across builds.
-  design: { html: "1.5", css: "7.2", js: "74.9", total: "83.6" },
+  design: { html: "1.5", css: "7.4", js: "75.3", total: "84.2" },
 };
 
 export default function DesignLabSection() {
@@ -185,14 +185,24 @@ export default function DesignLabSection() {
                 Buttons change fill on hover and again on press (blue-600 → 700
                 → 800). Nothing lifts, scales or gains a shadow — there is no{" "}
                 <code className="text-xs">hover:scale-*</code> left in the
-                codebase
+                codebase. Every hover state is emitted inside{" "}
+                <code className="text-xs">
+                  @media (hover: hover) and (pointer: fine)
+                </code>
+                , so a tap on a phone no longer leaves a button or a card stuck
+                in its hover colour; the press state is not gated, so touch
+                keeps its feedback
               </li>
               <li>
                 <code className="text-xs">focus:outline-none</code> never ships
                 alone: there is not one instance of it in the codebase without
                 a replacement. In page content the ring is 2px blue-500 sitting
                 2px off the control in the surface colour; text fields take it
-                inset so the field doesn&apos;t jump
+                inset so the field doesn&apos;t jump. A project card also takes
+                the blue frame it shows on hover when something inside it holds
+                keyboard focus (
+                <code className="text-xs">:has(:focus-visible)</code>), so the
+                ring is never the only clue about which card you are reading
               </li>
               <li>
                 White-on-blue-600 buttons measure 5.17:1, rising to 6.70:1 on
@@ -235,14 +245,42 @@ export default function DesignLabSection() {
                 opacity: 0
               </code>{" "}
               starting state, so a browser without it and a visitor with
-              JavaScript off both see finished cards. A global{" "}
+              JavaScript off both see finished cards. The case study behind
+              &ldquo;How it was built&rdquo; grows open the same way: a native{" "}
+              <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                &lt;details&gt;
+              </code>{" "}
+              animated through{" "}
+              <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                ::details-content
+              </code>{" "}
+              with no JavaScript and no height measured in script. That one
+              needs{" "}
+              <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                interpolate-size: allow-keywords
+              </code>
+              , which is Chromium-only today, so Firefox and Safari open it
+              instantly — the same finished state. A global{" "}
               <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
                 prefers-reduced-motion
               </code>{" "}
-              rule cuts every transition and animation to 0.01ms. The only
-              durations above 200ms anywhere in the codebase are on this page:
-              the flip and the ring below run at 500ms, and the tilt card&apos;s
-              sheen fades at 300ms.
+              rule cuts every transition and animation to 0.01ms — but it is
+              written for elements and their{" "}
+              <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                ::before
+              </code>
+              /
+              <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                ::after
+              </code>
+              , so it cannot reach the pseudo-element that disclosure animates.
+              That one is gated the other way round: it exists only inside{" "}
+              <code className="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                prefers-reduced-motion: no-preference
+              </code>
+              . The only durations above 200ms anywhere in the codebase are on
+              this page: the flip and the ring below run at 500ms, and the tilt
+              card&apos;s sheen fades at 300ms.
             </p>
           </LabCard>
 

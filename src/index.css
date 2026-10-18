@@ -91,6 +91,50 @@ summary::-webkit-details-marker {
   }
 }
 
+/* The second CSS-native, double-gated behaviour, after joshwcomeau.com, which
+   gates `interpolate-size` behind `no-preference` rather than switching it off
+   afterwards. It lets the native <details> on each project card grow open
+   instead of teleporting, with no JavaScript and no measured height.
+
+   Two things to know before editing:
+
+   1. `interpolate-size` is set on the <details>, not on `html` as joshwcomeau
+      sets it. It is inherited, so the pseudo-element gets it; scoping it here
+      keeps keyword interpolation away from every other size transition on the
+      site (the mobile menu animates max-height, which is numeric and would be
+      unaffected either way — but the narrow scope means nobody has to check
+      that again).
+   2. The reduced-motion backstop below matches `*`, `*::before` and
+      `*::after`. It does NOT match `::details-content`, so it cannot clamp
+      this transition. The `no-preference` gate is not belt-and-braces here;
+      it is the only gate. Do not rewrite it as a `reduce` override.
+
+   `interpolate-size` is Chromium-only (Chrome/Edge 129+; not implemented in
+   Firefox or Safari as of October 2026), so this is a Chromium-only
+   enhancement and the `@supports` gate is what the other engines land on.
+   Every failure mode lands on today's behaviour: no `interpolate-size`, no
+   `::details-content`, reduced motion, or no CSS all give an instant
+   disclosure, which is the final, correct state. */
+@supports (interpolate-size: allow-keywords) {
+  @media (prefers-reduced-motion: no-preference) {
+    .disclosure-grow {
+      interpolate-size: allow-keywords;
+    }
+
+    .disclosure-grow::details-content {
+      height: 0;
+      overflow: hidden;
+      transition:
+        height 200ms ease-out,
+        content-visibility 200ms ease-out allow-discrete;
+    }
+
+    .disclosure-grow[open]::details-content {
+      height: auto;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* Global backstop: the per-component reduced-motion paths only cover the
      components that opted in — hover/press transforms, the mobile menu and
