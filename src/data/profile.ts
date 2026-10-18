@@ -209,7 +209,7 @@ export const profile = {
       architecture:
         "A Decision Tree classifier infers threat level at the edge. Together with device criticality, battery level and RSSI it forms a Contextual Quadruple that chooses between AES-128 and ChaCha20, while an M/M/4 queueing model handles concurrent requests. Evaluated on the CICIoT2023 dataset.",
       outcome:
-        "Against a static-encryption baseline over 180 simulation runs: 63.40% lower mean response time and 27.39% lower energy consumption, both significant at p < 0.001.",
+        "Against a static-encryption baseline over 180 simulation runs: 63.40% lower mean response time (3,960 ms vs 10,819 ms), 27.39% less energy (764.32 J vs 1,052.63 J) and 38.06% better accuracy-per-joule (0.000827 vs 0.000599) — with detection accuracy statistically unchanged (63.22% vs 63.05%, p = 0.126).",
       tags: ["Python", "Machine Learning", "IoT Security", "Edge Computing"],
       category: "Research",
     },

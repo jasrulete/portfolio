@@ -44,7 +44,7 @@ export const faqData: FaqEntry[] = [
     question: "What was your thesis about?",
     keywords: ["undergraduate thesis", "research", "iot security", "capstone"],
     answer:
-      "My thesis, 'Design and Evaluation of a Context-Aware Edge Security Framework for Smart Home IoT Devices,' introduced a Contextual Quadruple (device criticality, battery level, RSSI, and an ML-inferred threat level) to adaptively switch between AES-128 and ChaCha20 encryption. Across 180 simulation runs on the CICIoT2023 dataset, it achieved a 63.40% reduction in mean response time and a 27.39% reduction in energy consumption, both statistically significant at p < 0.001.",
+      "My thesis, 'Design and Evaluation of a Context-Aware Edge Security Framework for Smart Home IoT Devices,' introduced a Contextual Quadruple (device criticality, battery level, RSSI, and an ML-inferred threat level) to adaptively switch between AES-128 and ChaCha20 encryption. Across 180 simulation runs on the CICIoT2023 dataset, it achieved a 63.40% reduction in mean response time and a 27.39% reduction in energy consumption, both statistically significant at p < 0.001. It also improved accuracy-per-joule by 38.06%, and detection accuracy was statistically unchanged against the baseline (63.22% vs 63.05%, p = 0.126) — the adaptive switching cost no accuracy.",
   },
   {
     id: "languages",
