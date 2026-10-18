@@ -6,7 +6,7 @@ import { lazy, type ComponentType, type ReactNode } from "react";
 import {
   User,
   FolderKanban,
-  Sparkles,
+  Layers,
   Palette,
   Briefcase,
   Mail,
@@ -65,7 +65,7 @@ export const OS_APPS: OSAppDef[] = [
     id: "skills",
     label: "Skills",
     desktopLabel: "Skills.txt",
-    icon: <Sparkles size={28} />,
+    icon: <Layers size={28} />,
     Component: SkillsApp,
     windowSize: { width: 560, height: 460 },
   },

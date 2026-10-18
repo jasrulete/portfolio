@@ -75,7 +75,7 @@ export default function DesktopOS({
 }) {
   return (
     <WindowManagerProvider>
-      <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900">
+      <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-sky-700 to-blue-900">
         <DesktopIcons />
         <WindowLayer />
         <Taskbar onModeToggle={onModeToggle} onOpenPalette={onOpenPalette} />
