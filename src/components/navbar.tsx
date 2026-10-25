@@ -36,7 +36,7 @@ export default function Navbar({
     <nav className="sticky top-0 z-50 bg-canvas/95 border-b border-line">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <a href="#home" className={cn("rounded text-lg text-ink", FOCUS_RING)}>
+          <a href="#home" className={cn("rounded-sm text-lg text-ink", FOCUS_RING)}>
             <Wordmark />
           </a>
 

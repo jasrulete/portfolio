@@ -25,7 +25,7 @@ const projectImages: Record<string, string> = {
 };
 
 const TILE =
-  "card-enter bg-surface border border-line rounded-lg overflow-hidden flex flex-col hover:border-accent/60 has-[:focus-visible]:border-accent/60 transition-colors duration-150";
+  "card-enter bg-surface border border-line rounded-lg overflow-hidden flex flex-col hover:border-accent/60 has-focus-visible:border-accent/60 transition-colors duration-150";
 
 /** The one large tile: screenshot, summary and the facts that prove it. */
 export function FeatureTile({
@@ -44,7 +44,7 @@ export function FeatureTile({
           <ProjectImage src={image} priority={priority} />
         </div>
       )}
-      <div className="p-5 sm:p-6 flex flex-col flex-grow">
+      <div className="p-5 sm:p-6 flex flex-col grow">
         <h3 className="text-xl font-semibold tracking-tight text-ink">
           {project.title}
         </h3>
@@ -81,7 +81,7 @@ export function ProjectTile({ project }: { project: Project }) {
           <ProjectImage src={image} priority={false} />
         </div>
       )}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="p-5 flex flex-col grow">
         <h3 className="text-lg font-semibold tracking-tight text-ink">
           {project.title}
         </h3>
@@ -189,7 +189,7 @@ function TagList({
       {tags.map((tag) => (
         <li
           key={tag}
-          className="font-mono text-xs text-muted border border-line rounded px-2 py-1"
+          className="font-mono text-xs text-muted border border-line rounded-sm px-2 py-1"
         >
           {tag}
         </li>

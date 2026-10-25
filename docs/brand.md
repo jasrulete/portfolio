@@ -14,9 +14,9 @@ and here is how to reach him. Every design choice serves that skim.
 ## 2. Colour
 
 Dark is the default theme; light is available behind the toggle. Tokens are
-CSS variables in `src/index.css` and Tailwind colours in `tailwind.config.js`,
-so the classic page and the OS chrome use `bg-surface`, `text-muted` and so
-on, never raw grays or blues. Some OS app internals (games, camera, gestures,
+CSS variables in `src/index.css`, exposed to Tailwind by the `@theme inline`
+block in that file, so the classic page and the OS chrome use `bg-surface`,
+`text-muted` and so on, never raw grays or blues. Some OS app internals (games, camera, gestures,
 chatbot) still use `gray-*` classes; convert them when you next touch them.
 
 On surfaces that stay dark in both themes (the OS wallpaper, the terminal,

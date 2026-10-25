@@ -121,7 +121,7 @@ export default function Window({ win }: { win: WindowState }) {
       role="dialog"
       aria-label={win.title}
       tabIndex={-1}
-      className="fixed flex flex-col rounded-lg overflow-hidden shadow-md border border-line bg-surface text-ink outline-none"
+      className="fixed flex flex-col rounded-lg overflow-hidden shadow-md border border-line bg-surface text-ink outline-hidden"
       style={style}
       onPointerDown={() => focusWindow(win.id)}
     >
@@ -141,7 +141,7 @@ export default function Window({ win }: { win: WindowState }) {
         <div className="flex items-center gap-1 shrink-0">
           <button
             aria-label="Minimize"
-            className="p-3 rounded hover:bg-line text-muted"
+            className="p-3 rounded-sm hover:bg-line text-muted"
             onClick={(e) => {
               e.stopPropagation();
               minimizeWindow(win.id);
@@ -151,7 +151,7 @@ export default function Window({ win }: { win: WindowState }) {
           </button>
           <button
             aria-label="Maximize"
-            className="p-3 rounded hover:bg-line text-muted"
+            className="p-3 rounded-sm hover:bg-line text-muted"
             onClick={(e) => {
               e.stopPropagation();
               toggleMaximize(win.id);
@@ -161,7 +161,7 @@ export default function Window({ win }: { win: WindowState }) {
           </button>
           <button
             aria-label="Close"
-            className="p-3 rounded hover:bg-red-500 hover:text-white text-muted"
+            className="p-3 rounded-sm hover:bg-red-500 hover:text-white text-muted"
             onClick={(e) => {
               e.stopPropagation();
               closeWindow(win.id);

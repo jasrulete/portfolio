@@ -24,7 +24,7 @@ The site is served from the `/portfolio/` base path (`vite.config.ts` `base: "/p
 
 ## Architecture
 
-React 19 + TypeScript + Vite + Tailwind CSS. Single-page app, no backend — all dynamic behavior is client-side.
+React 19 + TypeScript + Vite + Tailwind CSS 4. Single-page app, no backend — all dynamic behavior is client-side. Tailwind 4 is configured in CSS (`@theme` blocks in `src/index.css`) and runs through `@tailwindcss/vite`; there is no `tailwind.config.js` and no PostCSS config.
 
 ### View modes
 `src/App.tsx` renders one of three entirely separate UIs, chosen by a `ViewMode` (`"classic" | "desktop" | "mobile"`, defined with its helpers in `src/view-mode.ts`) persisted to `sessionStorage` under `portfolio-view-mode` — deliberately per-tab, so trying OS mode once doesn't strand a later visitor in it (the theme is persisted separately, and permanently, to `localStorage` under `portfolio-theme`). Visitors ask for "OS mode"; `osModeForWidth` picks `desktop` at ≥768px and `mobile` below, once, on entry — resizing afterwards does not swap OS. `?view=desktop` and `?view=mobile` force one (applied on first mount, then stripped with `history.replaceState` so later reloads honour `sessionStorage`); unknown stored values fall back to classic:
@@ -58,6 +58,11 @@ The rules live in **`docs/brand.md`** — read it before changing anything visua
 - Component files are kebab-case (`hero-section.tsx`); OS-mode chrome and app components are PascalCase (`AboutApp.tsx`, `DesktopOS.tsx`, `MobileOS.tsx`).
 - Dark mode is a `dark` class toggled on a wrapper div in `App.tsx`, seeded from `localStorage` (`portfolio-theme`) and defaulting to dark for a first visit. The pre-paint script in `index.html` mirrors that default and is allowed by a CSP sha256 hash — changing one byte of it means recomputing the hash (see the comment there).
 - `cn()` (in `lib/utils.ts`) composes `clsx` + `tailwind-merge` for conditional class names.
+- **Tailwind 4 gotchas.** (1) Colour tokens that point at CSS variables must live in `@theme inline`, or Tailwind resolves them once at `:root` and the `.dark` overrides never reach components. (2) Unlayered CSS in `index.css` always beats utilities, whatever the specificity. (3) A bare `border` is `currentcolor`, so always pair it with a colour class. (4) Renamed utilities: `rounded` → `rounded-sm`, `shadow-sm` → `shadow-xs`, `outline-none` → `outline-hidden`, `flex-grow` → `grow`, `!` goes at the end (`py-6!`). (5) `hover:` only applies on devices that can hover. (6) Browser floor is Safari 16.4 / Chrome 111 / Firefox 128.
+
+## Dependencies and CI
+
+Node comes from `.nvmrc` (22). CI installs with `npm ci --ignore-scripts`; if a new dependency genuinely needs an install script, allow it explicitly rather than dropping the flag. Every GitHub Action in `.github/workflows/` is pinned to a commit hash with the version in a trailing comment; Dependabot (`.github/dependabot.yml`) keeps them and the npm packages current. `audit.yml` runs `npm audit` and `npm audit signatures` weekly and when the lockfile changes, separately from the deploy workflow. Prefer `npm audit fix` for patches; a major bump (like Tailwind 3 → 4) gets its own change and a before/after visual check.
 
 ---
 

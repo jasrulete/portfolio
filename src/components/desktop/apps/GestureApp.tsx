@@ -238,7 +238,7 @@ export default function GestureApp() {
         <>
           <div
             role="status"
-            className="min-h-[4.5rem] w-full max-w-md flex items-center justify-center gap-3"
+            className="min-h-18 w-full max-w-md flex items-center justify-center gap-3"
           >
             {model === "loading" && (
               <p className="text-sm text-muted">

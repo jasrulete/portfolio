@@ -43,10 +43,10 @@ export function OsModeTile({ onOpen }: { onOpen: () => void }) {
         aria-hidden
         className="hidden md:block relative min-h-36 bg-[#1B1C1F] border-l border-line"
       >
-        <div className="absolute left-6 top-5 w-32 h-20 rounded bg-[#E9E9EA]">
+        <div className="absolute left-6 top-5 w-32 h-20 rounded-sm bg-[#E9E9EA]">
           <div className="h-2.5 rounded-t bg-[#CFD0D2]" />
         </div>
-        <div className="absolute left-24 top-12 w-36 h-20 rounded bg-[#E9E9EA] shadow-[0_2px_6px_rgb(0_0_0/0.4)]">
+        <div className="absolute left-24 top-12 w-36 h-20 rounded-sm bg-[#E9E9EA] shadow-[0_2px_6px_rgb(0_0_0/0.4)]">
           <div className="h-2.5 rounded-t bg-[#CFD0D2]" />
         </div>
         <div className="absolute inset-x-0 bottom-0 h-4 bg-surface border-t border-line" />

@@ -118,7 +118,7 @@ function App() {
       <div className="min-h-screen bg-canvas text-ink transition-colors duration-150">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-accent-fill focus:text-on-accent focus:px-4 focus:py-2.5 focus:rounded-md"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:bg-accent-fill focus:text-on-accent focus:px-4 focus:py-2.5 focus:rounded-md"
         >
           Skip to content
         </a>

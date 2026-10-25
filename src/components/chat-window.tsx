@@ -37,7 +37,7 @@ export function FaqChatBody({ chat }: { chat: FaqChat }) {
             <button
               key={s.id}
               onClick={() => chat.send(s.question)}
-              className="rounded-full border border-muted px-3 py-1.5 text-xs text-muted hover:border-accent hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="rounded-full border border-muted px-3 py-1.5 text-xs text-muted hover:border-accent hover:text-accent focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus"
             >
               {s.question}
             </button>
@@ -54,12 +54,12 @@ export function FaqChatBody({ chat }: { chat: FaqChat }) {
           onChange={(e) => chat.setInput(e.target.value)}
           aria-label="Ask a question"
           placeholder="Ask a question..."
-          className="flex-1 rounded-lg border border-muted bg-transparent px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-accent"
+          className="flex-1 rounded-lg border border-muted bg-transparent px-3 py-2 text-sm outline-hidden focus-visible:ring-2 focus-visible:ring-focus focus:border-accent"
         />
         <button
           type="submit"
           aria-label="Send"
-          className="rounded-lg bg-accent-fill p-2 text-on-accent hover:opacity-90 disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="rounded-lg bg-accent-fill p-2 text-on-accent hover:opacity-90 disabled:opacity-40 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus"
           disabled={!chat.input.trim()}
         >
           <Send size={16} aria-hidden />

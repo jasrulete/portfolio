@@ -129,7 +129,7 @@ function Education() {
           {education.coursework.map((course) => (
             <li
               key={course}
-              className="text-xs px-2.5 py-1 rounded bg-surface border border-line text-muted"
+              className="text-xs px-2.5 py-1 rounded-sm bg-surface border border-line text-muted"
             >
               {course}
             </li>
@@ -140,7 +140,7 @@ function Education() {
             href={cvUrl}
             download="Jeric-Rulete_CV.pdf"
             className={cn(
-              "rounded text-accent underline underline-offset-4",
+              "rounded-sm text-accent underline underline-offset-4",
               FOCUS_RING,
             )}
           >

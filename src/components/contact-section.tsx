@@ -74,7 +74,7 @@ export default function Contact() {
         at{" "}
         <a
           href={`mailto:${profile.formEmail}`}
-          className="rounded underline underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+          className="rounded-sm underline underline-offset-4 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
         >
           {profile.formEmail}
         </a>{" "}
@@ -254,7 +254,7 @@ function ContactGrid({
             required
             rows={5}
             placeholder="Write your message here..."
-            className="w-full px-4 py-2.5 border border-muted rounded-md bg-surface text-ink focus:outline-none focus:ring-2 focus:ring-focus"
+            className="w-full px-4 py-2.5 border border-muted rounded-md bg-surface text-ink focus:outline-hidden focus:ring-2 focus:ring-focus"
           />
         </div>
 
@@ -290,7 +290,7 @@ function ContactGrid({
         <button
           type="submit"
           disabled={!formConfigured || isSubmitting}
-          className="inline-flex items-center px-5 py-3 text-sm font-semibold rounded-md text-on-accent bg-accent-fill hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-opacity duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center px-5 py-3 text-sm font-semibold rounded-md text-on-accent bg-accent-fill hover:opacity-90 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-opacity duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Sending..." : "Send Message"}
         </button>
@@ -321,7 +321,7 @@ function ContactInfo() {
                 <li key={address}>
                   <a
                     href={`mailto:${address}`}
-                    className="rounded text-muted hover:text-accent transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+                    className="rounded-sm text-muted hover:text-accent transition-colors duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
                   >
                     <span className="text-xs text-muted mr-2">
                       {label}:
@@ -340,7 +340,7 @@ function ContactInfo() {
           content={
             <a
               href={`tel:${profile.phone.replace(/\s/g, "")}`}
-              className="rounded text-muted hover:text-accent transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+              className="rounded-sm text-muted hover:text-accent transition-colors duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
             >
               {profile.phone}
             </a>
@@ -417,7 +417,7 @@ function FormField({
         onChange={onChange}
         onFocus={onFocus}
         required={required}
-        className="w-full px-4 py-2.5 border border-muted rounded-md bg-surface text-ink focus:outline-none focus:ring-2 focus:ring-focus"
+        className="w-full px-4 py-2.5 border border-muted rounded-md bg-surface text-ink focus:outline-hidden focus:ring-2 focus:ring-focus"
       />
     </div>
   );

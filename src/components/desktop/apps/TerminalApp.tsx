@@ -120,7 +120,7 @@ export default function TerminalApp() {
           aria-label="Terminal command"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 bg-transparent outline-none text-green-400"
+          className="flex-1 bg-transparent outline-hidden text-green-400"
           spellCheck={false}
           autoComplete="off"
         />

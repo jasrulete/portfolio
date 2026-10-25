@@ -50,7 +50,7 @@ export default function Footer({ onOpenOs }: { onOpenOs?: () => void }) {
               type="button"
               onClick={onOpenOs}
               className={cn(
-                "self-start rounded underline underline-offset-4 hover:text-ink transition-colors duration-150",
+                "self-start rounded-sm underline underline-offset-4 hover:text-ink transition-colors duration-150",
                 FOCUS_RING,
               )}
             >

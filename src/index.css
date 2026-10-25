@@ -1,6 +1,54 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/* `inline` matters: the colours below point at the --c-* variables, which the
+   `.dark` wrapper overrides. Without it Tailwind would resolve them once at
+   :root and dark mode would never reach the components. */
+@theme inline {
+  --color-canvas: rgb(var(--c-canvas));
+  --color-surface: rgb(var(--c-surface));
+  --color-line: rgb(var(--c-line));
+  --color-ink: rgb(var(--c-ink));
+  --color-muted: rgb(var(--c-muted));
+  --color-accent: rgb(var(--c-accent));
+  --color-accent-fill: rgb(var(--c-accent-fill));
+  --color-on-accent: rgb(var(--c-on-accent));
+  --color-focus: rgb(var(--c-focus));
+}
+
+@theme {
+  --font-sans:
+    'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --animate-bounce: bounce 1s infinite;
+  --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+}
 
 /* Custom animations */
 @keyframes pulse {
@@ -17,9 +65,9 @@
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Brand tokens (docs/brand.md). Space-separated RGB channels so Tailwind's
-   `rgb(var(--c-x) / <alpha-value>)` colours accept opacity modifiers. Light
-   is the base set; `.dark` (toggled on App.tsx's wrapper) overrides it. */
+/* Brand tokens (docs/brand.md). Space-separated RGB channels, wrapped as
+   `rgb(var(--c-x))` in the @theme inline block above. Light is the base set;
+   `.dark` (toggled on App.tsx's wrapper) overrides it. */
 :root {
   --c-canvas: 250 250 249; /* #FAFAF9 */
   --c-surface: 255 255 255; /* #FFFFFF */
@@ -47,7 +95,7 @@
 }
 
 body {
-  font-family: theme(fontFamily.sans);
+  font-family: var(--font-sans);
 }
 
 /* Smooth scrolling */
@@ -73,10 +121,9 @@ summary::-webkit-details-marker {
 /* Paragraph rhythm measured in line-heights rather than a fixed step, after
    lynnandtonic.com. The em fallback is exact for every block that uses it,
    because they all carry `leading-relaxed` (1.625); the `1lh` upgrade keeps it
-   exact if that ever changes. Specificity is (0,1,0) — the same as an `mt-*`
-   utility — and this file is emitted after `@tailwind utilities`, so source
-   order makes it win. Do not put an `mt-*` on a direct child; it will be
-   silently overridden. */
+   exact if that ever changes. This rule is unlayered, and Tailwind 4 puts its
+   utilities in `@layer utilities`, so unlayered CSS always wins over them.
+   Do not put an `mt-*` on a direct child; it will be silently overridden. */
 .prose-flow > * + * {
   margin-top: 1.625em;
 }

@@ -262,7 +262,7 @@ export default function CommandPalette({
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-start justify-center bg-black/60 px-4 pt-[15vh]"
+      className="fixed inset-0 z-70 flex items-start justify-center bg-black/60 px-4 pt-[15vh]"
       onClick={() => setOpen(false)}
     >
       <div
@@ -286,9 +286,9 @@ export default function CommandPalette({
             aria-controls="command-palette-listbox"
             aria-autocomplete="list"
             aria-activedescendant={activeOption ? `command-option-${activeOption.id}` : undefined}
-            className="w-full py-3.5 bg-transparent text-ink placeholder:text-muted rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
+            className="w-full py-3.5 bg-transparent text-ink placeholder:text-muted rounded-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
           />
-          <kbd className="shrink-0 font-mono text-xs text-muted border border-line rounded px-1.5 py-0.5">
+          <kbd className="shrink-0 font-mono text-xs text-muted border border-line rounded-sm px-1.5 py-0.5">
             ESC
           </kbd>
         </div>

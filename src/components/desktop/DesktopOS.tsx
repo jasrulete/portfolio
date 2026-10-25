@@ -41,13 +41,13 @@ function DesktopIcons() {
             e.preventDefault();
             handleOpen(app);
           }}
-          className="flex flex-col items-center gap-1 w-16 sm:w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 focus-visible:ring-2 focus-visible:ring-white outline-none"
+          className="flex flex-col items-center gap-1 w-16 sm:w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 focus-visible:ring-2 focus-visible:ring-white outline-hidden"
         >
           <span className="drop-shadow-lg">{app.icon}</span>
           {/* A solid scrim, not a drop shadow: it keeps the label at AA
               whatever the wallpaper, and text-shadow does not count toward
               contrast. */}
-          <span className="text-xs text-center leading-tight rounded bg-black/40 px-1">
+          <span className="text-xs text-center leading-tight rounded-sm bg-black/40 px-1">
             {app.desktopLabel}
           </span>
         </button>

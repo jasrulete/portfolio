@@ -55,7 +55,7 @@ export default function WorkWithMeSection() {
           <a
             href="#contact"
             className={cn(
-              "rounded text-accent font-semibold underline underline-offset-4",
+              "rounded-sm text-accent font-semibold underline underline-offset-4",
               FOCUS_RING,
             )}
           >

@@ -1,0 +1,31 @@
+name: Dependency audit
+
+# Runs when the dependency files change and every Monday. It is separate from
+# the deploy workflow on purpose: a new advisory should raise a flag, not stop
+# a release.
+on:
+  pull_request:
+    paths: [package.json, package-lock.json]
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts
+      # Known vulnerabilities, any severity at moderate or above.
+      - run: npm audit --audit-level=moderate
+      # Every package must carry a valid registry signature.
+      - run: npm audit signatures

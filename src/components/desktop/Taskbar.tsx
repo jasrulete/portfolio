@@ -19,7 +19,7 @@ export default function Taskbar({
   }, []);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-12 z-[9999] flex items-center justify-between px-2 bg-surface text-ink border-t border-line">
+    <div className="fixed bottom-0 left-0 right-0 h-12 z-9999 flex items-center justify-between px-2 bg-surface text-ink border-t border-line">
       <div className="flex items-center gap-1 overflow-x-auto">
         <JSquaredIcon size={24} className="shrink-0 mx-1" />
         <button

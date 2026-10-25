@@ -46,14 +46,14 @@ export default function MobileOS({
           <button
             onClick={onOpenPalette}
             aria-label="Open command palette"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
           >
             <Search size={14} aria-hidden />
           </button>
           <button
             onClick={onExit}
             aria-label="Exit mobile view"
-            className="flex h-11 items-center gap-1.5 px-4 rounded-full bg-white/15 hover:bg-white/25 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="flex h-11 items-center gap-1.5 px-4 rounded-full bg-white/15 hover:bg-white/25 transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
           >
             <Monitor size={14} aria-hidden />
             Exit
