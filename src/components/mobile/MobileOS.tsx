@@ -1,9 +1,11 @@
-// Intentionally unlinked: nothing renders this today, pending the owner's decision on whether mobile mode returns.
+// The phone OS: App.tsx renders it when OS mode is opened below 768px
+// (src/view-mode.ts) or from ?view=mobile.
 import { Suspense, useEffect, useState } from "react";
 import { ChevronLeft, Monitor, Search } from "lucide-react";
 import { profile } from "../../data/profile";
 import { OS_APPS, DOCK_APP_IDS, type OSAppDef } from "../../data/os-apps";
 import AppLoadingFallback from "../desktop/apps/app-loading-fallback";
+import { Wordmark } from "../wordmark";
 
 export default function MobileOS({
   onExit,
@@ -36,9 +38,9 @@ export default function MobileOS({
   const OpenAppComponent = openApp?.Component;
 
   return (
-    <div className="fixed inset-0 flex flex-col overflow-hidden bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-900 text-white">
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-[#1B1C1F] text-white">
       {/* Status bar — h-12 so its controls can reach the 44px touch minimum */}
-      <div className="relative z-20 flex shrink-0 items-center justify-between px-4 h-12 text-xs font-display bg-black/20">
+      <div className="relative z-20 flex shrink-0 items-center justify-between px-4 h-12 text-xs font-mono bg-black/30">
         <span>{time}</span>
         <div className="flex items-center gap-2">
           <button
@@ -60,16 +62,16 @@ export default function MobileOS({
       </div>
 
       {openApp ? (
-        <div className="absolute inset-x-0 top-12 bottom-0 z-10 flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-          <header className="flex items-center gap-1 px-2 h-12 shrink-0 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <div className="absolute inset-x-0 top-12 bottom-0 z-10 flex flex-col bg-canvas text-ink">
+          <header className="flex items-center gap-1 px-2 h-12 shrink-0 border-b border-line bg-surface">
             <button
               onClick={() => setOpenApp(null)}
               aria-label="Back to home screen"
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              className="p-3 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
             >
               <ChevronLeft size={20} />
             </button>
-            <h1 className="font-display text-sm font-bold">{openApp.label}</h1>
+            <h1 className="text-sm font-semibold">{openApp.label}</h1>
           </header>
           <div className="flex-1 overflow-y-auto">
             {OpenAppComponent && (
@@ -85,11 +87,10 @@ export default function MobileOS({
         <div className="relative flex min-h-0 flex-1 flex-col overflow-y-auto">
           {/* Home screen clock */}
           <div className="text-center mt-10 mb-8">
-            <p className="font-display text-5xl font-bold drop-shadow-lg">{time}</p>
-            <p className="mt-2 text-sm text-white/80">
-              {profile.shortName}
-              <span className="text-blue-300">_</span> · portfolio
-            </p>
+            <p className="font-mono text-5xl font-semibold">{time}</p>
+            {/* The wallpaper is dark in both themes, so the wordmark takes the
+                dark-theme accent rather than light mode's darker amber. */}
+            <Wordmark className="mt-2 block text-base text-white/90 [--c-accent:255_181_71]" />
           </div>
 
           {/* App grid */}
@@ -100,16 +101,16 @@ export default function MobileOS({
                 onClick={() => handleOpen(app)}
                 className="flex flex-col items-center gap-1.5 group"
               >
-                <span className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/15 group-hover:bg-white/25 transition-all drop-shadow-lg">
+                <span className="flex items-center justify-center w-14 h-14 rounded-xl bg-white/10 group-hover:bg-white/20 transition-colors">
                   {app.icon}
                 </span>
-                <span className="text-xs drop-shadow">{app.label}</span>
+                <span className="text-xs">{app.label}</span>
               </button>
             ))}
           </div>
 
           {/* Dock */}
-          <div className="mt-auto mb-6 mx-auto flex gap-6 px-6 py-3 rounded-3xl bg-white/10">
+          <div className="mt-auto mb-6 mx-auto flex gap-6 px-6 py-3 rounded-xl bg-white/10">
             {OS_APPS
               .filter((a) => DOCK_APP_IDS.includes(a.id))
               .map((app) => (
@@ -117,7 +118,7 @@ export default function MobileOS({
                   key={app.id}
                   onClick={() => handleOpen(app)}
                   aria-label={app.label}
-                  className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/15 hover:bg-white/25 transition-all"
+                  className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 transition-colors"
                 >
                   {app.icon}
                 </button>

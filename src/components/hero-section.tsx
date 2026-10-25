@@ -1,76 +1,67 @@
+import profilePhoto from "../assets/profile.webp";
+import { cn } from "../../lib/utils";
 import { profile } from "../data/profile";
+import { FOCUS_RING } from "./focus-ring";
 
-// One focus style for every hero action. The hero now sits on the ordinary
-// page surface rather than a dark overlay, so the ring offset follows the
-// page colour instead of being pinned to gray-900.
-const CTA_FOCUS =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900";
-
+// Copy is fixed by the approved design
+// (docs/superpowers/specs/2026-10-24-portfolio-redesign-design.md). The photo
+// stays in colour and sits beside the text on wide screens, above it on phones.
 export default function Hero() {
   return (
     <section id="home" className="pt-10 pb-16 sm:pt-16 sm:pb-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {profile.shortName}
-          <span className="text-blue-600 dark:text-blue-400">_</span>
-        </h1>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-12 lg:items-end">
+        <img
+          src={profilePhoto}
+          alt={profile.name}
+          width={190}
+          height={230}
+          loading="eager"
+          decoding="async"
+          className="w-24 h-28 lg:w-[190px] lg:h-[230px] object-cover rounded-md lg:order-last"
+        />
 
-        <p className="mt-4 text-lg sm:text-xl text-gray-900 dark:text-white">
-          {profile.title} · {profile.location}
-        </p>
+        <div>
+          <p className="text-sm text-muted">
+            <strong className="text-ink font-medium">Available now</strong> for
+            contract work and full-time developer roles. Based in Cebu City.
+          </p>
 
-        {/* Both audiences, named symmetrically and in one sentence. "Open to
-            roles" on its own read as temporary to anyone considering hiring
-            him for a project; leading with project work would read as flight
-            risk to an employer. Neither half ranks above the other. */}
-        <p className="mt-3 max-w-prose text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-          {profile.tagline} I&apos;m available for contract and freelance work,
-          and open to software developer, web developer and QA engineer roles.
-        </p>
+          <h1 className="mt-4 max-w-3xl text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+            I build full-stack web apps, and I write the tests that keep them
+            working.
+          </h1>
 
-        <div className="mt-8 flex flex-wrap items-center gap-4">
-          <a
-            href="#projects"
-            className={`inline-flex items-center rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-blue-700 active:bg-blue-800 ${CTA_FOCUS}`}
-          >
-            View projects
-          </a>
-          <a
-            href={profile.resumeUrl}
-            download="Jeric-Rulete_Resume.pdf"
-            className={`inline-flex items-center rounded-lg border border-blue-600 px-5 py-3 text-sm font-semibold text-blue-600 transition-colors duration-150 hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white ${CTA_FOCUS}`}
-          >
-            Resume (PDF)
-          </a>
+          <p className="mt-5 max-w-prose text-base sm:text-lg text-muted leading-relaxed">
+            Mostly Next.js, TypeScript and PostgreSQL.
+            <span className="hidden sm:inline">
+              {" "}
+              I like finding the bug that only shows up when two people click
+              at the same moment, fixing it, and writing down why.
+            </span>
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+            <a
+              href="#projects"
+              className={cn(
+                "inline-flex justify-center items-center rounded-md bg-accent-fill px-5 py-3 text-sm font-semibold text-on-accent transition-opacity duration-150 hover:opacity-90",
+                FOCUS_RING,
+              )}
+            >
+              See projects
+            </a>
+            <a
+              href={profile.resumeUrl}
+              download="Jeric-Rulete_Resume.pdf"
+              className={cn(
+                "inline-flex justify-center items-center rounded-md border border-line px-5 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:border-accent",
+                FOCUS_RING,
+              )}
+            >
+              Download résumé (PDF)
+            </a>
+          </div>
         </div>
-
-        <p className="mt-6 text-sm text-gray-600 dark:text-gray-300">
-          {/* A text link in a row that already exists, not a third button:
-              the hero holds two actions and there is no room above the fold
-              for a new one. */}
-          <a
-            href="#work-with-me"
-            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 ${CTA_FOCUS}`}
-          >
-            Work with me
-          </a>
-          <span aria-hidden> · </span>
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 ${CTA_FOCUS}`}
-          >
-            GitHub
-          </a>
-          <span aria-hidden> · </span>
-          <a
-            href={`mailto:${profile.personalEmail}`}
-            className={`rounded underline underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 ${CTA_FOCUS}`}
-          >
-            {profile.personalEmail}
-          </a>
-        </p>
       </div>
     </section>
   );

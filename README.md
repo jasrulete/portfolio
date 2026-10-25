@@ -1,13 +1,13 @@
 # Portfolio
 
 Jeric Rulete's personal portfolio: a single-page React app with no backend. The same
-content is presented two ways — a classic scrolling page and a simulated desktop OS with
-draggable windows — plus a Ctrl/Cmd+K command palette in both. The desktop OS carries a
-few extras that never load on the homepage, including a Fuse.js search over a
-hand-written FAQ.
+content is presented as a classic scrolling page and as "OS mode", a simulated operating
+system that opens as a desktop with draggable windows on wide screens and as a phone home
+screen below 768px. A Ctrl/Cmd+K command palette works everywhere. OS mode carries a few
+extras that never load on the homepage, including a Fuse.js search over a hand-written FAQ.
 
-Built with React 19, TypeScript, Vite and Tailwind CSS. A second build entry at
-`/design/` documents the design system.
+Built with React 19, TypeScript, Vite and Tailwind CSS. The visual rules (colours, type,
+the jer2x logo, voice, and what to avoid) live in [`docs/brand.md`](docs/brand.md).
 
 Live: https://jasrulete.github.io/portfolio/
 
@@ -33,7 +33,7 @@ npm run dev            # http://localhost:5173
 | `npm run preview` | Serve the production build locally |
 | `npm run deploy` | Manual `gh-pages -d dist` publish (fallback only) |
 
-There is **no test runner configured** — `npm run test` does not exist.
+There is **no test runner configured**: `npm run test` does not exist.
 
 ## Environment
 
@@ -54,9 +54,10 @@ or it will 404 in production.
 
 ```
 index.html          Entry document, meta tags, CSP
-design/index.html   Second build entry — the design-system page at /design/
+docs/brand.md       Brand guide; docs/brand/ holds the logo and OG image sources
 public/             Static files copied as-is (PDFs, favicons, og-image)
-src/components/     Classic sections, plus desktop/ OS chrome (mobile/ is unlinked)
+src/components/     Classic sections, plus desktop/ and mobile/ OS chrome
+src/view-mode.ts    Classic / desktop OS / mobile OS selection
 src/data/           profile.ts (all portfolio content), faqData.ts, skill-match.ts
 src/hooks/          Portfolio hooks; root lib/ and hooks/ hold shadcn-style utilities
 ```

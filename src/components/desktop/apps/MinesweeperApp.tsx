@@ -21,8 +21,8 @@ const NUMBER_COLORS = [
   "text-purple-700 dark:text-purple-400",
   "text-amber-700 dark:text-amber-500",
   "text-teal-600 dark:text-teal-400",
-  "text-gray-800 dark:text-gray-200",
-  "text-gray-600 dark:text-gray-300",
+  "text-ink",
+  "text-muted",
 ];
 
 function emptyBoard(): Cell[][] {
@@ -153,19 +153,19 @@ export default function MinesweeperApp() {
 
   return (
     <div className="p-4 flex flex-col items-center gap-3 select-none">
-      <div className="flex items-center gap-3 font-display text-sm">
+      <div className="flex items-center gap-3 font-mono text-sm">
         <span aria-label="Mines remaining">
           <span aria-hidden>⚑</span> {MINES - flags}
         </span>
-        <span className="text-gray-600 dark:text-gray-300">{seconds}s</span>
+        <span className="text-muted">{seconds}s</span>
         <button
           type="button"
           onClick={() => setFlagMode((f) => !f)}
           aria-pressed={flagMode}
           className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${
             flagMode
-              ? "bg-blue-600 text-white border-blue-600"
-              : "border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300"
+              ? "bg-accent-fill text-on-accent border-accent-fill"
+              : "border-muted text-muted"
           }`}
         >
           Flag mode
@@ -173,7 +173,7 @@ export default function MinesweeperApp() {
         <button
           type="button"
           onClick={reset}
-          className="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold"
+          className="px-3 py-1 rounded-full bg-accent-fill hover:opacity-90 text-on-accent text-xs font-bold"
         >
           Reset
         </button>
@@ -181,9 +181,9 @@ export default function MinesweeperApp() {
 
       <p
         role="status"
-        className="font-display text-sm h-5 text-gray-700 dark:text-gray-300"
+        className="text-sm h-5 text-ink"
       >
-        {status === "won" && `Cleared in ${seconds}s — nice.`}
+        {status === "won" && `Cleared in ${seconds}s. Nice.`}
         {status === "lost" && "Boom. Reset to try again."}
         {(status === "ready" || status === "playing") &&
           `${ROWS * COLS - MINES - revealedCount} cells to go`}
@@ -204,12 +204,12 @@ export default function MinesweeperApp() {
                 toggleFlag(r, c);
               }}
               aria-label={`Cell ${r + 1},${c + 1}`}
-              className={`w-11 h-11 rounded text-sm font-display font-bold flex items-center justify-center transition-colors ${
+              className={`w-11 h-11 rounded text-sm font-mono font-bold flex items-center justify-center transition-colors ${
                 cell.revealed
                   ? cell.mine
                     ? "bg-red-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-700"
-                  : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 cursor-pointer"
+                    : "bg-surface"
+                  : "bg-muted/30 hover:bg-muted/50 cursor-pointer"
               }`}
             >
               {cell.revealed
@@ -224,8 +224,8 @@ export default function MinesweeperApp() {
         )}
       </div>
 
-      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
-        Right-click (or Flag mode) to flag · first click is always safe
+      <p className="text-xs text-muted text-center">
+        Right-click (or Flag mode) to flag. The first click is always safe.
       </p>
     </div>
   );

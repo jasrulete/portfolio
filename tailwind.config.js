@@ -1,3 +1,9 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
+// Brand colours resolve to the CSS variables in src/index.css, so one class
+// (`bg-surface`, `text-accent`) serves both themes. See docs/brand.md.
+const token = (name) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -7,9 +13,6 @@ module.exports = {
   // Touch browsers apply :hover on tap and keep it until the next tap, which
   // left buttons and project cards stuck in their hover colour. `active:`
   // states are not affected, so press feedback on touch is unchanged.
-  // Known cost: the Design Lab motion demo (design-lab-section.tsx:215-218)
-  // is driven by `group-hover:` and therefore no longer demonstrates anything
-  // on a touch device. See motion-devices-spec.md §3.7.
   future: { hoverOnlyWhenSupported: true },
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -19,8 +22,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        canvas: token("canvas"),
+        surface: token("surface"),
+        line: token("line"),
+        ink: token("ink"),
+        muted: token("muted"),
+        accent: token("accent"),
+        "accent-fill": token("accent-fill"),
+        "on-accent": token("on-accent"),
+        focus: token("focus"),
+      },
       fontFamily: {
-        display: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+        sans: ['"IBM Plex Sans"', ...defaultTheme.fontFamily.sans],
+        mono: ['"IBM Plex Mono"', ...defaultTheme.fontFamily.mono],
       },
       animation: {
         bounce: "bounce 1s infinite",

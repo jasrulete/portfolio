@@ -2,112 +2,113 @@ import { useState } from "react";
 import { cn } from "../../lib/utils";
 import { profile } from "../data/profile";
 import { useActiveSection } from "../hooks/use-active-section";
+import { FOCUS_RING } from "./focus-ring";
+import { Wordmark } from "./wordmark";
 
 interface NavbarProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
   onOpenPalette?: () => void;
+  onOpenOs?: () => void;
 }
 
 // Order mirrors the section order in App.tsx. "Home" is omitted because the
-// logo to the left of this list already links to #home.
+// wordmark to the left of this list already links to #home. The projects
+// section is labelled "Work" but keeps its `projects` id so old deep links
+// still land.
 const navLinks = [
-  { href: "#projects", id: "projects", label: "Projects" },
+  { href: "#projects", id: "projects", label: "Work" },
   { href: "#experience", id: "experience", label: "Experience" },
   { href: "#about", id: "about", label: "About" },
   { href: "#contact", id: "contact", label: "Contact" },
 ];
 
-export default function Navbar({ darkMode, toggleDarkMode, onOpenPalette }: NavbarProps) {
+export default function Navbar({
+  darkMode,
+  toggleDarkMode,
+  onOpenPalette,
+  onOpenOs,
+}: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const activeSection = useActiveSection();
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur shadow-md">
-      <NavContent
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        activeSection={activeSection}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-        onOpenPalette={onOpenPalette}
-      />
-    </nav>
-  );
-}
-
-function NavContent({
-  isMenuOpen,
-  setIsMenuOpen,
-  activeSection,
-  darkMode,
-  toggleDarkMode,
-  onOpenPalette,
-}: {
-  isMenuOpen: boolean;
-  setIsMenuOpen: (v: boolean) => void;
-  activeSection: string;
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-  onOpenPalette?: () => void;
-}) {
-  return (
-    <>
+    <nav className="sticky top-0 z-50 bg-canvas/95 border-b border-line">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <a
-              href="#home"
-              className="rounded font-display text-xl font-bold text-gray-900 dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
-            >
-              {profile.shortName}
-              <span className="text-blue-600 dark:text-blue-400">_</span>
-            </a>
-          </div>
+        <div className="flex justify-between items-center h-16">
+          <a href="#home" className={cn("rounded text-lg text-ink", FOCUS_RING)}>
+            <Wordmark />
+          </a>
 
-          <div className="hidden md:flex items-center space-x-1">
+          {/* The full row needs lg: eight controls crowd a 768px tablet, so
+              tablets get the menu like phones do. */}
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
+                  "relative px-3 py-2.5 text-sm font-medium rounded-md transition-colors duration-150",
+                  FOCUS_RING,
                   activeSection === link.id
-                    ? "text-blue-600 dark:text-blue-400"
-                    : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    ? "text-accent"
+                    : "text-muted hover:text-ink",
                 )}
               >
                 {link.label}
                 {activeSection === link.id && (
-                  <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-blue-600 dark:bg-blue-400" />
+                  <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent" />
                 )}
               </a>
             ))}
+            {onOpenOs && (
+              <button
+                type="button"
+                onClick={onOpenOs}
+                className={cn(
+                  "ml-3 px-3 py-2 rounded-md border border-line text-sm font-medium text-ink hover:border-accent transition-colors duration-150",
+                  FOCUS_RING,
+                )}
+              >
+                Open OS mode
+              </button>
+            )}
             <a
               href={profile.resumeUrl}
               download="Jeric-Rulete_Resume.pdf"
-              className="ml-2 px-4 py-2.5 rounded-lg border border-blue-600 dark:border-blue-400 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+              className={cn(
+                "px-3 py-2.5 rounded-md text-sm font-medium text-muted hover:text-ink transition-colors duration-150",
+                FOCUS_RING,
+              )}
             >
-              Resume
+              Résumé
             </a>
             {onOpenPalette && (
               <button
+                type="button"
                 onClick={onOpenPalette}
                 aria-label="Open command palette"
-                className="flex items-center gap-1.5 ml-2 px-3 py-2.5 rounded-lg border border-gray-500 dark:border-gray-400 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-600 dark:hover:border-blue-400 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                className={cn(
+                  "flex items-center gap-1.5 px-2.5 py-2 rounded-md border border-line text-muted hover:text-ink transition-colors duration-150",
+                  FOCUS_RING,
+                )}
               >
                 <SearchIcon />
-                <kbd className="text-xs font-semibold">Ctrl K</kbd>
+                <kbd className="font-mono text-xs">Ctrl K</kbd>
               </button>
             )}
             <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
           </div>
 
-          <div className="md:hidden flex items-center">
-            <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} mobile />
+          <div className="lg:hidden flex items-center gap-1">
+            <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
             <button
+              type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+              className={cn(
+                "p-2.5 rounded-md text-ink hover:bg-surface transition-colors duration-150",
+                FOCUS_RING,
+              )}
               aria-label="Toggle menu"
               aria-expanded={isMenuOpen}
             >
@@ -120,55 +121,75 @@ function NavContent({
       <div
         inert={!isMenuOpen}
         className={cn(
-          "md:hidden overflow-hidden transition-all duration-200 ease-out",
-          isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          "lg:hidden overflow-hidden transition-all duration-200 ease-out",
+          isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
         )}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 shadow-md border-t border-gray-300 dark:border-gray-700">
+        <div className="px-4 pt-2 pb-4 space-y-1 bg-canvas border-t border-line">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={cn(
-                "block px-3 py-2.5 rounded-lg transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
+                "block px-3 py-2.5 rounded-md transition-colors duration-150",
+                FOCUS_RING,
                 activeSection === link.id
-                  ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
-                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                  ? "bg-surface text-accent"
+                  : "text-ink hover:bg-surface",
               )}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
             </a>
           ))}
-          <a
-            href={profile.resumeUrl}
-            download="Jeric-Rulete_Resume.pdf"
-            onClick={() => setIsMenuOpen(false)}
-            className="mt-2 block px-3 py-2.5 rounded-lg border border-blue-600 dark:border-blue-400 text-center font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
-          >
-            Resume
-          </a>
+          <div className="grid grid-cols-2 gap-2 pt-2">
+            {onOpenOs && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onOpenOs();
+                }}
+                className={cn(
+                  "px-3 py-3 rounded-md border border-line text-sm font-medium text-ink",
+                  FOCUS_RING,
+                )}
+              >
+                Open OS mode
+              </button>
+            )}
+            <a
+              href={profile.resumeUrl}
+              download="Jeric-Rulete_Resume.pdf"
+              onClick={() => setIsMenuOpen(false)}
+              className={cn(
+                "px-3 py-3 rounded-md border border-line text-center text-sm font-medium text-ink",
+                FOCUS_RING,
+              )}
+            >
+              Résumé
+            </a>
+          </div>
         </div>
       </div>
-    </>
+    </nav>
   );
 }
 
 function DarkModeToggle({
   darkMode,
   onToggle,
-  mobile,
 }: {
   darkMode: boolean;
   onToggle: () => void;
-  mobile?: boolean;
 }) {
   return (
     <button
+      type="button"
       onClick={onToggle}
       className={cn(
-        "p-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",
-        mobile && "mr-2"
+        "p-2.5 rounded-md text-muted hover:text-ink transition-colors duration-150",
+        FOCUS_RING,
       )}
       aria-label="Toggle dark mode"
       aria-pressed={darkMode}

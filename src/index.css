@@ -17,9 +17,37 @@
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Dark mode styles */
+/* Brand tokens (docs/brand.md). Space-separated RGB channels so Tailwind's
+   `rgb(var(--c-x) / <alpha-value>)` colours accept opacity modifiers. Light
+   is the base set; `.dark` (toggled on App.tsx's wrapper) overrides it. */
+:root {
+  --c-canvas: 250 250 249; /* #FAFAF9 */
+  --c-surface: 255 255 255; /* #FFFFFF */
+  --c-line: 228 228 226; /* #E4E4E2 */
+  --c-ink: 21 21 21; /* #151515 */
+  --c-muted: 95 99 104; /* #5F6368 */
+  --c-accent: 154 91 0; /* #9A5B00, readable amber on light */
+  --c-accent-fill: 255 181 71; /* #FFB547 */
+  --c-on-accent: 30 20 4; /* #1E1404 */
+  --c-focus: 154 91 0; /* #9A5B00 */
+}
+
 .dark {
-  @apply bg-gray-900 text-white;
+  --c-canvas: 16 17 19; /* #101113 */
+  --c-surface: 23 24 27; /* #17181B */
+  --c-line: 38 40 44; /* #26282C */
+  --c-ink: 236 236 236; /* #ECECEC */
+  --c-muted: 154 157 163; /* #9A9DA3 */
+  --c-accent: 255 181 71; /* #FFB547 */
+  --c-accent-fill: 255 181 71; /* #FFB547 */
+  --c-on-accent: 30 20 4; /* #1E1404 */
+  --c-focus: 255 181 71; /* #FFB547 */
+  background-color: rgb(var(--c-canvas));
+  color: rgb(var(--c-ink));
+}
+
+body {
+  font-family: theme(fontFamily.sans);
 }
 
 /* Smooth scrolling */
@@ -59,11 +87,11 @@ summary::-webkit-details-marker {
   }
 }
 
-/* Selection in the one accent family, fixed in both themes so there is a
-   single pair to verify. blue-900 on blue-200 = 7.30:1. */
+/* Selection in the accent, fixed in both themes so there is a single pair
+   to verify: #1E1404 on #FFB547. */
 ::selection {
-  background-color: #bfdbfe; /* blue-200 */
-  color: #1e3a8a; /* blue-900 */
+  background-color: #ffb547;
+  color: #1e1404;
 }
 
 /* The one trend adopted on purpose: a CSS-native scroll-driven entrance for

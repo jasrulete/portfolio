@@ -1,52 +1,43 @@
+import { cn } from "../../lib/utils";
 import { profile } from "../data/profile";
+import { FOCUS_RING } from "./focus-ring";
+import { ChevronIcon } from "./project-card";
 import SectionHeading from "./section-heading";
 
-// Static, always-expanded entries. Three roles with 2–4 bullets each is not
-// enough content to justify hiding two thirds of it behind a toggle — and the
-// toggle's "+" glyph was read aloud as part of the button name.
+type ExperienceItem = (typeof profile.experience)[number];
+
+// A timeline, not cards: date on the left, role on the right, hairlines
+// between. The developer roles get full entries; work marked `compact` in
+// profile.ts (volunteering, the family business) gets one line each under
+// "Also", with its details a click away.
 export default function ExperienceSection() {
+  const full = profile.experience.filter((item) => !("compact" in item));
+  const compact = profile.experience.filter((item) => "compact" in item);
+
   return (
-    <section
-      id="experience"
-      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
-    >
+    <section id="experience" className="py-16 sm:py-24 border-t border-line">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Experience" />
-        <div className="space-y-6 sm:space-y-8 max-w-3xl">
-          {profile.experience.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-xl shadow-sm border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden"
-            >
-              <div className="p-5 sm:p-6">
-                <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">
-                  {item.period}
-                </p>
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  {item.org}
-                </p>
-              </div>
-              <ul className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-3 border-t border-gray-300 dark:border-gray-700 pt-4">
-                {item.highlights.map((highlight) => (
-                  <li
-                    key={highlight}
-                    className="text-gray-600 dark:text-gray-300 text-base flex gap-3"
-                  >
-                    <span
-                      aria-hidden
-                      className="text-blue-600 dark:text-blue-400 shrink-0"
-                    >
-                      ▹
-                    </span>
-                    <span className="max-w-prose leading-relaxed">{highlight}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
+
+        <div className="max-w-4xl">
+          {full.map((item) => (
+            <TimelineRow key={item.title} period={item.period}>
+              <h3 className="text-lg font-semibold tracking-tight text-ink">
+                {item.title}
+              </h3>
+              <p className="text-muted">{item.org}</p>
+              <Highlights items={item.highlights} className="mt-3" />
+            </TimelineRow>
           ))}
+
+          {compact.length > 0 && (
+            <div className="pt-8">
+              <h3 className="text-sm font-semibold text-ink mb-2">Also</h3>
+              {compact.map((item) => (
+                <CompactRow key={item.title} item={item} />
+              ))}
+            </div>
+          )}
 
           <Education />
         </div>
@@ -55,51 +46,108 @@ export default function ExperienceSection() {
   );
 }
 
+function TimelineRow({
+  period,
+  children,
+}: {
+  period: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <article className="grid gap-1 md:grid-cols-[10rem_1fr] md:gap-8 py-6 border-t border-line first:border-t-0 first:pt-0">
+      <p className="font-mono text-sm text-muted md:pt-1">{period}</p>
+      <div>{children}</div>
+    </article>
+  );
+}
+
+function Highlights({
+  items,
+  className,
+}: {
+  items: readonly string[];
+  className?: string;
+}) {
+  return (
+    <ul className={cn("list-disc pl-5 space-y-2 text-muted", className)}>
+      {items.map((highlight) => (
+        <li key={highlight} className="max-w-prose leading-relaxed">
+          {highlight}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function CompactRow({ item }: { item: ExperienceItem }) {
+  return (
+    <details className="group border-t border-line py-3">
+      <summary
+        className={cn(
+          "cursor-pointer list-none grid gap-1 sm:grid-cols-[1fr_auto] sm:gap-6 sm:items-center min-h-11 rounded-md",
+          FOCUS_RING,
+        )}
+      >
+        <span className="flex items-center gap-2">
+          <span className="text-accent">
+            <ChevronIcon />
+          </span>
+          <span className="font-medium text-ink">{item.title}</span>
+          <span className="text-muted">, {item.org}</span>
+        </span>
+        <span className="font-mono text-sm text-muted">{item.period}</span>
+      </summary>
+      <Highlights items={item.highlights} className="mt-3 text-sm" />
+    </details>
+  );
+}
+
 // Education sits with the work history, not with the bio. The coursework
-// chips are inert labels: the old hover enlarge/dim was mouse-only, with no
-// keyboard or touch equivalent, and revealed nothing.
+// chips are inert labels.
 function Education() {
   const { education, cvUrl } = profile;
 
   return (
-    <div className="pt-6">
-      <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">
+    <div className="pt-12">
+      <h3 className="text-xl font-semibold tracking-tight text-ink mb-2">
         Education
       </h3>
-      <article className="rounded-xl shadow-sm border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6">
-        <h4 className="text-lg font-semibold mb-1 text-gray-900 dark:text-white">{education.degree}</h4>
-        <p className="text-blue-600 dark:text-blue-400 font-medium">
-          {education.school}
+      <TimelineRow period={`Graduated ${education.graduated}`}>
+        <h4 className="text-lg font-semibold tracking-tight text-ink">
+          {education.degree}
+        </h4>
+        <p className="text-muted">
+          {education.school}, {education.campus}
         </p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-          {education.campus} · Graduated {education.graduated}
-        </p>
-        <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-4">
-          {education.honors}
-        </p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-          Relevant coursework
-        </p>
-        <div className="flex flex-wrap gap-2">
+        <ul className="mt-2 text-sm text-muted">
+          {education.honors.split(" · ").map((honor) => (
+            <li key={honor}>{honor}</li>
+          ))}
+        </ul>
+        <p className="mt-4 text-sm font-semibold text-ink">Relevant coursework</p>
+        <ul className="mt-2 flex flex-wrap gap-2">
           {education.coursework.map((course) => (
-            <span
+            <li
               key={course}
-              className="text-xs px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700"
+              className="text-xs px-2.5 py-1 rounded bg-surface border border-line text-muted"
             >
               {course}
-            </span>
+            </li>
           ))}
-        </div>
+        </ul>
         <p className="mt-4 text-sm">
           <a
             href={cvUrl}
             download="Jeric-Rulete_CV.pdf"
-            className="rounded text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+            className={cn(
+              "rounded text-accent underline underline-offset-4",
+              FOCUS_RING,
+            )}
           >
-            Full CV (PDF) — longer academic version
+            Full CV (PDF), the longer academic version
           </a>
         </p>
-      </article>
+      </TimelineRow>
     </div>
   );
 }

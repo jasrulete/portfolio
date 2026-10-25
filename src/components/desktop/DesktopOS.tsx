@@ -44,8 +44,9 @@ function DesktopIcons() {
           className="flex flex-col items-center gap-1 w-16 sm:w-20 p-2 rounded-md text-white hover:bg-white/10 focus:bg-white/20 focus-visible:ring-2 focus-visible:ring-white outline-none"
         >
           <span className="drop-shadow-lg">{app.icon}</span>
-          {/* A solid scrim, not a drop shadow: white-on-sky-600 is 4.1:1 and
-              text-shadow does not count toward contrast. */}
+          {/* A solid scrim, not a drop shadow: it keeps the label at AA
+              whatever the wallpaper, and text-shadow does not count toward
+              contrast. */}
           <span className="text-xs text-center leading-tight rounded bg-black/40 px-1">
             {app.desktopLabel}
           </span>
@@ -75,7 +76,7 @@ export default function DesktopOS({
 }) {
   return (
     <WindowManagerProvider>
-      <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-sky-700 to-blue-900">
+      <div className="fixed inset-0 overflow-hidden bg-[#1B1C1F]">
         <DesktopIcons />
         <WindowLayer />
         <Taskbar onModeToggle={onModeToggle} onOpenPalette={onOpenPalette} />

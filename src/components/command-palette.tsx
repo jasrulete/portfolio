@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { profile } from "../data/profile";
+import { osModeForWidth, type ViewMode } from "../view-mode";
 
 interface Command {
   id: string;
@@ -26,18 +27,11 @@ interface Command {
 // sub-block of About now, so this is how it stays directly reachable.
 const SECTIONS = [
   { id: "home", label: "Home" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "Selected work" },
   { id: "experience", label: "Experience" },
   { id: "about", label: "About" },
   { id: "stack", label: "Stack" },
   { id: "contact", label: "Contact" },
-];
-
-type ViewMode = "classic" | "desktop";
-
-const VIEW_MODES: { id: ViewMode; label: string }[] = [
-  { id: "classic", label: "Switch to classic view" },
-  { id: "desktop", label: "Switch to desktop OS view" },
 ];
 
 export default function CommandPalette({
@@ -122,22 +116,31 @@ export default function CommandPalette({
           toggleDarkMode();
         },
       },
-      ...VIEW_MODES.filter((m) => m.id !== mode).map((m) => ({
-        id: `view-${m.id}`,
-        label: m.label,
-        hint: "Action",
-        keywords: "mode view os windows classic desktop switch",
-        icon:
-          m.id === "desktop" ? (
-            <MonitorSmartphone size={16} />
-          ) : (
-            <LayoutTemplate size={16} />
-          ),
-        action: () => {
-          close();
-          setViewMode(m.id);
-        },
-      })),
+      // One device-aware entry into OS mode; the viewport picks desktop or
+      // phone at that moment (src/view-mode.ts).
+      mode === "classic"
+        ? {
+            id: "view-os",
+            label: "Open OS mode",
+            hint: "Action",
+            keywords: "os desktop mobile phone windows mode view switch",
+            icon: <MonitorSmartphone size={16} />,
+            action: () => {
+              close();
+              setViewMode(osModeForWidth(window.innerWidth));
+            },
+          }
+        : {
+            id: "view-classic",
+            label: "Back to classic view",
+            hint: "Action",
+            keywords: "classic mode view exit leave switch",
+            icon: <LayoutTemplate size={16} />,
+            action: () => {
+              close();
+              setViewMode("classic");
+            },
+          },
       {
         id: "github-profile",
         label: "Open GitHub profile",
@@ -188,7 +191,7 @@ export default function CommandPalette({
       if ("github" in p && p.github) {
         list.push({
           id: `gh-${p.title}`,
-          label: `${p.title} — view code`,
+          label: `${p.title}: view code`,
           hint: "Project",
           keywords: `github repository ${p.tags.join(" ")}`,
           icon: <Github size={16} />,
@@ -201,7 +204,7 @@ export default function CommandPalette({
       if ("demo" in p && p.demo) {
         list.push({
           id: `demo-${p.title}`,
-          label: `${p.title} — live demo`,
+          label: `${p.title}: live demo`,
           hint: "Project",
           keywords: `demo website ${p.tags.join(" ")}`,
           icon: <ExternalLink size={16} />,
@@ -259,18 +262,18 @@ export default function CommandPalette({
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-start justify-center bg-black/50 backdrop-blur-sm px-4 pt-[15vh]"
+      className="fixed inset-0 z-[70] flex items-start justify-center bg-black/60 px-4 pt-[15vh]"
       onClick={() => setOpen(false)}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Command palette"
-        className="w-full max-w-lg rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-300 dark:border-gray-700 overflow-hidden"
+        className="w-full max-w-lg rounded-lg bg-surface text-ink border border-line overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 px-4 border-b border-gray-300 dark:border-gray-700">
-          <Search size={18} className="shrink-0 text-gray-600 dark:text-gray-300" aria-hidden />
+        <div className="flex items-center gap-3 px-4 border-b border-line">
+          <Search size={18} className="shrink-0 text-muted" aria-hidden />
           <input
             ref={inputRef}
             value={query}
@@ -283,9 +286,9 @@ export default function CommandPalette({
             aria-controls="command-palette-listbox"
             aria-autocomplete="list"
             aria-activedescendant={activeOption ? `command-option-${activeOption.id}` : undefined}
-            className="w-full py-3.5 bg-transparent text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-300 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+            className="w-full py-3.5 bg-transparent text-ink placeholder:text-muted rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
           />
-          <kbd className="shrink-0 text-xs font-semibold text-gray-600 dark:text-gray-300 border border-gray-500 dark:border-gray-400 rounded px-1.5 py-0.5">
+          <kbd className="shrink-0 font-mono text-xs text-muted border border-line rounded px-1.5 py-0.5">
             ESC
           </kbd>
         </div>
@@ -298,7 +301,7 @@ export default function CommandPalette({
           className="max-h-[50vh] overflow-y-auto py-2"
         >
           {filtered.length === 0 && (
-            <p className="px-4 py-6 text-sm text-gray-600 dark:text-gray-300">
+            <p className="px-4 py-6 text-sm text-muted">
               No commands match &ldquo;{query}&rdquo;
             </p>
           )}
@@ -314,22 +317,22 @@ export default function CommandPalette({
               onClick={() => cmd.action()}
               className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors duration-150 ${
                 i === selected
-                  ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
-                  : "text-gray-900 dark:text-white"
+                  ? "bg-accent/10 text-ink"
+                  : "text-ink"
               }`}
             >
-              <span className="shrink-0 text-gray-600 dark:text-gray-300" aria-hidden>
+              <span className="shrink-0 text-muted" aria-hidden>
                 {cmd.icon}
               </span>
               <span className="flex-1 truncate">{cmd.label}</span>
-              <span className="shrink-0 text-xs uppercase tracking-wide text-gray-600 dark:text-gray-300">
+              <span className="shrink-0 text-xs text-muted">
                 {cmd.hint}
               </span>
             </button>
           ))}
         </div>
 
-        <div className="px-4 py-2 border-t border-gray-300 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 flex gap-4">
+        <div className="px-4 py-2 border-t border-line text-xs text-muted flex gap-4">
           <span>↑↓ navigate</span>
           <span>↵ select</span>
           <span>esc close</span>

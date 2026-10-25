@@ -121,27 +121,27 @@ export default function Window({ win }: { win: WindowState }) {
       role="dialog"
       aria-label={win.title}
       tabIndex={-1}
-      className="fixed flex flex-col rounded-lg overflow-hidden shadow-md border border-black/10 dark:border-white/10 bg-white dark:bg-gray-800 outline-none"
+      className="fixed flex flex-col rounded-lg overflow-hidden shadow-md border border-line bg-surface text-ink outline-none"
       style={style}
       onPointerDown={() => focusWindow(win.id)}
     >
       <div
-        className="flex items-center justify-between px-3 py-2 bg-gray-100 dark:bg-gray-900 border-b border-black/10 dark:border-white/10 cursor-grab active:cursor-grabbing select-none touch-none"
+        className="flex items-center justify-between px-3 py-2 bg-canvas border-b border-line cursor-grab active:cursor-grabbing select-none touch-none"
         onPointerDown={onDragStart}
         onPointerMove={onDragMove}
         onPointerUp={onDragEnd}
         onDoubleClick={() => toggleMaximize(win.id)}
       >
         <div className="flex items-center gap-2 min-w-0">
-          <span className="shrink-0 text-blue-600 dark:text-blue-400">{win.icon}</span>
-          <span className="text-sm font-medium truncate text-gray-800 dark:text-gray-100">
+          <span className="shrink-0 text-accent">{win.icon}</span>
+          <span className="text-sm font-medium truncate text-ink">
             {win.title}
           </span>
         </div>
         <div className="flex items-center gap-1 shrink-0">
           <button
             aria-label="Minimize"
-            className="p-3 rounded hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
+            className="p-3 rounded hover:bg-line text-muted"
             onClick={(e) => {
               e.stopPropagation();
               minimizeWindow(win.id);
@@ -151,7 +151,7 @@ export default function Window({ win }: { win: WindowState }) {
           </button>
           <button
             aria-label="Maximize"
-            className="p-3 rounded hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
+            className="p-3 rounded hover:bg-line text-muted"
             onClick={(e) => {
               e.stopPropagation();
               toggleMaximize(win.id);
@@ -161,7 +161,7 @@ export default function Window({ win }: { win: WindowState }) {
           </button>
           <button
             aria-label="Close"
-            className="p-3 rounded hover:bg-red-500 hover:text-white text-gray-600 dark:text-gray-300"
+            className="p-3 rounded hover:bg-red-500 hover:text-white text-muted"
             onClick={(e) => {
               e.stopPropagation();
               closeWindow(win.id);
@@ -172,7 +172,7 @@ export default function Window({ win }: { win: WindowState }) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto bg-white dark:bg-gray-800">
+      <div className="flex-1 overflow-auto bg-canvas">
         {win.content}
       </div>
 
@@ -183,7 +183,7 @@ export default function Window({ win }: { win: WindowState }) {
           onPointerMove={onResizeMove}
           onPointerUp={onResizeEnd}
         >
-          <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-r-2 border-b-2 border-gray-400 dark:border-gray-500" />
+          <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-r-2 border-b-2 border-muted" />
         </div>
       )}
     </div>

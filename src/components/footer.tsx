@@ -1,73 +1,63 @@
 // lucide-react was already a dependency; these two glyphs were the only reason
 // the site carried a second icon package, so that package is gone.
 import { Github, Linkedin } from "lucide-react";
+import { cn } from "../../lib/utils";
 import { profile } from "../data/profile";
+import { FOCUS_RING } from "./focus-ring";
+import { Wordmark } from "./wordmark";
 
-export default function Footer({
-  onDesktopMode,
-}: {
-  onDesktopMode?: () => void;
-}) {
-  const { social, shortName, title, location } = profile;
+export default function Footer({ onOpenOs }: { onOpenOs?: () => void }) {
+  const { social, title, location } = profile;
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-canvas border-t border-line py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h3 className="text-2xl font-bold tracking-tight">{shortName}</h3>
-            <p className="text-gray-300 mt-2">
-              {title} · {location}
+        <div className="flex flex-col md:flex-row justify-between gap-6 md:items-center">
+          <div>
+            <Wordmark className="text-xl text-ink" />
+            <p className="mt-2 text-sm text-muted">
+              {title}, {location}
             </p>
           </div>
 
-          <div className="flex space-x-6 text-2xl">
+          <div className="flex gap-2">
             <a
               href={social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              className={cn("p-2.5 rounded-md text-muted hover:text-ink transition-colors duration-150", FOCUS_RING)}
               aria-label="GitHub"
             >
-              <Github size={24} aria-hidden />
+              <Github size={22} aria-hidden />
             </a>
             <a
               href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              className={cn("p-2.5 rounded-md text-muted hover:text-ink transition-colors duration-150", FOCUS_RING)}
               aria-label="LinkedIn"
             >
-              <Linkedin size={24} aria-hidden />
+              <Linkedin size={22} aria-hidden />
             </a>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p className="mb-3 text-sm">
-            <a
-              href={`${import.meta.env.BASE_URL}design/`}
-              className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+        <div className="border-t border-line mt-8 pt-8 flex flex-col sm:flex-row gap-3 justify-between text-sm text-muted">
+          {/* One of the OS-mode entry points, with the navbar button, the
+              Selected work tile and the command palette. */}
+          {onOpenOs && (
+            <button
+              type="button"
+              onClick={onOpenOs}
+              className={cn(
+                "self-start rounded underline underline-offset-4 hover:text-ink transition-colors duration-150",
+                FOCUS_RING,
+              )}
             >
-              Design system →
-            </a>
-          </p>
-          {/* The only in-page entry point to the desktop-OS mode, besides the
-              command palette and the ?view=desktop link. */}
-          {onDesktopMode && (
-            <p className="mb-3 text-sm">
-              <button
-                type="button"
-                onClick={onDesktopMode}
-                className="rounded text-gray-300 underline underline-offset-4 hover:text-white transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
-              >
-                I also built this site as a desktop OS →
-              </button>
-            </p>
+              This site also runs as an operating system
+            </button>
           )}
-          <p className="text-gray-300">
-            &copy; {new Date().getFullYear()} {shortName}. All rights reserved.
-          </p>
+          <p>&copy; {new Date().getFullYear()} Jeric Rulete</p>
         </div>
       </div>
     </footer>

@@ -1,10 +1,9 @@
 export const profile = {
   name: "Jeric Ashley S. Rulete",
   shortName: "Jeric Rulete",
-  title: "Full-stack web developer · BS Computer Science, UP Cebu (2026)",
+  title: "Full-stack web developer",
   tagline:
     "I build full-stack web apps with Next.js, TypeScript and PostgreSQL, and write the unit, component and end-to-end tests for them.",
-  projectFilters: ["All", "Web", "Research"] as const,
   personalEmail: "rulete.jeric@gmail.com",
   /** Inbox for the Get In Touch form (Web3Forms delivers to the email tied to your access key). */
   formEmail: "rulete.jeric@gmail.com",
@@ -108,10 +107,18 @@ export const profile = {
   projects: [
     {
       title: "ShelfStock",
+      tier: "feature",
+      summary:
+        "An online store whose checkout locks the stock row, so two buyers can't both take the last unit. Comes with an Android app for packing orders.",
+      facts: [
+        { value: "262", label: "API tests" },
+        { value: "8.9 ms", label: "search on 40k rows" },
+        { value: "Live", label: "on Vercel" },
+      ],
       subtitle: "Personal project",
       period: "July – August 2026",
       description:
-        "A Next.js, Express and PostgreSQL store with server-side search and pagination, multi-currency price display, a row-locked Cash-on-Delivery checkout and an admin analytics dashboard — plus an Android companion app for order fulfilment.",
+        "A Next.js, Express and PostgreSQL store with server-side search and pagination, multi-currency price display, a row-locked Cash-on-Delivery checkout and an admin analytics dashboard, plus an Android companion app for order fulfilment.",
       challenge:
         "Checkout has to stay correct when two people buy the last unit at the same moment, an old order has to keep the price the customer actually paid after the product's price changes, and substring search has to stay fast as the product table grows.",
       architecture:
@@ -139,6 +146,9 @@ export const profile = {
     },
     {
       title: "Nexus CRM",
+      tier: "tile",
+      summary:
+        "A CRM with AI lead scoring that still works with no API key, tested against prompt injection.",
       subtitle: "Personal project",
       period: "August 2026",
       description:
@@ -166,16 +176,19 @@ export const profile = {
     },
     {
       title: "Kitchen Line Supply (Shopify Theme)",
+      tier: "tile",
+      summary:
+        "A Shopify theme written from an empty folder. Cart and filters work with JavaScript off.",
       subtitle: "Personal project",
       period: "August 2026",
       description:
         "A Shopify Online Store 2.0 theme for a fictional pickleball brand, written from an empty folder in Liquid, CSS and vanilla JavaScript: no Dawn fork, no purchased template, no page builder, no build step.",
       challenge:
-        "Merchants can change a theme's settings, so the theme had to stay accessible whatever they pick — and the cart, variant picker, filters and mobile menu all had to work with JavaScript switched off.",
+        "Merchants can change a theme's settings, so the theme had to stay accessible whatever they pick, and the cart, variant picker, filters and mobile menu all had to work with JavaScript switched off.",
       architecture:
         "Schema-driven sections with merchant-editable blocks, 38 specs product metafields and a badge metaobject limited to pre-checked tones. Without JavaScript the cart is a form POST to /cart, variants are a noscript select, filters are GET parameters on Shopify's native filter system and the mobile menu is a details element; with JavaScript those upgrade to an AJAX cart through the Section Rendering API, radio groups with section re-rendering, and pushState filtering. One base.css, one deferred theme.js, zero dependencies. Products, metafield definitions, metaobjects and collections are all created by Admin GraphQL API scripts, so the store rebuilds from scratch. Visual design adapted from SHOP.CO by Hamza Naeem (CC BY 4.0).",
       outcome:
-        "Lighthouse on the live store under real mobile throttling (4× CPU slowdown, slow 4G), median of 5 runs per page: Accessibility 100 and SEO 100 on every run, CLS 0 on every run, Performance 69–75 — most of the main-thread time belongs to Shopify's own scripts. An earlier version of the README claimed 100 across the board; those runs used desktop throttling, and I documented the mistake rather than keep the better number. The storefront is password-gated: jer2x-kls.",
+        "Lighthouse on the live store under real mobile throttling (4× CPU slowdown, slow 4G), median of 5 runs per page: Accessibility 100 and SEO 100 on every run, CLS 0 on every run, Performance 69–75. Most of the main-thread time belongs to Shopify's own scripts. An earlier version of the README claimed 100 across the board; those runs used desktop throttling, and I documented the mistake rather than keep the better number. The storefront is password-gated: jer2x-kls.",
       tags: ["Shopify", "Liquid", "JavaScript", "CSS"],
       github: "https://github.com/jasrulete/shopify-kitchen-line-theme",
       demo: "https://kitchen-line-supply.myshopify.com",
@@ -183,16 +196,19 @@ export const profile = {
     },
     {
       title: "Pulse",
+      tier: "list",
+      summary:
+        "Take-home assessment: fixed a broken WebRTC map app and audited its API, finding 7 security issues.",
       subtitle: "Take-home technical assessment",
       period: "June 2026",
       description:
-        "A take-home assessment: I inherited a broken Next.js and WebRTC app — an anonymous live map where every online user is a dot you can tap for chat or a video call — then fixed its core bugs, audited and hardened its API, redesigned the UI and added mobile support.",
+        "A take-home assessment: I inherited a broken Next.js and WebRTC app (an anonymous live map where every online user is a dot you can tap for chat or a video call), then fixed its core bugs, audited and hardened its API, redesigned the UI and added mobile support.",
       challenge:
         "The app I was handed didn't work. Dots stayed on the map after people left, chat only appeared for the sender, users got stuck as busy after a call, and video often connected with no remote stream. Its API also trusted any session ID it was given.",
       architecture:
         "Next.js and TypeScript with PostgreSQL via Prisma for presence and signaling over HTTP polling, and WebRTC data channels and media for chat and video. The root causes: a heartbeat updateMany with an empty where clause, a message-type mismatch between sender and receiver, a busy flag cleared on decline but not on end, and ICE candidates flushed before the remote description was set.",
       outcome:
-        "Audited 7 security issues — 2 critical (session impersonation, and reading or deleting another user's signaling queue), 2 high, 2 medium, 1 low — and shipped fixes: a server-issued secret checked on every protected endpoint, create-only joins with UUID validation, payload-size and ownership checks, per-IP rate limits returning 429 with Retry-After, and baseline security headers. Also fixed 4 functional bugs and one regression my own security changes introduced. Every phase is written up in NOTES.md, including the limits I didn't solve: no TURN server, and per-IP rate limiting only.",
+        "Audited 7 security issues: 2 critical (session impersonation, and reading or deleting another user's signaling queue), 2 high, 2 medium and 1 low. Shipped fixes: a server-issued secret checked on every protected endpoint, create-only joins with UUID validation, payload-size and ownership checks, per-IP rate limits returning 429 with Retry-After, and baseline security headers. Also fixed 4 functional bugs and one regression my own security changes introduced. Every phase is written up in NOTES.md, including the limits I didn't solve: no TURN server, and per-IP rate limiting only.",
       tags: ["Next.js", "React", "TypeScript", "WebRTC", "Prisma", "PostgreSQL"],
       github: "https://github.com/jasrulete/Idea-Venture-Application",
       demo: "https://idea-venture-application.vercel.app",
@@ -200,6 +216,9 @@ export const profile = {
     },
     {
       title: "Context-Aware Edge Security Framework",
+      tier: "list",
+      summary:
+        "Thesis: smart-home encryption that adapts to context. 63% faster responses and 27% less energy than static encryption.",
       subtitle: "Undergraduate thesis",
       period: "June 2026",
       description:
@@ -209,27 +228,33 @@ export const profile = {
       architecture:
         "A Decision Tree classifier infers threat level at the edge. Together with device criticality, battery level and RSSI it forms a Contextual Quadruple that chooses between AES-128 and ChaCha20, while an M/M/4 queueing model handles concurrent requests. Evaluated on the CICIoT2023 dataset.",
       outcome:
-        "Against a static-encryption baseline over 180 simulation runs: 63.40% lower mean response time (3,960 ms vs 10,819 ms), 27.39% less energy (764.32 J vs 1,052.63 J) and 38.06% better accuracy-per-joule (0.000827 vs 0.000599) — with detection accuracy statistically unchanged (63.22% vs 63.05%, p = 0.126).",
+        "Against a static-encryption baseline over 180 simulation runs: 63.40% lower mean response time (3,960 ms vs 10,819 ms), 27.39% less energy (764.32 J vs 1,052.63 J) and 38.06% better accuracy-per-joule (0.000827 vs 0.000599), with detection accuracy statistically unchanged (63.22% vs 63.05%, p = 0.126).",
       tags: ["Python", "Machine Learning", "IoT Security", "Edge Computing"],
       category: "Research",
     },
     {
       title: "Bridge Degradation Agent-Based Model",
-      subtitle: "Course project · co-authored with Chriz Ian Mesa",
+      tier: "list",
+      summary:
+        "A NetLogo model of how a bridge deck wears out. Coastal exposure degraded it 3× faster than inland.",
+      subtitle: "Course project, co-authored with Chriz Ian Mesa",
       period: "June 2026",
       description:
         "A NetLogo agent-based model of how a bridge deck wears out, written with a classmate for CMSC 176. Deck segments are patches with health, load capacity and status; cars and trucks are agents that load them; failed segments push their load onto their neighbours.",
       challenge:
-        "Bridge inspections happen on a schedule, but damage doesn't: corrosion and fatigue accumulate continuously, and a span can go from a warning condition to failure between two inspections. Aggregate models also hide the thing that makes collapse sudden — one failed segment redistributing its load onto its neighbours.",
+        "Bridge inspections happen on a schedule, but damage doesn't: corrosion and fatigue accumulate continuously, and a span can go from a warning condition to failure between two inspections. Aggregate models also hide the thing that makes collapse sudden: one failed segment redistributing its load onto its neighbours.",
       architecture:
-        "Each simulated day runs as 48 half-hour substeps: vehicles spawn from a daily traffic target and a heavy-truck ratio, patches accumulate load, then lose health to environmental decay plus traffic wear, with an overload penalty when load exceeds capacity. Failed patches redistribute their share to their Moore neighbours, which is what makes cascading collapse emergent rather than scripted. Three structural profiles are inspired by real Cebu spans — Sergio Osmeña, Marcelo Fernan and CCLEX — and BehaviorSpace sweeps environment, traffic volume, truck ratio and maintenance policy.",
+        "Each simulated day runs as 48 half-hour substeps: vehicles spawn from a daily traffic target and a heavy-truck ratio, patches accumulate load, then lose health to environmental decay plus traffic wear, with an overload penalty when load exceeds capacity. Failed patches redistribute their share to their Moore neighbours, which is what makes cascading collapse emergent rather than scripted. Three structural profiles are inspired by real Cebu spans (Sergio Osmeña, Marcelo Fernan and CCLEX), and BehaviorSpace sweeps environment, traffic volume, truck ratio and maintenance policy.",
       outcome:
-        "Coastal exposure degraded the deck exactly 3× faster than inland (0.006590 vs 0.002197 HP/day, ANOVA p < 1e-16). Fleet composition mattered more than vehicle count: shifting from 0% to 100% heavy trucks added 27% to the wear rate, while a near-5× increase in daily traffic added 16%. Maintenance was non-linear — at zero repair quality, inspection frequency changed nothing at all, while yearly maintenance at 0.25 effectiveness cut degradation 79.6%. Under a 100-year run, all 16 traffic-and-truck configurations eventually collapsed, the earliest at about 7.91 years.",
+        "Coastal exposure degraded the deck exactly 3× faster than inland (0.006590 vs 0.002197 HP/day, ANOVA p < 1e-16). Fleet composition mattered more than vehicle count: shifting from 0% to 100% heavy trucks added 27% to the wear rate, while a near-5× increase in daily traffic added 16%. Maintenance was non-linear: at zero repair quality, inspection frequency changed nothing at all, while yearly maintenance at 0.25 effectiveness cut degradation 79.6%. Under a 100-year run, all 16 traffic-and-truck configurations eventually collapsed, the earliest at about 7.91 years.",
       tags: ["NetLogo", "Agent-Based Modeling", "BehaviorSpace"],
       category: "Research",
     },
     {
       title: "AmBot (Trading Strategy Research)",
+      tier: "list",
+      summary:
+        "Tested seven trading strategies over 36 years of market data. None of them beat buy-and-hold.",
       subtitle: "Personal project",
       period: "July 2026",
       description:
@@ -248,7 +273,7 @@ export const profile = {
   experience: [
     {
       title: "Full-Stack Developer",
-      org: "Confidential SaaS clients · Remote",
+      org: "Confidential SaaS clients, remote",
       period: "July 2026 – Present",
       highlights: [
         "Contract development on production SaaS web applications; client names and system details stay confidential",
@@ -257,17 +282,17 @@ export const profile = {
     },
     {
       title: "Software Developer Intern",
-      org: "Mvolo · Remote (Netherlands)",
+      org: "Mvolo, remote (Netherlands)",
       period: "June 2026 – August 2026",
       highlights: [
         "Built the mobile client for a cross-platform app in React Native (Expo) and TypeScript: a multi-step onboarding wizard, a day-planning timeline view, and bilingual English/Dutch interface support",
-        "Set up the project's pnpm monorepo — mobile and desktop apps over shared core and ui-shared packages — and kept the Expo and build toolchain working through scaffolding, Metro and workspace fixes",
+        "Set up the project's pnpm monorepo (mobile and desktop apps over shared core and ui-shared packages) and kept the Expo and build toolchain working through scaffolding, Metro and workspace fixes",
         "Wrote the typed data layer in the shared core package: a Supabase client factory with auth wrappers and a Result type, idempotent batch writes for onboarding, non-destructive seeding, plus Vitest coverage and a persistence design spec reviewed before implementation",
       ],
     },
     {
       title: "Asset Management Specialist Intern",
-      org: "Lexmark (now Xerox) · Cebu City",
+      org: "Lexmark (now Xerox), Cebu City",
       period: "June 2025 – January 2026",
       highlights: [
         "Built and maintained internal tracking tools for enterprise hardware asset lifecycle management",
@@ -277,6 +302,7 @@ export const profile = {
     },
     {
       title: "Volunteer Work",
+      compact: true,
       org: "Various Events & Organizations",
       period: "2022 – Present",
       highlights: [
@@ -287,7 +313,8 @@ export const profile = {
     },
     {
       title: "Manager & Operations Support",
-      org: "Family Business – Rice Trading · Zamboanga City",
+      compact: true,
+      org: "Family business (rice trading), Zamboanga City",
       period: "High School – Present",
       highlights: [
         "Ran day-to-day operations, inventory tracking and customer relations",

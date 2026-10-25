@@ -70,11 +70,11 @@ export default function Contact() {
     setStatus("error");
     setResult(
       <>
-        The CAPTCHA could not load — it may be blocked on this network. Email me
+        The CAPTCHA could not load. It may be blocked on this network. Email me
         at{" "}
         <a
           href={`mailto:${profile.formEmail}`}
-          className="rounded underline underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+          className="rounded underline underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
         >
           {profile.formEmail}
         </a>{" "}
@@ -150,7 +150,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
+      className="py-16 sm:py-24 border-t border-line"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Contact" />
@@ -211,7 +211,7 @@ function ContactGrid({
     status === "success"
       ? "text-green-800 dark:text-green-400"
       : status === "sending"
-        ? "text-gray-600 dark:text-gray-300"
+        ? "text-muted"
         : "text-red-600 dark:text-red-400";
 
   return (
@@ -254,7 +254,7 @@ function ContactGrid({
             required
             rows={5}
             placeholder="Write your message here..."
-            className="w-full px-4 py-2.5 border border-gray-500 dark:border-gray-400 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2.5 border border-muted rounded-md bg-surface text-ink focus:outline-none focus:ring-2 focus:ring-focus"
           />
         </div>
 
@@ -290,7 +290,7 @@ function ContactGrid({
         <button
           type="submit"
           disabled={!formConfigured || isSubmitting}
-          className="inline-flex items-center px-5 py-3 text-sm font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600"
+          className="inline-flex items-center px-5 py-3 text-sm font-semibold rounded-md text-on-accent bg-accent-fill hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-opacity duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Sending..." : "Send Message"}
         </button>
@@ -310,7 +310,7 @@ function ContactInfo() {
 
   return (
     <div>
-      <h3 className="text-2xl font-semibold tracking-tight mb-6">Contact Information</h3>
+      <h3 className="text-xl font-semibold tracking-tight mb-6 text-ink">Contact information</h3>
       <div className="space-y-6">
         <div className="flex items-start">
           <MailIcon />
@@ -321,9 +321,9 @@ function ContactInfo() {
                 <li key={address}>
                   <a
                     href={`mailto:${address}`}
-                    className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150"
+                    className="rounded text-muted hover:text-accent transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
                   >
-                    <span className="text-xs text-gray-600 dark:text-gray-300 mr-2">
+                    <span className="text-xs text-muted mr-2">
                       {label}:
                     </span>
                     {address}
@@ -340,7 +340,7 @@ function ContactInfo() {
           content={
             <a
               href={`tel:${profile.phone.replace(/\s/g, "")}`}
-              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150"
+              className="rounded text-muted hover:text-accent transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
             >
               {profile.phone}
             </a>
@@ -351,7 +351,7 @@ function ContactInfo() {
           icon={<LocationIcon />}
           title="Location"
           content={
-            <p className="text-gray-600 dark:text-gray-300">{profile.location}</p>
+            <p className="text-muted">{profile.location}</p>
           }
         />
       </div>
@@ -370,7 +370,7 @@ function ContactRow({
 }) {
   return (
     <div className="flex items-start">
-      <div className="mr-4 mt-1 text-blue-600 dark:text-blue-400 shrink-0">{icon}</div>
+      <div className="mr-4 mt-1 text-accent shrink-0">{icon}</div>
       <div>
         <h4 className="text-lg font-medium">{title}</h4>
         {content}
@@ -417,7 +417,7 @@ function FormField({
         onChange={onChange}
         onFocus={onFocus}
         required={required}
-        className="w-full px-4 py-2.5 border border-gray-500 dark:border-gray-400 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2.5 border border-muted rounded-md bg-surface text-ink focus:outline-none focus:ring-2 focus:ring-focus"
       />
     </div>
   );
@@ -425,7 +425,7 @@ function FormField({
 
 function MailIcon() {
   return (
-    <svg className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-4 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+    <svg className="h-6 w-6 text-accent mr-4 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
   );

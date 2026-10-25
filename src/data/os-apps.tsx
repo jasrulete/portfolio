@@ -7,7 +7,6 @@ import {
   User,
   FolderKanban,
   Layers,
-  Palette,
   Briefcase,
   Mail,
   TerminalSquare,
@@ -24,7 +23,6 @@ import {
 const AboutApp = lazy(() => import("../components/desktop/apps/AboutApp"));
 const ProjectsApp = lazy(() => import("../components/desktop/apps/ProjectsApp"));
 const SkillsApp = lazy(() => import("../components/desktop/apps/SkillsApp"));
-const DesignLabApp = lazy(() => import("../components/desktop/apps/DesignLabApp"));
 const ExperienceApp = lazy(() => import("../components/desktop/apps/ExperienceApp"));
 const ContactApp = lazy(() => import("../components/desktop/apps/ContactApp"));
 const TerminalApp = lazy(() => import("../components/desktop/apps/TerminalApp"));
@@ -68,14 +66,6 @@ export const OS_APPS: OSAppDef[] = [
     icon: <Layers size={28} />,
     Component: SkillsApp,
     windowSize: { width: 560, height: 460 },
-  },
-  {
-    id: "design",
-    label: "Design",
-    desktopLabel: "Design.sys",
-    icon: <Palette size={28} />,
-    Component: DesignLabApp,
-    windowSize: { width: 680, height: 520 },
   },
   {
     id: "experience",

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    The j² icon (docs/brand.md §4): a lowercase "j" in ink with a superscript
+    "2" in the mango-amber accent, on an opaque dark square so it survives a
+    light tab strip as well as a dark one. Paths only, so nothing here needs a
+    webfont. public/favicon.svg is a copy of this file; logo.png is rendered
+    from it by docs/brand/logo-icon-512.html.
+  -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7" fill="#17181B" stroke="#26282C" />
+  <circle cx="13" cy="8.6" r="1.9" fill="#ECECEC" />
+  <path d="M13 13v10.2a3.3 3.3 0 0 1-3.3 3.3H8" fill="none" stroke="#ECECEC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M18.4 8.2a2.9 2.9 0 0 1 5.6 0.9c0 1.5-1 2.4-2.3 3.5L18.2 15.6h6.2" fill="none" stroke="#FFB547" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

@@ -130,7 +130,7 @@ export default function SnakeApp() {
         if (d.x === -x && d.y === -y) return;
         nextDirRef.current = { x, y };
       }}
-      className="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-display font-bold transition-transform"
+      className="w-12 h-12 rounded-lg bg-surface text-ink font-bold transition-transform"
     >
       {label}
     </button>
@@ -138,15 +138,15 @@ export default function SnakeApp() {
 
   return (
     <div className="p-4 flex flex-col items-center gap-3 select-none">
-      <div className="flex items-center gap-4 font-display text-sm">
+      <div className="flex items-center gap-4 font-mono text-sm">
         <span>
-          Score: <strong className="text-blue-600 dark:text-blue-400">{score}</strong>
+          Score: <strong className="text-accent">{score}</strong>
         </span>
-        <span className="text-gray-600 dark:text-gray-300">Best: {best}</span>
+        <span className="text-muted">Best: {best}</span>
         <button
           type="button"
           onClick={() => (gameOver || !running ? reset() : setRunning(false))}
-          className="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold"
+          className="px-3 py-1 rounded-full bg-accent-fill hover:opacity-90 text-on-accent text-xs font-bold"
         >
           {running ? "Pause" : gameOver ? "Restart" : "Start"}
         </button>
@@ -161,10 +161,10 @@ export default function SnakeApp() {
         />
         {(!running || gameOver) && (
           <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/50">
-            <p className="font-display text-white text-sm text-center px-4">
+            <p className="text-white text-sm text-center px-4">
               {gameOver
-                ? `Game over — ${score} point${score === 1 ? "" : "s"}. Space or Restart to retry.`
-                : "Arrows / WASD to move · Space to pause"}
+                ? `Game over: ${score} point${score === 1 ? "" : "s"}. Space or Restart to retry.`
+                : "Arrows or WASD to move, Space to pause"}
             </p>
           </div>
         )}

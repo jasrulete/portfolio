@@ -1,14 +1,24 @@
+import { cn } from "../../lib/utils";
 import { profile } from "../data/profile";
 import { normalizeSkill } from "../data/skill-match";
+import { FOCUS_RING } from "./focus-ring";
+import { OsModeTile } from "./os-mode-tile";
+import { FeatureTile, ProjectRow, ProjectTile } from "./project-card";
 import SectionHeading from "./section-heading";
-import { ProjectCard } from "./project-card";
 
+// Selected work: tiles for the projects with the most behind them, then the
+// OS-mode tile, then a plain list for research and smaller work. Which group a
+// project lands in is its `tier` in profile.ts. A skill filter applies to both
+// groups, and a group with nothing left disappears, heading and all.
 export default function Projects({
   activeTag = null,
   onClearTag,
+  onOpenOs,
 }: {
   activeTag?: string | null;
   onClearTag?: () => void;
+  /** Present only on the classic page, so the OS's own Projects app has no tile. */
+  onOpenOs?: () => void;
 }) {
   const filtered = activeTag
     ? profile.projects.filter((p) =>
@@ -16,34 +26,29 @@ export default function Projects({
       )
     : profile.projects;
 
-  return (
-    <section
-      id="projects"
-      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700"
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading title="Projects" className="mb-3" />
+  const tiled = filtered.filter((p) => p.tier !== "list");
+  const listed = filtered.filter((p) => p.tier === "list");
+  const showOsTile = Boolean(onOpenOs) && !activeTag;
 
-        {/* The Design Lab is its own page now; this is one of its two entry
-            points (the other is in the footer). */}
-        <p className="mb-8 sm:mb-10 text-sm">
-          <a
-            href={`${import.meta.env.BASE_URL}design/`}
-            className="rounded text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-          >
-            The design system behind this site →
-          </a>
-        </p>
+  return (
+    <section id="projects" className="py-16 sm:py-24 border-t border-line">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading title="Selected work" />
 
         {activeTag && (
-          <div className="flex mb-8 sm:mb-10">
+          <div className="flex mb-8">
             <button
               type="button"
               onClick={() => onClearTag?.()}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-600 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+              className={cn(
+                "inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-sm text-ink bg-surface border border-accent/60 hover:border-accent transition-colors duration-150",
+                FOCUS_RING,
+              )}
             >
               Showing projects using
-              <span className="font-bold">{activeTag}</span>
+              <span className="font-mono font-semibold text-accent">
+                {activeTag}
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -52,41 +57,51 @@ export default function Projects({
                 stroke="currentColor"
                 aria-hidden
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
               <span className="sr-only">Clear skill filter</span>
             </button>
           </div>
         )}
 
-        {/* The cards' entrance is pure CSS (`.card-enter` in index.css), gated
-            behind @supports and prefers-reduced-motion so the un-animated
-            state is the final state. No observer, no opacity-0 start, so a
-            fast scroller never sees an empty box. */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {filtered.map((project, i) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              priority={i === 0}
-            />
-          ))}
-        </div>
+        {(tiled.length > 0 || showOsTile) && (
+          <div className="grid grid-cols-1 md:grid-cols-[1.55fr_1fr] gap-4 sm:gap-5">
+            {tiled.map((project, i) =>
+              project.tier === "feature" ? (
+                <FeatureTile key={project.title} project={project} priority={i === 0} />
+              ) : (
+                <ProjectTile key={project.title} project={project} />
+              ),
+            )}
+            {showOsTile && onOpenOs && <OsModeTile onOpen={onOpenOs} />}
+          </div>
+        )}
+
+        {listed.length > 0 && (
+          <div className={tiled.length > 0 || showOsTile ? "mt-14" : undefined}>
+            <h3 className="text-lg font-semibold tracking-tight text-ink mb-3">
+              Research and smaller projects
+            </h3>
+            <div className="border-t border-line">
+              {listed.map((project) => (
+                <ProjectRow key={project.title} project={project} />
+              ))}
+            </div>
+          </div>
+        )}
 
         {filtered.length === 0 && (
           <div className="py-12">
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-muted">
               No projects tagged &ldquo;{activeTag}&rdquo; yet.
             </p>
             <button
               type="button"
               onClick={() => onClearTag?.()}
-              className="mt-4 inline-flex items-center rounded-lg border border-blue-600 px-4 py-2.5 text-sm font-semibold text-blue-600 transition-colors duration-150 hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+              className={cn(
+                "mt-4 inline-flex items-center rounded-md border border-line px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent transition-colors duration-150",
+                FOCUS_RING,
+              )}
             >
               Show all projects
             </button>

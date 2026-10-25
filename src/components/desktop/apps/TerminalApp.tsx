@@ -37,13 +37,13 @@ function runCommand(raw: string): string {
 
   if (cmd === "projects" || cmd === "ls projects" || cmd === "ls") {
     return profile.projects
-      .map((p, i) => `${i + 1}. ${p.title} (${p.period}) — ${p.description}`)
+      .map((p, i) => `${i + 1}. ${p.title} (${p.period}): ${p.description}`)
       .join("\n\n");
   }
 
   if (cmd === "experience" || cmd === "cat experience.txt") {
     return profile.experience
-      .map((e) => `${e.title} · ${e.org} (${e.period})`)
+      .map((e) => `${e.title}, ${e.org} (${e.period})`)
       .join("\n");
   }
 
@@ -103,7 +103,7 @@ export default function TerminalApp() {
         <div key={i} className="whitespace-pre-wrap mb-1">
           {l.type === "input" ? (
             <span>
-              <span className="text-blue-400">jeric@portfolio</span>
+              <span className="text-[#FFB547]">jeric@portfolio</span>
               <span className="text-gray-400">:~$ </span>
               {l.text}
             </span>
@@ -113,7 +113,7 @@ export default function TerminalApp() {
         </div>
       ))}
       <form onSubmit={submit} className="flex items-center">
-        <span className="text-blue-400">jeric@portfolio</span>
+        <span className="text-[#FFB547]">jeric@portfolio</span>
         <span className="text-gray-400 mr-1">:~$</span>
         <input
           autoFocus

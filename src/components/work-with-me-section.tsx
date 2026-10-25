@@ -1,3 +1,5 @@
+import { cn } from "../../lib/utils";
+import { FOCUS_RING } from "./focus-ring";
 import SectionHeading from "./section-heading";
 
 /**
@@ -20,15 +22,15 @@ export default function WorkWithMeSection() {
   return (
     <section
       id="work-with-me"
-      className="py-16 sm:py-24 border-t border-gray-300 dark:border-gray-700 scroll-mt-20"
+      className="py-16 sm:py-24 border-t border-line scroll-mt-20"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Work with me" />
 
-        <div className="max-w-prose prose-flow text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+        <div className="max-w-prose prose-flow text-base text-muted leading-relaxed">
           <p>
-            What I build — and what there is a demo and source for on this
-            page: full-stack web apps (ShelfStock, Nexus CRM), Shopify themes
+            What I build, with a demo and source for each on this page:
+            full-stack web apps (ShelfStock, Nexus CRM), Shopify themes
             written from scratch (Kitchen Line Supply), and AI features that
             work on your own records, with a rule-based fallback for when
             there is no API key. If you want something else built, ask and
@@ -36,7 +38,7 @@ export default function WorkWithMeSection() {
           </p>
           <p>
             How an engagement runs: we scope it first, and I quote the project
-            once we both know what it is — smaller open-ended work can run
+            once we both know what it is. Smaller open-ended work can run
             hourly instead. You get a preview URL early and small changes you
             can review as they land, the code goes in a repository you own,
             and if there is a cheaper or simpler way to get what you want,
@@ -52,9 +54,12 @@ export default function WorkWithMeSection() {
         <p className="mt-6 text-sm">
           <a
             href="#contact"
-            className="rounded text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+            className={cn(
+              "rounded text-accent font-semibold underline underline-offset-4",
+              FOCUS_RING,
+            )}
           >
-            Tell me what you&apos;re building →
+            Tell me what you&apos;re building
           </a>
         </p>
       </div>

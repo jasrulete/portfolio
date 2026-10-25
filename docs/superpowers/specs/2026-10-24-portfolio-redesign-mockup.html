@@ -1,0 +1,232 @@
+<!-- Approved mockup for 2026-10-24-portfolio-redesign-design.md. Fragment from the brainstorm companion: open it directly in a browser. Accent shown is mango amber (approved). Logo section: option C was chosen, then refined to "jer2x_" wordmark + "j²" icon (see spec); the navbar here still shows a placeholder wordmark. -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .stage { --bg:#101113; --surface:#17181B; --line:#26282C; --ink:#ECECEC; --muted:#9A9DA3; --accent:#5B9BFF; --accent-ink:#0B1020; }
+  .stage.mango { --accent:#FFB547; --accent-ink:#1E1404; }
+  .stage * { box-sizing:border-box; }
+  .swatches { display:flex; gap:10px; margin:6px 0 18px; flex-wrap:wrap; }
+  .swatches button { font:600 13px/1 system-ui; padding:10px 14px; border-radius:8px; border:2px solid transparent; cursor:pointer; background:#eee; }
+  .swatches button.on { border-color:#111; }
+  .frames { display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
+  .label { font:600 12px system-ui; color:#666; margin:0 0 8px; }
+
+  .site { background:var(--bg); color:var(--ink); font-family:'IBM Plex Sans', sans-serif; }
+  .mono { font-family:'IBM Plex Mono', monospace; }
+  .desk { width:900px; border-radius:10px; overflow:hidden; border:1px solid #333; }
+  .bar { background:#1f2023; height:26px; display:flex; align-items:center; gap:6px; padding:0 10px; }
+  .bar i { width:9px; height:9px; border-radius:50%; background:#3a3c40; }
+
+  .nav { display:flex; justify-content:space-between; align-items:center; padding:16px 36px; border-bottom:1px solid var(--line); font-size:13px; }
+  .logo { font-weight:700; font-size:15px; letter-spacing:-.01em; }
+  .logo b { color:var(--accent); }
+  .nav .links span { margin-left:20px; color:var(--muted); }
+  .nav .os { margin-left:20px; color:var(--ink); border:1px solid var(--line); padding:6px 10px; border-radius:6px; }
+
+  .hero { display:grid; grid-template-columns:1fr 190px; gap:36px; padding:44px 36px 36px; align-items:end; }
+  .avail { font-size:13px; color:var(--muted); margin:0 0 14px; }
+  .avail strong { color:var(--ink); font-weight:500; }
+  h1.h { font-size:44px; line-height:1.06; letter-spacing:-.025em; font-weight:700; margin:0 0 16px; }
+  .lede { color:var(--muted); font-size:15.5px; line-height:1.6; max-width:520px; margin:0; }
+  .btns { display:flex; gap:10px; margin-top:24px; }
+  .btn { font-size:13.5px; font-weight:600; padding:11px 16px; border-radius:7px; }
+  .btn.p { background:var(--accent); color:var(--accent-ink); }
+  .btn.s { border:1px solid var(--line); }
+  .me { width:190px; height:230px; object-fit:cover; border-radius:6px; display:block; }
+
+  .sec { padding:8px 36px 36px; }
+  .sec h2 { font-size:20px; font-weight:600; margin:0 0 16px; letter-spacing:-.01em; }
+  .work { display:grid; grid-template-columns:1.55fr 1fr; grid-template-rows:auto auto; gap:14px; }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .card img { width:100%; display:block; object-fit:cover; object-position:top; }
+  .card .body { padding:14px 16px 16px; }
+  .card h3 { margin:0 0 4px; font-size:16px; font-weight:600; }
+  .card p { margin:0; color:var(--muted); font-size:13px; line-height:1.5; }
+  .facts { display:flex; gap:18px; margin-top:12px; font-size:12px; color:var(--muted); }
+  .facts b { display:block; color:var(--ink); font-size:17px; font-weight:500; }
+  .feature { grid-row:span 2; }
+  .feature img { height:250px; }
+  .small img { height:110px; }
+  .stack { font-size:11.5px; color:var(--muted); margin-top:10px; }
+
+  .ostile { margin-top:14px; display:grid; grid-template-columns:1fr 260px; gap:0; }
+  .ostile .body { padding:18px 20px; }
+  .ostile .link { display:inline-block; margin-top:12px; font-size:13px; font-weight:600; color:var(--accent); }
+  .mini { background:#2a3d5c; position:relative; min-height:130px; border-left:1px solid var(--line); }
+  .mini .w { position:absolute; background:#e9e9ea; border-radius:4px; box-shadow:0 2px 6px #0006; }
+  .mini .w::before { content:""; display:block; height:8px; background:#cfd0d2; border-radius:4px 4px 0 0; }
+  .mini .tb { position:absolute; left:0; right:0; bottom:0; height:12px; background:#0009; }
+
+  .rows { border-top:1px solid var(--line); }
+  .row { display:grid; grid-template-columns:1fr 2fr 110px; gap:16px; padding:12px 0; border-bottom:1px solid var(--line); font-size:13px; }
+  .row .t { font-weight:600; }
+  .row .d { color:var(--muted); }
+  .row .y { color:var(--muted); text-align:right; }
+
+  /* phone */
+  .phone { width:340px; border-radius:34px; border:10px solid #222; overflow:hidden; }
+  .phone .nav { padding:14px 18px; }
+  .phone .hero { grid-template-columns:1fr; padding:26px 18px 22px; gap:18px; }
+  .phone .me { width:96px; height:110px; order:-1; }
+  .phone h1.h { font-size:31px; }
+  .phone .lede { font-size:14.5px; }
+  .phone .btns { flex-direction:column; }
+  .phone .btn { text-align:center; }
+  .phone .sec { padding:4px 18px 24px; }
+  .phone .work { grid-template-columns:1fr; }
+  .phone .feature img { height:170px; }
+  .phone .ostile { grid-template-columns:1fr; }
+  .phone .mini { display:none; }
+  .phone .row { grid-template-columns:1fr auto; }
+  .phone .row .d { grid-column:1 / -1; order:3; }
+  .menu { width:22px; display:grid; gap:4px; } .menu i { height:2px; background:var(--ink); display:block; }
+</style>
+
+<h2>Direction B, reworked so it doesn't read as AI-made</h2>
+<p class="subtitle">Desktop on the left, phone on the right. Changes from the first mockup: no grid or glow, no pulsing badge, one font family (IBM Plex), monospace only for real data, tiles sized by how much each project has behind it, and an OS-mode tile. Use the buttons to try two accent colours.</p>
+
+<div class="swatches">
+  <button class="on" onclick="setAcc(this,'')">Blue: carries over from your current site</button>
+  <button onclick="setAcc(this,'mango')">Mango amber: a nod to Cebu</button>
+</div>
+
+<div class="stage mango" id="stage">
+<div class="frames">
+
+<div>
+<p class="label">Desktop, 1440px wide (scaled)</p>
+<div class="desk site">
+  <div class="bar"><i></i><i></i><i></i></div>
+  <div class="nav"><div class="logo">jeric rulete<b>_</b></div>
+    <div class="links"><span>Work</span><span>Experience</span><span>About</span><span>Contact</span><span class="os">Open OS mode</span></div></div>
+
+  <div class="hero">
+    <div>
+      <p class="avail"><strong>Available now</strong> for contract work and full-time developer roles. Based in Cebu City.</p>
+      <h1 class="h">I build full-stack web apps, and I write the tests that keep them working.</h1>
+      <p class="lede">Mostly Next.js, TypeScript and PostgreSQL. I like finding the bug that only shows up when two people click at the same moment, fixing it, and writing down why.</p>
+      <div class="btns"><span class="btn p">See projects</span><span class="btn s">Download résumé (PDF)</span></div>
+    </div>
+    <img class="me" src="../../../src/assets/profile.webp" alt="">
+  </div>
+
+  <div class="sec">
+    <h2>Selected work</h2>
+    <div class="work">
+      <div class="card feature">
+        <img src="../../../src/assets/shelfstock.jpg" alt="">
+        <div class="body">
+          <h3>ShelfStock</h3>
+          <p>An online store whose checkout locks the stock row, so two buyers can't both take the last unit. Comes with an Android app for packing orders.</p>
+          <div class="facts mono"><div><b>262</b>API tests</div><div><b>8.9 ms</b>search on 40k rows</div><div><b>Live</b>on Vercel</div></div>
+        </div>
+      </div>
+      <div class="card small">
+        <img src="../../../src/assets/nexus-crm.jpg" alt="">
+        <div class="body"><h3>Nexus CRM</h3><p>A CRM with AI lead scoring that still works with no API key, tested against prompt injection.</p></div>
+      </div>
+      <div class="card small">
+        <img src="../../../src/assets/kitchen-line.jpg" alt="">
+        <div class="body"><h3>Kitchen Line Supply</h3><p>A Shopify theme written from an empty folder. Cart and filters work with JavaScript off.</p></div>
+      </div>
+    </div>
+
+    <div class="card ostile">
+      <div class="body">
+        <h3>This site also runs as an operating system</h3>
+        <p>Draggable windows, a terminal, Minesweeper and a camera app that takes a photo when you give it a thumbs-up. On a phone it opens as a home screen instead.</p>
+        <span class="link">Open OS mode</span>
+      </div>
+      <div class="mini"><div class="w" style="left:22px;top:16px;width:120px;height:72px"></div><div class="w" style="left:96px;top:44px;width:130px;height:66px"></div><div class="tb"></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Research and smaller projects</h2>
+    <div class="rows">
+      <div class="row"><span class="t">Edge security framework</span><span class="d">Thesis: smart-home encryption that adapts to context. 63% faster responses, 27% less energy.</span><span class="y mono">2026</span></div>
+      <div class="row"><span class="t">Pulse</span><span class="d">Take-home: fixed a broken WebRTC map app and closed 7 security issues.</span><span class="y mono">2026</span></div>
+      <div class="row"><span class="t">AmBot</span><span class="d">Tested seven trading strategies over 36 years of data. None of them worked.</span><span class="y mono">2026</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div>
+<p class="label">Phone, 390px wide</p>
+<div class="phone site">
+  <div class="nav"><div class="logo">jeric rulete<b>_</b></div><div class="menu"><i></i><i></i><i></i></div></div>
+  <div class="hero">
+    <img class="me" src="../../../src/assets/profile.webp" alt="">
+    <div>
+      <p class="avail"><strong>Available now</strong> for contract work and full-time developer roles.</p>
+      <h1 class="h">I build full-stack web apps, and I write the tests that keep them working.</h1>
+      <p class="lede">Mostly Next.js, TypeScript and PostgreSQL.</p>
+      <div class="btns"><span class="btn p">See projects</span><span class="btn s">Download résumé (PDF)</span></div>
+    </div>
+  </div>
+  <div class="sec">
+    <h2>Selected work</h2>
+    <div class="work">
+      <div class="card feature">
+        <img src="../../../src/assets/shelfstock.jpg" alt="">
+        <div class="body"><h3>ShelfStock</h3><p>A store whose checkout can't oversell the last unit.</p>
+        <div class="facts mono"><div><b>262</b>API tests</div><div><b>8.9 ms</b>search</div></div></div>
+      </div>
+    </div>
+    <div class="card ostile">
+      <div class="body"><h3>This site also runs as a phone OS</h3><p>Home screen, apps, a terminal and games.</p><span class="link">Open it</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<style>
+  .logos { display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-top:10px; }
+  .lg { background:var(--bg); color:var(--ink); border-radius:10px; padding:22px 18px 16px; font-family:'IBM Plex Sans', sans-serif; }
+  .lg .big { height:64px; display:flex; align-items:center; }
+  .lg .meta { display:flex; align-items:center; gap:10px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); font-size:11px; color:var(--muted); }
+  .fav { width:28px; height:28px; border-radius:6px; background:#1d1e21; display:grid; place-items:center; font:700 13px 'IBM Plex Mono', monospace; color:var(--ink); border:1px solid var(--line); flex-shrink:0; }
+  .lg h4 { margin:10px 0 2px; font:600 13px system-ui; color:#111; }
+  .lgwrap p { margin:0; font:13px/1.45 system-ui; color:#555; }
+  .acc { color:var(--accent); }
+  .sup { font-size:.5em; vertical-align:super; margin-left:1px; }
+</style>
+
+<h2 style="margin-top:40px">Logo ideas around jer2x</h2>
+<p class="subtitle">Each shows the wordmark at full size, at navbar size, and as a browser-tab icon. They're flat type only, with no gradients or glow, so they still work at 16 pixels. The accent buttons above recolour these too.</p>
+
+<div class="stage mango" id="stage2">
+<div class="options logos" style="display:grid">
+  <div class="option lgwrap" data-choice="logo-a" onclick="toggleSelect(this)" style="display:block">
+    <div class="lg"><div class="big" style="font:600 40px 'IBM Plex Mono',monospace;letter-spacing:-.03em">jer<span class="acc">2x</span></div>
+      <div class="meta"><span style="font:600 14px 'IBM Plex Mono',monospace;color:var(--ink)">jer<span class="acc">2x</span></span><span class="fav">2x</span></div></div>
+    <h4>A · Plain handle</h4><p>Your handle as-is in monospace, with “2x” in the accent. Simple and honest.</p>
+  </div>
+  <div class="option lgwrap" data-choice="logo-b" onclick="toggleSelect(this)" style="display:block">
+    <div class="lg"><div class="big" style="font:700 44px 'IBM Plex Sans',sans-serif;letter-spacing:-.04em">jer<span class="acc sup" style="font-family:'IBM Plex Mono',monospace;font-weight:600">2x</span></div>
+      <div class="meta"><span style="font:700 15px 'IBM Plex Sans',sans-serif;color:var(--ink)">jer<span class="acc sup" style="font-family:'IBM Plex Mono',monospace">2x</span></span><span class="fav" style="font-family:'IBM Plex Sans';font-size:14px">j<span class="acc" style="font-size:8px;vertical-align:super">2x</span></span></div></div>
+    <h4>B · Multiplier</h4><p>“2x” raised like a speed or zoom multiplier. Reads as “Jer, times two”.</p>
+  </div>
+  <div class="option lgwrap" data-choice="logo-c" onclick="toggleSelect(this)" style="display:block">
+    <div class="lg"><div class="big" style="font:600 40px 'IBM Plex Mono',monospace;letter-spacing:-.03em">jer2x<span class="acc">_</span></div>
+      <div class="meta"><span style="font:600 14px 'IBM Plex Mono',monospace;color:var(--ink)">jer2x<span class="acc">_</span></span><span class="fav">j<span class="acc">_</span></span></div></div>
+    <h4>C · Cursor</h4><p>Keeps the blinking-cursor underscore from your current logo, so the brand carries over.</p>
+  </div>
+  <div class="option lgwrap" data-choice="logo-d" onclick="toggleSelect(this)" style="display:block">
+    <div class="lg"><div class="big"><span style="display:inline-grid;place-items:center;width:58px;height:58px;border:2px solid var(--ink);border-radius:8px;font:700 24px 'IBM Plex Mono',monospace;letter-spacing:-.05em">j<span class="acc">2</span></span><span style="font:600 22px 'IBM Plex Sans';margin-left:12px">jeric rulete</span></div>
+      <div class="meta"><span style="display:inline-grid;place-items:center;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:4px;font:700 10px 'IBM Plex Mono',monospace;color:var(--ink)">j<span class="acc">2</span></span><span style="color:var(--ink);font-weight:600;font-size:13px">jeric rulete</span><span class="fav">j<span class="acc">2</span></span></div></div>
+    <h4>D · Keycap mark</h4><p>“j2” in a keycap square next to your real name. The mark is the handle and the name stays readable.</p>
+  </div>
+</div>
+</div>
+
+<script>
+function setAcc(btn, cls){
+  document.getElementById('stage').className = 'stage ' + cls;
+  document.getElementById('stage2').className = 'stage ' + cls;
+  document.querySelectorAll('.swatches button').forEach(b => b.classList.toggle('on', b === btn));
+}
+</script>

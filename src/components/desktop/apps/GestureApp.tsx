@@ -173,8 +173,8 @@ export default function GestureApp() {
 
   return (
     <div className="p-4 flex flex-col items-center gap-3">
-      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
-        Recognizes 7 hand gestures with MediaPipe — fully in your browser,
+      <p className="text-xs text-muted text-center">
+        Recognizes 7 hand gestures with MediaPipe, fully in your browser,
         nothing is uploaded.
       </p>
 
@@ -200,33 +200,33 @@ export default function GestureApp() {
               <button
                 type="button"
                 onClick={start}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-fill hover:opacity-90 text-on-accent text-sm font-bold transition-colors"
               >
                 <Camera size={16} />
                 Enable camera
               </button>
             )}
             {status === "starting" && (
-              <p className="font-display text-sm">Requesting camera…</p>
+              <p className="text-sm">Requesting camera…</p>
             )}
             {status === "denied" && (
               <div className="space-y-2">
                 <VideoOff size={24} className="mx-auto" aria-hidden />
-                <p className="font-display text-sm">
+                <p className="text-sm">
                   Camera access was blocked. Allow it in your browser&apos;s
                   site settings, then try again.
                 </p>
                 <button
                   type="button"
                   onClick={start}
-                  className="text-blue-400 text-sm underline underline-offset-4"
+                  className="text-[#FFB547] text-sm underline underline-offset-4"
                 >
                   Try again
                 </button>
               </div>
             )}
             {status === "unsupported" && (
-              <p className="font-display text-sm">
+              <p className="text-sm">
                 This browser doesn&apos;t support camera access.
               </p>
             )}
@@ -241,18 +241,18 @@ export default function GestureApp() {
             className="min-h-[4.5rem] w-full max-w-md flex items-center justify-center gap-3"
           >
             {model === "loading" && (
-              <p className="font-display text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-muted">
                 Downloading gesture model (~8 MB, first time only)…
               </p>
             )}
             {model === "error" && (
-              <p className="font-display text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-muted">
                 Couldn&apos;t load the gesture model. Check your connection and
                 reopen the app.
               </p>
             )}
             {model === "on" && detected.length === 0 && (
-              <p className="font-display text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-muted">
                 Show a hand to the camera…
               </p>
             )}
@@ -260,14 +260,14 @@ export default function GestureApp() {
               detected.map((g, i) => (
                 <div
                   key={`${g.label}-${i}`}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-surface"
                 >
                   <span className="text-3xl" aria-hidden>
                     {g.emoji}
                   </span>
                   <div>
-                    <p className="font-display text-sm font-bold">{g.label}</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-300">
+                    <p className="text-sm font-bold">{g.label}</p>
+                    <p className="text-xs text-muted">
                       {Math.round(g.score * 100)}% sure
                     </p>
                   </div>
@@ -277,7 +277,7 @@ export default function GestureApp() {
           <button
             type="button"
             onClick={stop}
-            className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-medium hover:border-red-500 transition-colors"
+            className="px-4 py-2 rounded-full border border-muted text-ink text-sm font-medium hover:border-red-500 transition-colors"
           >
             Stop camera
           </button>

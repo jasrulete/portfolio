@@ -197,8 +197,8 @@ export default function CameraApp() {
 
   return (
     <div className="p-4 flex flex-col items-center gap-3">
-      <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
-        Everything runs in your browser — video never leaves your device.
+      <p className="text-xs text-muted text-center">
+        Everything runs in your browser. Video never leaves your device.
       </p>
 
       <div
@@ -222,7 +222,7 @@ export default function CameraApp() {
             <span
               role="status"
               aria-label={`Photo in ${countdown}`}
-              className="font-display text-8xl font-bold text-white drop-shadow-lg"
+              className="font-mono text-8xl font-bold text-white drop-shadow-lg"
             >
               {countdown}
             </span>
@@ -234,33 +234,33 @@ export default function CameraApp() {
               <button
                 type="button"
                 onClick={start}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-fill hover:opacity-90 text-on-accent text-sm font-bold transition-colors"
               >
                 <Camera size={16} />
                 Enable camera
               </button>
             )}
             {status === "starting" && (
-              <p className="font-display text-sm">Requesting camera…</p>
+              <p className="text-sm">Requesting camera…</p>
             )}
             {status === "denied" && (
               <div className="space-y-2">
                 <VideoOff size={24} className="mx-auto" aria-hidden />
-                <p className="font-display text-sm">
+                <p className="text-sm">
                   Camera access was blocked. Allow it in your browser&apos;s
                   site settings, then try again.
                 </p>
                 <button
                   type="button"
                   onClick={start}
-                  className="text-blue-400 text-sm underline underline-offset-4"
+                  className="text-[#FFB547] text-sm underline underline-offset-4"
                 >
                   Try again
                 </button>
               </div>
             )}
             {status === "unsupported" && (
-              <p className="font-display text-sm">
+              <p className="text-sm">
                 This browser doesn&apos;t support camera access.
               </p>
             )}
@@ -278,8 +278,8 @@ export default function CameraApp() {
               aria-pressed={hands === "on"}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-colors disabled:opacity-60 ${
                 hands === "on"
-                  ? "bg-blue-600 hover:bg-blue-700 text-white"
-                  : "border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-blue-500"
+                  ? "bg-accent-fill hover:opacity-90 text-on-accent"
+                  : "border border-muted text-ink hover:border-accent"
               }`}
             >
               <Hand size={14} />
@@ -288,7 +288,7 @@ export default function CameraApp() {
             <button
               type="button"
               onClick={capture}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-fill hover:opacity-90 text-on-accent text-sm font-bold transition-colors"
             >
               <Camera size={14} />
               Snap
@@ -297,7 +297,7 @@ export default function CameraApp() {
               type="button"
               onClick={() => setMirror((m) => !m)}
               aria-pressed={mirror}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-medium hover:border-blue-500 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-muted text-ink text-sm font-medium hover:border-accent transition-colors"
             >
               <RefreshCcw size={14} />
               Mirror {mirror ? "on" : "off"}
@@ -305,21 +305,21 @@ export default function CameraApp() {
             <button
               type="button"
               onClick={stop}
-              className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-medium hover:border-red-500 transition-colors"
+              className="px-4 py-2 rounded-full border border-muted text-ink text-sm font-medium hover:border-red-500 transition-colors"
             >
               Stop
             </button>
           </div>
           <p
             role="status"
-            className="font-display text-xs h-4 text-gray-600 dark:text-gray-300 text-center"
+            className="text-xs h-4 text-muted text-center"
           >
             {hands === "loading" &&
               "Downloading gesture model (~8 MB, first time only)…"}
             {hands === "on" &&
               (countdown !== null
                 ? "Get ready!"
-                : `${handCount} hand${handCount === 1 ? "" : "s"} detected · thumbs-up starts a ${TIMER_SECONDS}s photo timer`)}
+                : `${handCount} hand${handCount === 1 ? "" : "s"} detected. Thumbs-up starts a ${TIMER_SECONDS}s photo timer`)}
             {hands === "error" &&
               "Couldn't load the gesture model. Check your connection and try again."}
           </p>
@@ -331,13 +331,13 @@ export default function CameraApp() {
           <img
             src={snapshot}
             alt="Captured snapshot"
-            className="w-full rounded-lg border border-gray-200 dark:border-gray-700"
+            className="w-full rounded-lg border border-line"
           />
           <div className="flex gap-2">
             <a
               href={snapshot}
               download="camera-snapshot.png"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-fill hover:opacity-90 text-on-accent text-sm font-bold transition-colors"
             >
               <Download size={14} />
               Download
@@ -345,7 +345,7 @@ export default function CameraApp() {
             <button
               type="button"
               onClick={() => setSnapshot(null)}
-              className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-medium"
+              className="px-4 py-2 rounded-full border border-muted text-ink text-sm font-medium"
             >
               Clear
             </button>

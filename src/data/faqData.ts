@@ -23,7 +23,7 @@ export const faqData: FaqEntry[] = [
     question: "What's your tech stack?",
     keywords: ["skills", "technologies", "what do you use", "languages", "frameworks"],
     answer:
-      "TypeScript, React and Next.js on the front end; Node.js with Express, or Next.js Server Actions, on the back end; PostgreSQL, SQLite and MongoDB, with Prisma or plain SQL. For testing I use Vitest, Supertest, Testing Library, Jest and Playwright, with GitHub Actions running them on every push, and Docker Compose for local stacks. I also work in Python with pandas, have written a Shopify theme by hand in Liquid, built an Android companion app with React Native and Expo, and built a small Laravel app with login and per-user access control. I use AI coding assistants, and I disclose it where it matters — the Kitchen Line theme's README says so outright.",
+      "TypeScript, React and Next.js on the front end; Node.js with Express, or Next.js Server Actions, on the back end; PostgreSQL, SQLite and MongoDB, with Prisma or plain SQL. For testing I use Vitest, Supertest, Testing Library, Jest and Playwright, with GitHub Actions running them on every push, and Docker Compose for local stacks. I also work in Python with pandas, have written a Shopify theme by hand in Liquid, built an Android companion app with React Native and Expo, and built a small Laravel app with login and per-user access control. I use AI coding assistants, and I disclose it where it matters: the Kitchen Line theme's README says so outright.",
   },
   {
     id: "experience",
@@ -37,14 +37,14 @@ export const faqData: FaqEntry[] = [
     question: "Tell me about your local AI agent project",
     keywords: ["chatbot project", "ollama", "chromadb", "rag project", "local llm"],
     answer:
-      "Hermes is a command-line chatbot that runs entirely on my own machine, with no cloud API keys. Ollama serves the model, ChromaDB stores past exchanges as sentence-transformer embeddings so it can pull relevant history back into context after a restart, and it can search the web through DuckDuckGo and read local files. I didn't use an agent framework for the tools: the model writes tool-call blocks and my own code parses and runs them. For something you can click instead, DocChat is a hosted RAG app — upload a PDF or paste a URL and it answers with page or URL citations. Both are on my GitHub rather than in the Projects section.",
+      "Hermes is a command-line chatbot that runs entirely on my own machine, with no cloud API keys. Ollama serves the model, ChromaDB stores past exchanges as sentence-transformer embeddings so it can pull relevant history back into context after a restart, and it can search the web through DuckDuckGo and read local files. I didn't use an agent framework for the tools: the model writes tool-call blocks and my own code parses and runs them. For something you can click instead, DocChat is a hosted RAG app: upload a PDF or paste a URL and it answers with page or URL citations. Both are on my GitHub rather than under Selected work.",
   },
   {
     id: "thesis",
     question: "What was your thesis about?",
     keywords: ["undergraduate thesis", "research", "iot security", "capstone"],
     answer:
-      "My thesis, 'Design and Evaluation of a Context-Aware Edge Security Framework for Smart Home IoT Devices,' introduced a Contextual Quadruple (device criticality, battery level, RSSI, and an ML-inferred threat level) to adaptively switch between AES-128 and ChaCha20 encryption. Across 180 simulation runs on the CICIoT2023 dataset, it achieved a 63.40% reduction in mean response time and a 27.39% reduction in energy consumption, both statistically significant at p < 0.001. It also improved accuracy-per-joule by 38.06%, and detection accuracy was statistically unchanged against the baseline (63.22% vs 63.05%, p = 0.126) — the adaptive switching cost no accuracy.",
+      "My thesis, 'Design and Evaluation of a Context-Aware Edge Security Framework for Smart Home IoT Devices,' introduced a Contextual Quadruple (device criticality, battery level, RSSI, and an ML-inferred threat level) to adaptively switch between AES-128 and ChaCha20 encryption. Across 180 simulation runs on the CICIoT2023 dataset, it achieved a 63.40% reduction in mean response time and a 27.39% reduction in energy consumption, both statistically significant at p < 0.001. It also improved accuracy-per-joule by 38.06%, and detection accuracy was statistically unchanged against the baseline (63.22% vs 63.05%, p = 0.126), so the adaptive switching cost no accuracy.",
   },
   {
     id: "languages",
@@ -58,7 +58,7 @@ export const faqData: FaqEntry[] = [
     question: "What projects have you built?",
     keywords: ["portfolio projects", "what have you made", "show me your work"],
     answer:
-      "The ones I'd show you first: ShelfStock, a store with a row-locked checkout, 262 API tests and an Android companion app; Nexus CRM, which has an AI layer, Playwright tests and a prompt-injection eval; Kitchen Line Supply, a Shopify theme hand-written in Liquid; Pulse, a take-home assessment where I fixed a broken WebRTC app and closed two critical session vulnerabilities; my thesis on adaptive encryption for smart-home IoT; a NetLogo agent-based model of bridge degradation I co-wrote for a course; and AmBot, a backtesting pipeline whose honest result was that none of the strategies worked. They're all in the Projects section, or the Projects app in desktop mode. Smaller experiments are on my GitHub.",
+      "The ones I'd show you first: ShelfStock, a store with a row-locked checkout, 262 API tests and an Android companion app; Nexus CRM, which has an AI layer, Playwright tests and a prompt-injection eval; Kitchen Line Supply, a Shopify theme hand-written in Liquid; Pulse, a take-home assessment where I fixed a broken WebRTC app and closed two critical session vulnerabilities; my thesis on adaptive encryption for smart-home IoT; a NetLogo agent-based model of bridge degradation I co-wrote for a course; and AmBot, a backtesting pipeline whose honest result was that none of the strategies worked. They're all under Selected work, or in the Projects app in OS mode. Smaller experiments are on my GitHub.",
   },
   {
     id: "site-features",
@@ -69,12 +69,13 @@ export const faqData: FaqEntry[] = [
       "desktop mode",
       "command palette",
       "ctrl k",
-      "design lab",
+      "os mode",
+      "phone mode",
       "features of this site",
       "hidden features",
     ],
     answer:
-      "Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, toggles the theme and switches into the desktop OS mode — draggable windows, a working terminal, playable Snake and Minesweeper, a camera with a thumbs-up photo timer, and a live gesture-recognition app, all over the same content. That mode is also one link away at the bottom of the page. Click any skill chip to see the projects that use it, and the design system this site runs on has its own page, linked under the Projects heading and in the footer.",
+      "Press Ctrl+K (or Cmd+K) anywhere for a command palette that jumps to sections and projects, switches the theme and opens OS mode. OS mode is this site as an operating system. On a computer you get draggable windows, a working terminal, Snake, Minesweeper, a camera with a thumbs-up photo timer and a gesture-recognition app. On a phone it opens as a home screen with the same apps. You can open it from the navbar, the tile under Selected work, or the footer. Click any skill chip to see the projects that use it.",
   },
   {
     id: "how-built",
@@ -87,13 +88,13 @@ export const faqData: FaqEntry[] = [
       "what powers this website",
     ],
     answer:
-      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. This chatbot is not an LLM — it's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things I actually wrote. Images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
+      "React 19 + TypeScript + Vite + Tailwind CSS, deployed to GitHub Pages through GitHub Actions. This chatbot is not an LLM. It's Fuse.js fuzzy search over a hand-written FAQ file, so it can only tell you things I actually wrote. Images lazy-load behind skeletons, and every animation respects prefers-reduced-motion.",
   },
   {
     id: "hire-you",
     question: "Are you looking for work?",
     keywords: ["available for hire", "open to opportunities", "job search", "contact"],
     answer:
-      "I'm doing contract development work right now, and I take on client projects — web apps, Shopify themes and AI integrations, and I'm happy to talk about anything else you need built. Project work is quoted once we've scoped it together. I'm also open to software developer, web developer or QA engineer roles. Email rulete.jeric@gmail.com or use the contact form and I'll reply within one business day; GitHub and LinkedIn are in the footer.",
+      "I'm doing contract development work right now, and I take on client projects: web apps, Shopify themes and AI integrations, and I'm happy to talk about anything else you need built. Project work is quoted once we've scoped it together. I'm also open to software developer, web developer or QA engineer roles. Email rulete.jeric@gmail.com or use the contact form and I'll reply within one business day; GitHub and LinkedIn are in the footer.",
   },
 ];
