@@ -198,6 +198,24 @@ export const profile = {
       category: "Web",
     },
     {
+      title: "research-engine",
+      tier: "list",
+      summary:
+        "A research pipeline where AI agents look for products people already pay for and plain Python scripts check their work. 504 tests, none of them touch the network.",
+      subtitle: "Personal project",
+      period: "October 2026",
+      description:
+        "A pipeline built to run unattended every day and email me two or three product ideas that people already pay for, in categories that aren't crowded yet, each labelled by how well it is proven. Claude subagents do the judgement work, a researcher per opportunity type and a challenger per candidate. Small Python scripts do every exact step: planning, collecting from keyless APIs, validating, de-duplicating, scoring and rendering.",
+      challenge:
+        "An unattended agent reads untrusted web pages and sends email, so it can be steered by what it reads, and a wrong verdict costs weeks of work on a weak idea. The pipeline had to treat every page and email body as data, never as instructions, say so loudly when a run was degraded, and refuse to guess when the evidence wasn't there.",
+      architecture:
+        "Python 3.11 standard library only, no dependencies to install. The engine core (plan, validate, ledger, inbox, trend, score, render) knows nothing about what is being researched; a profile holds the settings, collectors and scoring rubric, so a second profile reuses all of it. The challenger agent is told to be the skeptic and to answer not_proven rather than pass or fail without evidence. State lives in the repo, so each run sees what earlier runs found. In cloud runs a PreToolUse hook blocks every write, search and connector call unless guard.py still matches its pinned SHA-256, and the settings deny every Gmail tool except send.",
+      outcome:
+        "504 tests (standard-library unittest on synthetic data, no network). A fresh reviewer went over the whole build and found 0 critical and 2 important issues; both were fixed test-first, and 12 minor ones were deferred. It has not run on a schedule yet: the pilot runs and calibration come next.",
+      tags: ["Python", "Claude Code", "AI Agents"],
+      category: "Software",
+    },
+    {
       title: "Pulse",
       tier: "list",
       summary:
