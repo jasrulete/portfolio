@@ -40,11 +40,13 @@ export function FeatureTile({
   return (
     <article className={cn(TILE, "md:row-span-2")}>
       {image && (
-        <div className="relative aspect-video border-b border-line">
+        // On wide screens the tile is stretched to the height of the two tiles
+        // beside it, so the screenshot takes up the slack, not the text block.
+        <div className="relative aspect-video md:aspect-auto md:min-h-64 md:grow border-b border-line">
           <ProjectImage src={image} priority={priority} />
         </div>
       )}
-      <div className="p-5 sm:p-6 flex flex-col grow">
+      <div className="p-5 sm:p-6 flex flex-col">
         <h3 className="text-xl font-semibold tracking-tight text-ink">
           {project.title}
         </h3>

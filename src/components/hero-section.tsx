@@ -8,16 +8,16 @@ import { FOCUS_RING } from "./focus-ring";
 // stays in colour and sits beside the text on wide screens, above it on phones.
 export default function Hero() {
   return (
-    <section id="home" className="pt-10 pb-16 sm:pt-16 sm:pb-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-12 lg:items-end">
+    <section id="home" className="pt-10 pb-16 sm:pt-16 sm:pb-24 lg:pt-24 lg:pb-28">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-16 lg:items-center">
         <img
           src={profilePhoto}
           alt={profile.name}
-          width={190}
-          height={230}
+          width={240}
+          height={290}
           loading="eager"
           decoding="async"
-          className="w-24 h-28 lg:w-[190px] lg:h-[230px] object-cover rounded-md lg:order-last"
+          className="w-24 h-28 lg:w-60 lg:h-[290px] object-cover rounded-lg border border-line lg:order-last"
         />
 
         <div>
@@ -26,7 +26,7 @@ export default function Hero() {
             contract work and full-time developer roles. Based in Cebu City.
           </p>
 
-          <h1 className="mt-4 max-w-3xl text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+          <h1 className="mt-4 max-w-3xl text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink">
             I build full-stack web apps, and I write the tests that keep them
             working.
           </h1>
