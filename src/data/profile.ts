@@ -61,10 +61,10 @@ export const profile = {
         "Express",
         "REST APIs",
         "WebRTC",
-        "WebSockets",
         "Laravel",
         "Blade",
         "NextAuth",
+        "Stripe webhooks",
       ],
     },
     {
@@ -89,10 +89,8 @@ export const profile = {
         "GitHub",
         "Docker",
         "Vercel",
-        "Netlify",
+        "Railway",
         "Shopify",
-        "Cloudinary",
-        "Figma",
       ],
     },
     {
@@ -100,8 +98,13 @@ export const profile = {
       items: ["pandas", "NetLogo", "Agent-Based Modeling", "Machine Learning"],
     },
     {
-      title: "Methodologies",
-      items: ["Agile", "Scrum", "Project Management"],
+      title: "Practices",
+      items: [
+        "Code review",
+        "Automated testing",
+        "QA test plans",
+        "Technical documentation (ADRs, runbooks)",
+      ],
     },
   ],
   projects: [
@@ -150,7 +153,7 @@ export const profile = {
       summary:
         "A CRM with AI lead scoring that still works with no API key, tested against prompt injection.",
       subtitle: "Personal project",
-      period: "August 2026",
+      period: "July 2026 – Present",
       description:
         "A Next.js 16 CRM with a drag-and-drop deal pipeline, contacts and companies, an activity timeline and tasks, plus AI lead scoring, relationship summaries and follow-up drafts that fall back to rule-based heuristics when no API key is set.",
       challenge:
@@ -158,7 +161,7 @@ export const profile = {
       architecture:
         "Next.js 16 App Router with Server Actions; every mutation is validated with zod and authorised on the server. Prisma 7 over SQLite locally and Turso in production. Auth is hand-built: bcrypt passwords, sessions stored as SHA-256 hashes in httpOnly cookies, timing-safe login with rate limiting, admin and member roles, and a full audit log. AI calls go through one provider module that tries Gemini first and fails over to Groq, with record data wrapped in tags and per-user rate limits.",
       outcome:
-        "Vitest unit tests for scoring, validation and rate limiting; Playwright end-to-end tests for auth and CRM flows; and an eval harness that runs fixture contacts through the real actions with three prompt-injection payloads. CI on GitHub Actions, live on Vercel with a seeded demo workspace.",
+        "469 Vitest unit tests for scoring, validation and rate limiting; 45 Playwright end-to-end tests for auth and CRM flows; and a 71-case eval harness that runs fixture contacts through the real actions with three prompt-injection payloads. All run in GitHub Actions on main; live on Vercel with a seeded demo workspace.",
       tags: [
         "Next.js",
         "React",
